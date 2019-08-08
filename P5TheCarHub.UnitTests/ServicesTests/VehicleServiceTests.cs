@@ -121,5 +121,22 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             Assert.Equal(orgVehicleCount, newVehicleCount);
         }
 
+        [Fact]
+        public void GetVehiclesBySoldStatus_IsSoldTrue_ReturnsListOfVehiclesSold()
+        {
+            var result = _vehicleService.GetVehiclesBySoldStatus(true);
+
+            Assert.NotEmpty(result);
+            Assert.True(result.First().IsSold);
+        }
+
+        [Fact]
+        public void GetVehiclesBySoldStatus_IsSoldFalse_ReturnsListOfVehiclesNotSold()
+        {
+            var result = _vehicleService.GetVehiclesBySoldStatus(false);
+
+            Assert.NotEmpty(result);
+            Assert.False(result.First().IsSold);
+        }
     }
 }

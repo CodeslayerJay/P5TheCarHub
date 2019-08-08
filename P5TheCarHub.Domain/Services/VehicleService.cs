@@ -46,7 +46,8 @@ namespace P5TheCarHub.Domain.Services
                     LotDate = DateTime.Today,
                     PurchaseDate = DateTime.Today,
                     PurchasePrice = 3000M,
-                    SalePrice = 500
+                    SalePrice = 500,
+                    IsSold = true
                 }
             };
 
@@ -113,6 +114,11 @@ namespace P5TheCarHub.Domain.Services
         public IEnumerable<string> ValidateModel()
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Vehicle> GetVehiclesBySoldStatus(bool isSold)
+        {
+            return GetAll().Where(x => x.IsSold == isSold).ToList();
         }
     }
 }
