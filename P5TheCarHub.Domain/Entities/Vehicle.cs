@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace P5TheCarHub.Domain.Entities
 {
     public class Vehicle : BaseEntity
     {
+        public Vehicle()
+        {
+            Repairs = new Collection<Repair>();
+            Photos = new Collection<Photo>();
+        }
         
         public string FullVehicleName { get; set; }
         public string VIN { get; set; }
@@ -17,5 +23,10 @@ namespace P5TheCarHub.Domain.Entities
         public string Trim { get; set; }
         public bool IsSold { get; set; } = false;
         public DateTime LastUpdated { get; set; } = DateTime.Now;
+
+        public VehicleDetail Detail { get; set; }
+        public Invoice Invoice { get; set; }
+        public ICollection<Repair> Repairs { get; set; }
+        public ICollection<Photo> Photos { get; set; }
     }
 }
