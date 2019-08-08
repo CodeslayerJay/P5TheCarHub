@@ -9,10 +9,18 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 {
     public class VehicleServiceTests
     {
+        private readonly VehicleService _vehicleService;
+
+        public VehicleServiceTests()
+        {
+            _vehicleService = new VehicleService();
+
+        }
+
         [Fact]
         public void AddVehicle_WhenCalled_AddsFullVehicleNameAndReturnsNewlyCreatedVehicle()
         {
-            var vehicleService = new VehicleService();
+            
             var vehicle = new Vehicle
             {
                 Year = 2001,
@@ -27,13 +35,19 @@ namespace P5TheCarHub.UnitTests.ServicesTests
                 SalePrice = 500
             };
 
-            var result = vehicleService.AddVehicle(vehicle);
+            var result = _vehicleService.AddVehicle(vehicle);
             
             Assert.NotNull(result);
             Assert.NotEqual(0, result.Id);
             Assert.Equal("2001 Kia Optima Ex", result.FullVehicleName);
         }
 
+        [Fact]
+        public void GetVehicle_WhenCalled_ReturnsVehicleById()
+        {
+            var result = _vehicleService.GetVehicle(1);
 
+            Assert.NotNull(result);
+        }
     }
 }
