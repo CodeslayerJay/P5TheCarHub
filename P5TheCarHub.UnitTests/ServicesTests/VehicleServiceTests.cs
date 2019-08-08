@@ -2,6 +2,7 @@
 using P5TheCarHub.Domain.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 
@@ -81,6 +82,42 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 
             Assert.NotEmpty(result);
             Assert.IsAssignableFrom<IEnumerable<Vehicle>>(result);
+        }
+
+        [Fact]
+        public void DeleteVehicle_WhenNotNull_FindsAndRemovesVehicle()
+        {
+            var seedVehicle = new Vehicle
+            {
+                Year = 2001,
+                Make = "Kia",
+                Model = "Optima",
+                Trim = "Ex",
+                Mileage = 30000,
+                VIN = "1234-1234",
+                LotDate = DateTime.Today,
+                PurchaseDate = DateTime.Today,
+                PurchasePrice = 3000M,
+                SalePrice = 500
+            };
+
+            var vehicle = _vehicleService.AddVehicle(seedVehicle);
+            Assert.NotNull(vehicle);
+
+            _vehicleService.DeleteVehicle(vehicle.Id);
+
+            Assert.Null(_vehicleService.GetVehicle(vehicle.Id));
+        }
+
+        [Fact]
+        public void DeleteVehicle_WhenNull_DoesNothing()
+        {
+            var orgVehicleCount = _vehicleService.GetAll().Count();
+            _vehicleService.DeleteVehicle(99999);
+
+            var newVehicleCount = _vehicleService.GetAll().Count();
+
+            Assert.Equal(orgVehicleCount, newVehicleCount);
         }
     }
 }

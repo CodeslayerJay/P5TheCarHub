@@ -93,5 +93,13 @@ namespace P5TheCarHub.Domain.Services
         {
             return _repo.ToList();
         }
+
+        public void DeleteVehicle(int id)
+        {
+            var vehicle = GetVehicle(id);
+
+            if (vehicle != null)
+                _repo.Remove(vehicle);
+        }
     }
 }
