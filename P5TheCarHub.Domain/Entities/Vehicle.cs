@@ -31,7 +31,6 @@ namespace P5TheCarHub.Domain.Entities
 
         public DateTime LastUpdated { get; set; } = DateTime.Now;
 
-        public VehicleDetail Detail { get; set; }
         public Invoice Invoice { get; set; }
         public ICollection<Repair> Repairs { get; set; }
         public ICollection<Photo> Photos { get; set; }

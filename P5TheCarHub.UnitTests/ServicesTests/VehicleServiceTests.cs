@@ -10,7 +10,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
     public class VehicleServiceTests
     {
         [Fact]
-        public void AddVehicle_WhenCalled_AddsAndReturnsNewlyCreatedVehicle()
+        public void AddVehicle_WhenCalled_AddsFullVehicleNameAndReturnsNewlyCreatedVehicle()
         {
             var vehicleService = new VehicleService();
             var vehicle = new Vehicle
@@ -31,9 +31,9 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             
             Assert.NotNull(result);
             Assert.NotEqual(0, result.Id);
+            Assert.Equal("2001 Kia Optima Ex", result.FullVehicleName);
         }
 
-        
 
     }
 }

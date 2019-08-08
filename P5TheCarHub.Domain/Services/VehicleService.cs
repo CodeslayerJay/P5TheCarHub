@@ -20,9 +20,15 @@ namespace P5TheCarHub.Domain.Services
             return VehiclesTemp.Count() + 1;
         }
 
+        private string VehicleFullNameStringBuilder(Vehicle vehicle)
+        {
+            return String.Concat(vehicle.Year, " ", vehicle.Make, " ", vehicle.Model, " ", vehicle.Trim);
+        }
+
         public Vehicle AddVehicle(Vehicle vehicle)
         {
             vehicle.Id = (vehicle.Id == 0) ? SetId() : vehicle.Id;
+            vehicle.FullVehicleName = VehicleFullNameStringBuilder(vehicle);
             VehiclesTemp.Add(vehicle);
             
             return vehicle;
