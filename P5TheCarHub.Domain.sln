@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P5TheCarHub.Domain", "P5The
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P5TheCarHub.Data", "P5TheCarHub.Data\P5TheCarHub.Data.csproj", "{9BBE81A5-D5F6-482C-90E3-9770B6E8DD74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P5TheCarHub.UnitTests", "P5TheCarHub.UnitTests\P5TheCarHub.UnitTests.csproj", "{AB416836-1F0E-4C19-965A-CCB39A3BEB31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9BBE81A5-D5F6-482C-90E3-9770B6E8DD74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BBE81A5-D5F6-482C-90E3-9770B6E8DD74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BBE81A5-D5F6-482C-90E3-9770B6E8DD74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB416836-1F0E-4C19-965A-CCB39A3BEB31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB416836-1F0E-4C19-965A-CCB39A3BEB31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB416836-1F0E-4C19-965A-CCB39A3BEB31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB416836-1F0E-4C19-965A-CCB39A3BEB31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
