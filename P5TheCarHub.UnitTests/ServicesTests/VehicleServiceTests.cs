@@ -73,5 +73,14 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 
             Assert.Null(result);
         }
+
+        [Fact]
+        public void GetAll_WhenCalled_ReturnsIEnumberableOfVehicles()
+        {
+            var result = _vehicleService.GetAll();
+
+            Assert.NotEmpty(result);
+            Assert.IsAssignableFrom<IEnumerable<Vehicle>>(result);
+        }
     }
 }

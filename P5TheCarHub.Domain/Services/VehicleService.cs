@@ -89,6 +89,9 @@ namespace P5TheCarHub.Domain.Services
             return vehicle;
         }
 
-
+        public IEnumerable<Vehicle> GetAll()
+        {
+            return _repo.ToList();
+        }
     }
 }
