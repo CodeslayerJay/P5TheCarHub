@@ -19,7 +19,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void AddVehicle_WhenCalled_AddsFullVehicleNameAndReturnsNewlyCreatedVehicle()
+        public void AddVehicle_WhenCalled_StoresAndReturnsNewVehicle()
         {
             
             var vehicle = new Vehicle
@@ -33,18 +33,19 @@ namespace P5TheCarHub.UnitTests.ServicesTests
                 LotDate = DateTime.Today,
                 PurchaseDate = DateTime.Today,
                 PurchasePrice = 3000M,
-                SalePrice = 500
+                
             };
 
             var result = _vehicleService.AddVehicle(vehicle);
             
             Assert.NotNull(result);
-            Assert.NotEqual(0, result.Id);
             Assert.Equal("2001 Kia Optima Ex", result.FullVehicleName);
+            Assert.Equal(3500M, result.SalePrice);
+
         }
 
         [Fact]
-        public void GetVehicle_WhenCalled_ReturnsVehicleById()
+        public void GetVehicle_ById_ReturnsVehicleOrNull()
         {
             var result = _vehicleService.GetVehicle(1);
 
@@ -52,7 +53,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void UpdateVehicle_WhenVehicleIdNotZero_FindsUpdatesAndReturnsVehicle()
+        public void UpdateVehicle_WhenFound_UpdatesAndReturnsVehicle()
         {
             var vehicle = _vehicleService.GetVehicle(2);
             var orgMakeValue = vehicle.Make;
@@ -66,7 +67,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void UpdateVehicle_WhenVehicleIdIsZero_ReturnsNull()
+        public void UpdateVehicle_WhenNotFound_ReturnsNull()
         {
             var vehicle = new Vehicle();
             
@@ -85,7 +86,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void DeleteVehicle_WhenNotNull_FindsAndRemovesVehicle()
+        public void DeleteVehicle_WhenFound_FindsAndRemovesVehicle()
         {
             var seedVehicle = new Vehicle
             {
@@ -110,7 +111,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void DeleteVehicle_WhenNull_DoesNothing()
+        public void DeleteVehicle_WhenNotFound_DoesNothing()
         {
             var orgVehicleCount = _vehicleService.GetAll().Count();
             _vehicleService.DeleteVehicle(99999);
@@ -119,5 +120,6 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 
             Assert.Equal(orgVehicleCount, newVehicleCount);
         }
+
     }
 }

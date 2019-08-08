@@ -63,10 +63,16 @@ namespace P5TheCarHub.Domain.Services
             return String.Concat(vehicle.Year, " ", vehicle.Make, " ", vehicle.Model, " ", vehicle.Trim);
         }
 
+        private decimal CalculateSalePrice(decimal purchasePrice)
+        {
+            return purchasePrice + 500M;
+        }
+
         public Vehicle AddVehicle(Vehicle vehicle)
         {
             vehicle.Id = (vehicle.Id == 0) ? SetId() : vehicle.Id;
             vehicle.FullVehicleName = VehicleFullNameStringBuilder(vehicle);
+            vehicle.SalePrice = CalculateSalePrice(vehicle.PurchasePrice);
             _repo.Add(vehicle);
             
             return vehicle;
@@ -79,10 +85,12 @@ namespace P5TheCarHub.Domain.Services
 
         public Vehicle UpdateVehicle(Vehicle vehicle)
         {
-            if (vehicle.Id == 0)
+            
+            var vehicleToUpdate = GetVehicle(vehicle.Id);
+
+            if (vehicleToUpdate == null)
                 return null;
 
-            var vehicleToUpdate = GetVehicle(vehicle.Id);
             _repo.Remove(vehicleToUpdate);
             _repo.Add(vehicle);
 
@@ -100,6 +108,11 @@ namespace P5TheCarHub.Domain.Services
 
             if (vehicle != null)
                 _repo.Remove(vehicle);
+        }
+
+        public IEnumerable<string> ValidateModel()
+        {
+            throw new NotImplementedException();
         }
     }
 }
