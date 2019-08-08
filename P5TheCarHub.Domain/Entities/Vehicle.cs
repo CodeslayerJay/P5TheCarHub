@@ -21,7 +21,14 @@ namespace P5TheCarHub.Domain.Entities
         public string Make { get; set; }
         public string Model { get; set; }
         public string Trim { get; set; }
+
+        public decimal PurchasePrice { get; set; }
+        public DateTime PurchaseDate { get; set; }
+        public DateTime LotDate { get; set; }
+        public decimal SalePrice { get; set; }
+
         public bool IsSold { get; set; } = false;
+
         public DateTime LastUpdated { get; set; } = DateTime.Now;
 
         public VehicleDetail Detail { get; set; }

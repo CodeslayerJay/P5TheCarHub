@@ -16,7 +16,10 @@
   <ItemGroup>
     <Folder Include="Mocks\" />
     <Folder Include="ControllerTests\" />
-    <Folder Include="ServicesTests\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\P5TheCarHub.Domain\P5TheCarHub.Domain.csproj" />
   </ItemGroup>
 
 </Project>
