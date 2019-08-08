@@ -49,5 +49,29 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 
             Assert.NotNull(result);
         }
+
+        [Fact]
+        public void UpdateVehicle_WhenVehicleIdNotZero_FindsUpdatesAndReturnsVehicle()
+        {
+            var vehicle = _vehicleService.GetVehicle(2);
+            var orgMakeValue = vehicle.Make;
+            vehicle.Make = "New Make";
+
+            var result = _vehicleService.UpdateVehicle(vehicle);
+
+            Assert.NotNull(result);
+            Assert.NotEqual(orgMakeValue, result.Make);
+
+        }
+
+        [Fact]
+        public void UpdateVehicle_WhenVehicleIdIsZero_ReturnsNull()
+        {
+            var vehicle = new Vehicle();
+            
+            var result = _vehicleService.UpdateVehicle(vehicle);
+
+            Assert.Null(result);
+        }
     }
 }

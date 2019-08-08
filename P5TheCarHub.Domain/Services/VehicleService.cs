@@ -77,5 +77,18 @@ namespace P5TheCarHub.Domain.Services
             return _repo.Where(x => x.Id == id).SingleOrDefault();
         }
 
+        public Vehicle UpdateVehicle(Vehicle vehicle)
+        {
+            if (vehicle.Id == 0)
+                return null;
+
+            var vehicleToUpdate = GetVehicle(vehicle.Id);
+            _repo.Remove(vehicleToUpdate);
+            _repo.Add(vehicle);
+
+            return vehicle;
+        }
+
+
     }
 }
