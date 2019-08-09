@@ -146,6 +146,9 @@ namespace P5TheCarHub.Domain.Services
             if (!results.Any())
                 results.AddRange(GetAll().Where(x => x.Trim.ToUpper() == filter).ToList());
 
+            if (!results.Any())
+                results.AddRange(GetAllByYear(filter));
+
             return results;
         }
 
