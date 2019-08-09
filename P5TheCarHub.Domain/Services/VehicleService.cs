@@ -119,7 +119,7 @@ namespace P5TheCarHub.Domain.Services
             return vehicle;
         }
 
-        private IEnumerable<Vehicle> GetByFilter(string filter)
+        private IEnumerable<Vehicle> FindByFilter(string filter)
         {
             if (filter == null)
                 return null;
@@ -142,7 +142,7 @@ namespace P5TheCarHub.Domain.Services
         public IEnumerable<Vehicle> GetAll(string filter = null)
         {
             if (!String.IsNullOrEmpty(filter))
-                return _repo.Where(x => x.FullVehicleName.Contains(filter.ToUpper())).ToList();
+                return FindByFilter(filter);
 
             return _repo.ToList();
         }
