@@ -1,4 +1,5 @@
 ﻿using P5TheCarHub.Core.Entities;
+using P5TheCarHub.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,57 +9,11 @@ namespace P5TheCarHub.Core.Services
 {
     public class VehicleService
     {
-        public List<Vehicle> _repo { get; set; }
-        
-        public VehicleService()
-        {
-            _repo = new List<Vehicle>();
-            SeedFakeData();
-        }
+        private readonly IVehicleRepository _vehicleRepo;
 
-        private void SeedFakeData()
+        public VehicleService(IVehicleRepository vehicleRepository)
         {
-            var vehicleSeeds = new List<Vehicle>
-            {
-                new Vehicle
-                {
-                    Id = 1,
-                    Year = 2001,
-                    FullVehicleName = "2001 KIA OPTIMA EX",
-                    Make = "Kia",
-                    Model = "Optima",
-                    Trim = "Ex",
-                    Mileage = 30000,
-                    VIN = "123xyz",
-                    LotDate = DateTime.Today,
-                    PurchaseDate = DateTime.Today,
-                    PurchasePrice = 3000M,
-                    SalePrice = 500
-                },
-                new Vehicle
-                {
-                    Id = 2,
-                    FullVehicleName = "2008 KIA OPTIMA EX",
-                    Year = 2008,
-                    Make = "Kia",
-                    Model = "Optima",
-                    Trim = "Ex",
-                    Mileage = 30000,
-                    VIN = "1234-1234",
-                    LotDate = DateTime.Today,
-                    PurchaseDate = DateTime.Today,
-                    PurchasePrice = 3000M,
-                    SalePrice = 500,
-                    IsSold = true
-                }
-            };
-
-            _repo.AddRange(vehicleSeeds);
-        }
-
-        private int SetId()
-        {
-            return _repo.Count() + 1;
+            _vehicleRepo = vehicleRepository;
         }
 
         private string VehicleFullNameStringBuilder(Vehicle vehicle)
@@ -74,17 +29,16 @@ namespace P5TheCarHub.Core.Services
 
         public Vehicle AddVehicle(Vehicle vehicle)
         {
-            vehicle.Id = (vehicle.Id == 0) ? SetId() : vehicle.Id;
             vehicle.FullVehicleName = VehicleFullNameStringBuilder(vehicle);
             vehicle.SalePrice = CalculateSalePrice(vehicle.PurchasePrice);
-            _repo.Add(vehicle);
+            _vehicleRepo.Add(vehicle);
             
             return vehicle;
         }
 
         public Vehicle GetVehicle(int id)
         {
-            return _repo.Where(x => x.Id == id).SingleOrDefault();
+            return _vehicleRepo.GetById(id);
         }
 
         public Vehicle GetVehicle(string vin)
@@ -92,27 +46,12 @@ namespace P5TheCarHub.Core.Services
             if (String.IsNullOrEmpty(vin))
                 return null;
 
-            return _repo.Where(x => x.VIN.ToUpper() == vin.ToUpper()).SingleOrDefault();
+            return _vehicleRepo.GetByVin(vin);
         }
 
-        public IEnumerable<Vehicle> GetAllByMake(string make)
+        private IEnumerable<Vehicle> GetAllByFilter(string filter)
         {
-            return _repo.Where(x => x.Make.ToUpper() == make.ToUpper()).ToList();
-        }
-
-        public IEnumerable<Vehicle> GetAllByModel(string model)
-        {
-            return _repo.Where(x => x.Model.ToUpper() == model.ToUpper()).ToList();
-        }
-
-        public IEnumerable<Vehicle> GetAllByYear(int year)
-        {
-            return _repo.Where(x => x.Year == year).ToList();
-        }
-
-        public IEnumerable<Vehicle> GetAllByYear(string year)
-        {
-            return int.TryParse(year, out int parsedYear) ? GetAllByYear(parsedYear) : null;
+            return _vehicleRepo.GetAllByFilter(filter);
         }
 
         public Vehicle UpdateVehicle(Vehicle vehicle)
@@ -122,48 +61,22 @@ namespace P5TheCarHub.Core.Services
 
             if (vehicleToUpdate == null)
                 return null;
+                //throw new VehicleNotFoundException();
 
-            _repo.Remove(vehicleToUpdate);
-            _repo.Add(vehicle);
+            //TODO: Change This
+            _vehicleRepo.Delete(vehicle.Id);
+            _vehicleRepo.Add(vehicle);
 
             return vehicle;
         }
-
-        private IEnumerable<Vehicle> FindByFilter(string filter)
-        {
-            if (filter == null)
-                return null;
-
-            filter = filter.ToUpper();
-
-            var results = new List<Vehicle>();
-
-            results.AddRange(GetAllByMake(filter));
-
-            if (!results.Any())
-                results.AddRange(GetAllByModel(filter));
-
-            if (!results.Any())
-                results.AddRange(GetAll().Where(x => x.Trim.ToUpper() == filter).ToList());
-
-            if (!results.Any())
-            {
-                var carsByYear = GetAllByYear(filter);
-
-                if (carsByYear != null && carsByYear.Any())
-                    results.AddRange(GetAllByYear(filter));
-            }
-                
-
-            return results;
-        }
+        
 
         public IEnumerable<Vehicle> GetAll(string filter = null)
         {
             if (!String.IsNullOrEmpty(filter))
-                return FindByFilter(filter);
+                return GetAllByFilter(filter);
 
-            return _repo.ToList();
+            return _vehicleRepo.GetAll().ToList();
         }
 
         public void DeleteVehicle(int id)
@@ -171,7 +84,7 @@ namespace P5TheCarHub.Core.Services
             var vehicle = GetVehicle(id);
 
             if (vehicle != null)
-                _repo.Remove(vehicle);
+                _vehicleRepo.Delete(id);
         }
 
         public IEnumerable<string> ValidateModel()

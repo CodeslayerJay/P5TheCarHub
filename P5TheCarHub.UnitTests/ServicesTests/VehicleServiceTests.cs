@@ -1,5 +1,6 @@
 ﻿using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Services;
+using P5TheCarHub.UnitTests.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 
         public VehicleServiceTests()
         {
-            _vehicleService = new VehicleService();
-
+            _vehicleService = new VehicleService(new MockVehicleRepository());
         }
 
         [Fact]
@@ -96,70 +96,37 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         [Fact]
         public void GetAll_FilterByModel_ReturnsListOfVehicles()
         {
-            var filterByModel = _vehicleService.GetAll("Kia");
-            Assert.NotEmpty(filterByModel);
+            var results = _vehicleService.GetAll("Kia");
+            Assert.NotEmpty(results);
 
         }
 
         [Fact]
         public void GetAll_FilterByMake_ReturnsListOfVehicles()
         {
-            var filterByMake = _vehicleService.GetAll("Optima");
-            Assert.NotEmpty(filterByMake);
+            var results = _vehicleService.GetAll("Optima");
+            Assert.NotEmpty(results);
         }
 
         [Fact]
         public void GetAll_FilterByYear_ReturnsListOfVehicles()
         {
-            var filterByYear = _vehicleService.GetAll("2008");
-            Assert.NotEmpty(filterByYear);
+            var results = _vehicleService.GetAll("2008");
+            Assert.NotEmpty(results);
         }
 
         [Fact]
         public void GetAll_FilterByTrim_ReturnsListOfVehicles()
         {
-            var filterByTrim = _vehicleService.GetAll("Ex");
-            Assert.NotEmpty(filterByTrim);
+            var results = _vehicleService.GetAll("Ex");
+            Assert.NotEmpty(results);
         }
         
         [Fact]
-        public void GetAllByMake_WhenCalled_ReturnsListOfVehicles()
+        public void GetAll_FilterBySalePrice_ReturnsListOfVehicles()
         {
-            var result = _vehicleService.GetAllByMake("Kia");
-
-            Assert.NotEmpty(result);
-        }
-
-        [Fact]
-        public void GetAllByModel_WhenCalled_ReturnsListOfVehicles()
-        {
-            var result = _vehicleService.GetAllByModel("Optima");
-
-            Assert.NotEmpty(result);
-        }
-
-        [Fact]
-        public void GetAllByYear_AsInt_ReturnsListOfVehicles()
-        {
-            var result = _vehicleService.GetAllByYear(2008);
-
-            Assert.NotEmpty(result);
-        }
-
-        [Fact]
-        public void GetAllByYear_ValidYearAsString_ReturnsListOfVehicles()
-        {
-            var result = _vehicleService.GetAllByYear("2008");
-
-            Assert.NotEmpty(result);
-        }
-
-        [Fact]
-        public void GetAllByYear_InValidYearAsString_ReturnsEmptyList()
-        {
-            var result = _vehicleService.GetAllByYear("2008fd");
-
-            Assert.Null(result);
+            var results = _vehicleService.GetAll("500");
+            Assert.NotEmpty(results);
         }
 
         [Fact]
