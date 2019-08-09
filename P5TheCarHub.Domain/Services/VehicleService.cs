@@ -119,6 +119,26 @@ namespace P5TheCarHub.Domain.Services
             return vehicle;
         }
 
+        private IEnumerable<Vehicle> GetByFilter(string filter)
+        {
+            if (filter == null)
+                return null;
+
+            filter += filter.ToUpper();
+
+            var results = new List<Vehicle>();
+
+            results.AddRange(GetAllByMake(filter));
+
+            if (!results.Any())
+                results.AddRange(GetAllByModel(filter));
+
+            if (!results.Any())
+                results.AddRange(GetAll().Where(x => x.Trim.ToUpper() == filter).ToList());
+
+            return results;
+        }
+
         public IEnumerable<Vehicle> GetAll(string filter = null)
         {
             if (!String.IsNullOrEmpty(filter))
