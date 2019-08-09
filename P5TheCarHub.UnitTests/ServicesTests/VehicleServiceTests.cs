@@ -39,7 +39,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             var result = _vehicleService.AddVehicle(vehicle);
             
             Assert.NotNull(result);
-            Assert.Equal("2001 Kia Optima Ex", result.FullVehicleName);
+            Assert.Equal("2001 Kia Optima Ex".ToUpper(), result.FullVehicleName);
             Assert.Equal(3500M, result.SalePrice);
 
         }
@@ -85,12 +85,44 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void GetAll_WhenCalled_ReturnsIEnumberableOfVehicles()
+        public void GetAll_WhenCalled_ReturnsListOfVehicles()
         {
             var result = _vehicleService.GetAll();
 
             Assert.NotEmpty(result);
             Assert.IsAssignableFrom<IEnumerable<Vehicle>>(result);
+        }
+
+        [Fact]
+        public void GetAll_ByFullNameFilter_ReturnsListOfVehicles()
+        {
+            var filterByModel = _vehicleService.GetAll("Kia");
+            Assert.NotEmpty(filterByModel);
+
+            var filterByMake = _vehicleService.GetAll("Optima");
+            Assert.NotEmpty(filterByMake);
+
+            var filterByYear = _vehicleService.GetAll("2008");
+            Assert.NotEmpty(filterByYear);
+
+            var filterByTrim = _vehicleService.GetAll("Ex");
+            Assert.NotEmpty(filterByTrim);
+        }
+
+        [Fact]
+        public void GetAllByMake_WhenCalled_ReturnsListOfVehicles()
+        {
+            var result = _vehicleService.GetAllByMake("Kia");
+
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void GetAllByModel_WhenCalled_ReturnsListOfVehicles()
+        {
+            var result = _vehicleService.GetAllByModel("Optima");
+
+            Assert.NotEmpty(result);
         }
 
         [Fact]

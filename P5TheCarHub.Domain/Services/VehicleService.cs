@@ -24,6 +24,7 @@ namespace P5TheCarHub.Domain.Services
                 {
                     Id = 1,
                     Year = 2001,
+                    FullVehicleName = "2001 KIA OPTIMA EX",
                     Make = "Kia",
                     Model = "Optima",
                     Trim = "Ex",
@@ -37,6 +38,7 @@ namespace P5TheCarHub.Domain.Services
                 new Vehicle
                 {
                     Id = 2,
+                    FullVehicleName = "2008 KIA OPTIMA EX",
                     Year = 2008,
                     Make = "Kia",
                     Model = "Optima",
@@ -61,7 +63,8 @@ namespace P5TheCarHub.Domain.Services
 
         private string VehicleFullNameStringBuilder(Vehicle vehicle)
         {
-            return String.Concat(vehicle.Year, " ", vehicle.Make, " ", vehicle.Model, " ", vehicle.Trim);
+            return String.Concat(vehicle.Year, " ", vehicle.Make, " ", vehicle.Model, " ", vehicle.Trim).ToUpper();
+            
         }
 
         private decimal CalculateSalePrice(decimal purchasePrice)
@@ -92,6 +95,16 @@ namespace P5TheCarHub.Domain.Services
             return _repo.Where(x => x.VIN.ToUpper() == vin.ToUpper()).SingleOrDefault();
         }
 
+        public IEnumerable<Vehicle> GetAllByMake(string make)
+        {
+            return _repo.Where(x => x.Make.ToUpper() == make.ToUpper()).ToList();
+        }
+
+        public IEnumerable<Vehicle> GetAllByModel(string model)
+        {
+            return _repo.Where(x => x.Model.ToUpper() == model.ToUpper()).ToList();
+        }
+
         public Vehicle UpdateVehicle(Vehicle vehicle)
         {
             
@@ -106,8 +119,11 @@ namespace P5TheCarHub.Domain.Services
             return vehicle;
         }
 
-        public IEnumerable<Vehicle> GetAll()
+        public IEnumerable<Vehicle> GetAll(string filter = null)
         {
+            if (!String.IsNullOrEmpty(filter))
+                return _repo.Where(x => x.FullVehicleName.Contains(filter.ToUpper())).ToList();
+
             return _repo.ToList();
         }
 
