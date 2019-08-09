@@ -8,6 +8,7 @@
     <Folder Include="Interfaces\Validation\" />
     <Folder Include="Interfaces\Services\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="Specifications\" />
   </ItemGroup>
 
 </Project>
