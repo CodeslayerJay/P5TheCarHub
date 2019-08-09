@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 
-namespace P5TheCarHub.Domain.Entities
+namespace P5TheCarHub.Core.Entities
 {
     public class Vehicle : BaseEntity
     {

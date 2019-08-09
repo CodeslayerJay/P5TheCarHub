@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace P5TheCarHub.Domain.Interfaces
+namespace P5TheCarHub.Core.Interfaces
 {
     public interface IEntity
     {

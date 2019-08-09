@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\P5TheCarHub.Domain\P5TheCarHub.Domain.csproj" />
+    <ProjectReference Include="..\P5TheCarHub.Domain\P5TheCarHub.Core.csproj" />
   </ItemGroup>
 
 </Project>

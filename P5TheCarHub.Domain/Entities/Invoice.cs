@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace P5TheCarHub.Domain.Entities
+namespace P5TheCarHub.Core.Entities
 {
     public class Invoice : BaseEntity
     {

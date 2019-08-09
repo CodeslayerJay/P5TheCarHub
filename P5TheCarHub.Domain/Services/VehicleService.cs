@@ -1,10 +1,10 @@
-﻿using P5TheCarHub.Domain.Entities;
+﻿using P5TheCarHub.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace P5TheCarHub.Domain.Services
+namespace P5TheCarHub.Core.Services
 {
     public class VehicleService
     {
@@ -134,7 +134,7 @@ namespace P5TheCarHub.Domain.Services
             if (filter == null)
                 return null;
 
-            filter += filter.ToUpper();
+            filter = filter.ToUpper();
 
             var results = new List<Vehicle>();
 
@@ -147,7 +147,13 @@ namespace P5TheCarHub.Domain.Services
                 results.AddRange(GetAll().Where(x => x.Trim.ToUpper() == filter).ToList());
 
             if (!results.Any())
-                results.AddRange(GetAllByYear(filter));
+            {
+                var carsByYear = GetAllByYear(filter);
+
+                if (carsByYear != null && carsByYear.Any())
+                    results.AddRange(GetAllByYear(filter));
+            }
+                
 
             return results;
         }

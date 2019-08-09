@@ -1,5 +1,5 @@
-﻿using P5TheCarHub.Domain.Entities;
-using P5TheCarHub.Domain.Services;
+﻿using P5TheCarHub.Core.Entities;
+using P5TheCarHub.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,21 +94,34 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void GetAll_ByFullNameFilter_ReturnsListOfVehicles()
+        public void GetAll_FilterByModel_ReturnsListOfVehicles()
         {
             var filterByModel = _vehicleService.GetAll("Kia");
             Assert.NotEmpty(filterByModel);
 
+        }
+
+        [Fact]
+        public void GetAll_FilterByMake_ReturnsListOfVehicles()
+        {
             var filterByMake = _vehicleService.GetAll("Optima");
             Assert.NotEmpty(filterByMake);
+        }
 
+        [Fact]
+        public void GetAll_FilterByYear_ReturnsListOfVehicles()
+        {
             var filterByYear = _vehicleService.GetAll("2008");
             Assert.NotEmpty(filterByYear);
+        }
 
+        [Fact]
+        public void GetAll_FilterByTrim_ReturnsListOfVehicles()
+        {
             var filterByTrim = _vehicleService.GetAll("Ex");
             Assert.NotEmpty(filterByTrim);
         }
-
+        
         [Fact]
         public void GetAllByMake_WhenCalled_ReturnsListOfVehicles()
         {

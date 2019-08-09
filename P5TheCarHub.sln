@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P5TheCarHub.Domain", "P5TheCarHub.Domain\P5TheCarHub.Domain.csproj", "{4593107F-DAA0-40E3-B5CA-38F4CC64D7E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P5TheCarHub.Core", "P5TheCarHub.Domain\P5TheCarHub.Core.csproj", "{4593107F-DAA0-40E3-B5CA-38F4CC64D7E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P5TheCarHub.Data", "P5TheCarHub.Data\P5TheCarHub.Data.csproj", "{9BBE81A5-D5F6-482C-90E3-9770B6E8DD74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P5TheCarHub.Data", "P5TheCarHub.Data\P5TheCarHub.Data.csproj", "{9BBE81A5-D5F6-482C-90E3-9770B6E8DD74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P5TheCarHub.UnitTests", "P5TheCarHub.UnitTests\P5TheCarHub.UnitTests.csproj", "{AB416836-1F0E-4C19-965A-CCB39A3BEB31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P5TheCarHub.UnitTests", "P5TheCarHub.UnitTests\P5TheCarHub.UnitTests.csproj", "{AB416836-1F0E-4C19-965A-CCB39A3BEB31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
