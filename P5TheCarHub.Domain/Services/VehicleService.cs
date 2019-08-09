@@ -28,7 +28,7 @@ namespace P5TheCarHub.Domain.Services
                     Model = "Optima",
                     Trim = "Ex",
                     Mileage = 30000,
-                    VIN = "1234-1234",
+                    VIN = "123xyz",
                     LotDate = DateTime.Today,
                     PurchaseDate = DateTime.Today,
                     PurchasePrice = 3000M,
@@ -82,6 +82,14 @@ namespace P5TheCarHub.Domain.Services
         public Vehicle GetVehicle(int id)
         {
             return _repo.Where(x => x.Id == id).SingleOrDefault();
+        }
+
+        public Vehicle GetVehicle(string vin)
+        {
+            if (String.IsNullOrEmpty(vin))
+                return null;
+
+            return _repo.Where(x => x.VIN.ToUpper() == vin.ToUpper()).SingleOrDefault();
         }
 
         public Vehicle UpdateVehicle(Vehicle vehicle)

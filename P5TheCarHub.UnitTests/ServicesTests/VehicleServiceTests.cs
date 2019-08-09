@@ -29,7 +29,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
                 Model = "Optima",
                 Trim = "Ex",
                 Mileage = 30000,
-                VIN = "1234-1234",
+                VIN = "qwerty-1234",
                 LotDate = DateTime.Today,
                 PurchaseDate = DateTime.Today,
                 PurchasePrice = 3000M,
@@ -45,9 +45,17 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void GetVehicle_ById_ReturnsVehicleOrNull()
+        public void GetVehicle_ById_ReturnsVehicleOrNullWhenNotFound()
         {
             var result = _vehicleService.GetVehicle(1);
+
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void GetVehicle_ByVin_ReturnsVehicleOrNullWhenNotFound()
+        {
+            var result = _vehicleService.GetVehicle("1234-1234");
 
             Assert.NotNull(result);
         }
@@ -95,7 +103,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
                 Model = "Optima",
                 Trim = "Ex",
                 Mileage = 30000,
-                VIN = "1234-1234",
+                VIN = "zzz-1234",
                 LotDate = DateTime.Today,
                 PurchaseDate = DateTime.Today,
                 PurchasePrice = 3000M,
@@ -138,5 +146,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             Assert.NotEmpty(result);
             Assert.False(result.First().IsSold);
         }
+
+        
     }
 }
