@@ -7,7 +7,7 @@
   <ItemGroup>
     <Folder Include="Interfaces\Validation\" />
     <Folder Include="Interfaces\Services\" />
-    <Folder Include="Interfaces\Repositories\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 
 </Project>
