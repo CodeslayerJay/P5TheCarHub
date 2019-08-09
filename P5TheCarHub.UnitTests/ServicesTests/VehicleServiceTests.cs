@@ -126,6 +126,30 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
+        public void GetAllByYear_AsInt_ReturnsListOfVehicles()
+        {
+            var result = _vehicleService.GetAllByYear(2008);
+
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void GetAllByYear_ValidYearAsString_ReturnsListOfVehicles()
+        {
+            var result = _vehicleService.GetAllByYear("2008");
+
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void GetAllByYear_InValidYearAsString_ReturnsEmptyList()
+        {
+            var result = _vehicleService.GetAllByYear("2008fd");
+
+            Assert.Null(result);
+        }
+
+        [Fact]
         public void DeleteVehicle_WhenFound_FindsAndRemovesVehicle()
         {
             var seedVehicle = new Vehicle

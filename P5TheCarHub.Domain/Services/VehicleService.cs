@@ -105,6 +105,16 @@ namespace P5TheCarHub.Domain.Services
             return _repo.Where(x => x.Model.ToUpper() == model.ToUpper()).ToList();
         }
 
+        public IEnumerable<Vehicle> GetAllByYear(int year)
+        {
+            return _repo.Where(x => x.Year == year).ToList();
+        }
+
+        public IEnumerable<Vehicle> GetAllByYear(string year)
+        {
+            return int.TryParse(year, out int parsedYear) ? GetAllByYear(parsedYear) : null;
+        }
+
         public Vehicle UpdateVehicle(Vehicle vehicle)
         {
             
