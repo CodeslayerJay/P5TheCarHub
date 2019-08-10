@@ -30,5 +30,11 @@ namespace P5TheCarHub.Core.Services
             return _invoiceRepo.GetByVehicleId(vehicleId);
         }
 
+        public Invoice AddInvoice(Invoice invoice)
+        {
+            //TODO: Apply business rules: Unique Invoice Number, must be auto-generated. Vehicle can only have 1 invoice
+            return _invoiceRepo.Add(invoice);
+        }
+
     }
 }

@@ -41,5 +41,15 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 
             Assert.NotNull(result);
         }
+
+        [Fact]
+        public void AddInvoice_WhenCalled_AddsAndReturnsNewlyCreatedInvoice()
+        {
+            var invoice = new Invoice { Id = 3, CustomerName = "John Doe", DateSold = DateTime.Now, PriceSold = 3000, VehicleId = 3, InvoiceNumber = "TCH-V3" };
+
+            var result = _invoiceService.AddInvoice(invoice);
+
+            Assert.NotNull(result);
+        }
     }
 }
