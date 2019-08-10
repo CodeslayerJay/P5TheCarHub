@@ -2,6 +2,7 @@
 using P5TheCarHub.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace P5TheCarHub.UnitTests.Mocks
@@ -32,9 +33,18 @@ namespace P5TheCarHub.UnitTests.Mocks
             _context.AddRange(seedData);
         }
 
+        private int SetId()
+        {
+            return _context.Count() + 1;
+        }
+
         public Repair Add(Repair entity)
         {
-            throw new NotImplementedException();
+            if (entity.Id == 0)
+                entity.Id = SetId();
+
+            _context.Add(entity);
+            return entity;
         }
 
         public void Delete(int id)
