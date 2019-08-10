@@ -12,9 +12,11 @@ namespace P5TheCarHub.Core.Entities
         public decimal PriceSold { get; set; }
         public string CustomerName { get; set; }
 
-        public DateTime DateSold { get; set; }
+        public DateTime DateSold { get; set; } = DateTime.Now;
 
         public int VehicleId { get; set; }
         public Vehicle Vehicle { get; set; }
+
+        public DateTime LastUpdated { get; set; } = DateTime.Now;
     }
 }

@@ -12,5 +12,6 @@ namespace P5TheCarHub.Core.Entities
         public bool IsMain { get; set; } = false;
 
         public Vehicle Vehicle { get; set; }
+        public DateTime LastUpdated { get; set; } = DateTime.Now;
     }
 }
