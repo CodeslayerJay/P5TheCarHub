@@ -11,20 +11,29 @@ namespace P5TheCarHub.UnitTests.ServicesTests
     public class RepairServiceTests
     {
         private readonly RepairService _repairService;
+        private readonly VehicleService _vehicleService;
 
         public RepairServiceTests()
         {
-            _repairService = new RepairService(new RepairRepositoryMock());
+            var vehicleRepo = new VehicleRepositoryMock();
+            _repairService = new RepairService(new RepairRepositoryMock(), vehicleRepo);
+            _vehicleService = new VehicleService(vehicleRepo);
         }
 
         [Fact]
-        public void AddRepair_WhenCalled_StoresAndReturnsNewlyCreatedRepair()
+        public void AddRepair_WhenCalled_UpdatesVehicleSalePriceAndReturnsNewlyCreatedRepair()
         {
-            var repair = new Repair { Description = "Wash", Details = "Washed and waxed car", Cost = 5, VehicleId = 2, RepairDate = DateTime.Today };
+            var vehicle = _vehicleService.GetVehicle(id: 2);
+            var currentSalePrice = vehicle.SalePrice;
+
+            var repair = new Repair { Description = "Wash", Details = "Washed and waxed car", Cost = 5, VehicleId = vehicle.Id,
+                RepairDate = DateTime.Today };
+
             var result = _repairService.AddRepair(repair);
 
             Assert.NotNull(result);
             Assert.NotEqual(0, result.Id);
+            Assert.Equal((currentSalePrice + repair.Cost), vehicle.SalePrice);
         }
     }
 }
