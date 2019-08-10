@@ -49,7 +49,10 @@ namespace P5TheCarHub.UnitTests.Mocks
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var repair = _context.SingleOrDefault(x => x.Id == id);
+
+            if (repair != null)
+                _context.Remove(repair);
         }
 
         public ICollection<Repair> GetAll()

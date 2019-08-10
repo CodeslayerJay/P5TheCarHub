@@ -61,12 +61,19 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 
 
         [Fact]
-        public void UpdateRepair_WHenFound_UpdatesVehicleSalePriceAndReturnsUpdatedRepair()
+        public void UpdateRepair_WhenFound_UpdatesVehicleSalePriceAndReturnsUpdatedRepair()
         {
             var vehicle = _vehicleService.GetVehicle(id: 1);
             var currentSalePrice = vehicle.SalePrice;
 
-            
+            var repair = _repairService.GetById(id: 1);
+            repair.Cost = 10;
+
+            var result = _repairService.UpdateRepair(repair);
+
+            Assert.NotNull(result);
+            Assert.Equal((currentSalePrice + result.Cost), vehicle.SalePrice);
+            Assert.NotEqual(currentSalePrice, vehicle.SalePrice);
         }
     }
 }

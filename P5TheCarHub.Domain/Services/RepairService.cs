@@ -43,5 +43,21 @@ namespace P5TheCarHub.Core.Services
         {
             return _repairRepo.GetById(id);
         }
+
+        public Repair UpdateRepair(Repair repair)
+        {
+            var repairToUpdate = GetById(repair.Id);
+
+            if (repairToUpdate == null)
+                return null;
+
+            UpdateVehicleSalePrice(repair);
+
+            //TODO: Implement updating
+            _repairRepo.Delete(repair.Id);
+            _repairRepo.Add(repair);
+
+            return repair;
+        }
     }
 }
