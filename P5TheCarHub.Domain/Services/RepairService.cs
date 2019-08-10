@@ -33,5 +33,10 @@ namespace P5TheCarHub.Core.Services
 
             vehicle.SalePrice += repair.Cost;
         }
+
+        public IEnumerable<Repair> GetAllByVehicleId(int vehicleId)
+        {
+            return _repairRepo.GetAllByVehicleId(vehicleId);
+        }
     }
 }

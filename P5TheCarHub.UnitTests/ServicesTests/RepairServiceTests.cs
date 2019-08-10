@@ -35,5 +35,22 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             Assert.NotEqual(0, result.Id);
             Assert.Equal((currentSalePrice + repair.Cost), vehicle.SalePrice);
         }
+
+        [Fact]
+        public void GetAllByVehicleId_WhenCalled_ReturnsListOfRepairsByVehicleId()
+        {
+            var results = _repairService.GetAllByVehicleId(vehicleId: 2);
+            Assert.NotEmpty(results);
+        }
+
+
+        [Fact]
+        public void UpdateRepair_WHenFound_UpdatesVehicleSalePriceAndReturnsUpdatedRepair()
+        {
+            var vehicle = _vehicleService.GetVehicle(id: 1);
+            var currentSalePrice = vehicle.SalePrice;
+
+            
+        }
     }
 }

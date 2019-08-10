@@ -61,5 +61,10 @@ namespace P5TheCarHub.UnitTests.Mocks
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Repair> GetAllByVehicleId(int vehicleId)
+        {
+            return _context.Where(x => x.VehicleId == vehicleId).ToList();
+        }
     }
 }
