@@ -41,7 +41,12 @@ namespace P5TheCarHub.Core.Services
 
         public Repair GetById(int id)
         {
-            return _repairRepo.GetById(id);
+            var repair = _repairRepo.GetById(id);
+
+            if (repair == null)
+                throw new RepairNotFoundException(id);
+
+            return repair;
         }
 
         public Repair UpdateRepair(Repair repair)
@@ -58,6 +63,16 @@ namespace P5TheCarHub.Core.Services
             _repairRepo.Add(repair);
 
             return repair;
+        }
+
+        public void DeleteRepair(int id)
+        {
+            var repair = _repairRepo.GetById(id);
+
+            if (repair == null)
+                throw new RepairNotFoundException(id);
+
+            _repairRepo.Delete(id);
         }
     }
 }

@@ -4,6 +4,7 @@ using P5TheCarHub.Core.Services;
 using P5TheCarHub.UnitTests.Mocks;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 
@@ -53,16 +54,15 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void GetById_WhenNotFound_ReturnsNull()
+        public void GetById_WhenNotFound_ThrowsRepairNotFoundException()
         {
-            var result = _repairService.GetById(id: 9999);
-
-            Assert.Null(result);
+            
+            Assert.Throws<RepairNotFoundException>(() => _repairService.GetById(id: 9999));
         }
 
 
         [Fact]
-        public void UpdateRepair_WhenFound_UpdatesVehicleSalePriceAndReturnsUpdatedRepair()
+        public void UpdateRepair_WhenRepairIsFound_UpdatesVehicleSalePriceAndReturnsUpdatedRepair()
         {
             var vehicle = _vehicleService.GetVehicle(id: 1);
             var currentSalePrice = vehicle.SalePrice;
@@ -77,5 +77,24 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             Assert.NotEqual(currentSalePrice, vehicle.SalePrice);
         }
 
+        [Fact]
+        public void DeleteRepair_WhenRepairIsFound_RemovesRepair()
+        {
+            var vehicleId = 1;
+            var repair = new Repair
+            {   
+                Description = "Wash",
+                Details = "Washed and waxed car",
+                Cost = 5,
+                VehicleId = vehicleId,
+                RepairDate = DateTime.Today
+            };
+
+            var result = _repairService.AddRepair(repair);
+            var orgCount = _repairService.GetAllByVehicleId(vehicleId).Count();
+
+            _repairService.DeleteRepair(result.Id);
+            Assert.NotEqual(orgCount, _repairService.GetAllByVehicleId(vehicleId).Count());
+        }
     }
 }
