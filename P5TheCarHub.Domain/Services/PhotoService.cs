@@ -56,5 +56,20 @@ namespace P5TheCarHub.Core.Services
         {
             return _photoRepo.GetVehicleMainPhoto(vehicleId);
         }
+
+        public void DeletePhoto(int id)
+        {
+            var photo = GetPhoto(id);
+
+            if (photo == null)
+                throw new PhotoNotFoundException(id);
+
+            _photoRepo.Delete(id);
+        }
+
+        public Photo GetPhoto(int id)
+        {
+            return _photoRepo.GetById(id);
+        }
     }
 }

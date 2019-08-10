@@ -45,7 +45,8 @@ namespace P5TheCarHub.UnitTests.Mocks
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var photo = GetById(id);
+            _context.Remove(photo);
         }
 
         public ICollection<Photo> GetAll()
@@ -66,7 +67,7 @@ namespace P5TheCarHub.UnitTests.Mocks
 
         public Photo GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.SingleOrDefault(x => x.Id == id);
         }
     }
 }

@@ -73,5 +73,19 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             Assert.NotNull(result);
             Assert.Equal(vehicleId, result.VehicleId);
         }
+
+        [Fact]
+        public void DeletePhoto_WhenFound_DeletesPhoto()
+        {
+            var vehicleId = 1;
+           var photo = new Photo { VehicleId = vehicleId, ImageUrl = "TEST", IsMain = true };
+
+            var result = _photoService.AddPhoto(photo);
+            var photosCount = _photoRepo.GetAllByVehicleId(vehicleId).Count();
+
+            _photoService.DeletePhoto(result.Id);
+
+            Assert.NotEqual(photosCount, _photoRepo.GetAllByVehicleId(vehicleId).Count());
+        }
     }
 }
