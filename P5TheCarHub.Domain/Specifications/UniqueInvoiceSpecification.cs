@@ -20,7 +20,7 @@ namespace P5TheCarHub.Core.Specifications
         public bool IsSatisfiedBy(Invoice candidate)
         {
             var count = _invoiceRepository.GetAll().Where(x => x.VehicleId == candidate.VehicleId).Count();
-            return (count > 0);
+            return (count == 0);
         }
     }
 }

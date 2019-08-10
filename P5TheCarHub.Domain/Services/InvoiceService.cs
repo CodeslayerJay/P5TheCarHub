@@ -38,7 +38,7 @@ namespace P5TheCarHub.Core.Services
         {
             var spec = new UniqueInvoiceSpecification(_invoiceRepo);
 
-            if (spec.IsSatisfiedBy(invoice))
+            if (!spec.IsSatisfiedBy(invoice))
                 throw new InvoiceAlreadyExistsForVehicleException(invoice.VehicleId);
 
             invoice.InvoiceNumber = GenerateInvoiceNumber(invoice.VehicleId);
