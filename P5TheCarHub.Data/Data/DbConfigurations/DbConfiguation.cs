@@ -13,10 +13,6 @@ namespace P5TheCarHub.Infrastructure.Data.DbConfigurations
         {
             builder.HasKey("Id");
 
-            builder.Property(v => v.FullVehicleName)
-                .HasMaxLength(500)
-                .IsRequired(true);
-
             builder.Property(v => v.VIN)
                 .HasMaxLength(500)
                 .IsRequired(true);

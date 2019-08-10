@@ -8,7 +8,6 @@ namespace P5TheCarHub.Core.Interfaces.Repositories
 {
     public interface IVehicleRepository : IBaseRespository<Vehicle>
     {
-        IEnumerable<Vehicle> GetAllByFilter(string filter);
         Vehicle GetByVin(string vin);
     }
 }

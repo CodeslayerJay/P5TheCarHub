@@ -20,10 +20,9 @@ namespace P5TheCarHub.Core.Services
             _vehicleRepo = vehicleRepository;
         }
 
-        private string VehicleFullNameStringBuilder(Vehicle vehicle)
+        public string GetFullVehicleName(Vehicle vehicle)
         {
             return String.Concat(vehicle.Year, " ", vehicle.Make, " ", vehicle.Model, " ", vehicle.Trim).ToUpper();
-            
         }
 
         private decimal CalculateVehicleSalePrice(decimal purchasePrice)
@@ -38,7 +37,6 @@ namespace P5TheCarHub.Core.Services
             if (!spec.IsSatisfiedBy(vehicle))
                 throw new VehicleNotGreaterThanRequiredYearException(spec.RequiredYear);
 
-            vehicle.FullVehicleName = VehicleFullNameStringBuilder(vehicle);
             vehicle.SalePrice = CalculateVehicleSalePrice(vehicle.PurchasePrice);
             _vehicleRepo.Add(vehicle);
             
@@ -56,11 +54,6 @@ namespace P5TheCarHub.Core.Services
                 return null;
 
             return _vehicleRepo.GetByVin(vin);
-        }
-
-        private IEnumerable<Vehicle> GetAllByFilter(string filter)
-        {
-            return _vehicleRepo.GetAllByFilter(filter);
         }
 
         public Vehicle UpdateVehicle(Vehicle vehicle)
@@ -81,12 +74,9 @@ namespace P5TheCarHub.Core.Services
         }
         
 
-        public IEnumerable<Vehicle> GetAll(string filter = null)
+        public IEnumerable<Vehicle> GetAll()
         {
-            if (!String.IsNullOrEmpty(filter))
-                return GetAllByFilter(filter);
-
-            return _vehicleRepo.GetAll().ToList();
+            return _vehicleRepo.GetAll();
         }
 
         public void DeleteVehicle(int id)

@@ -13,7 +13,7 @@ namespace P5TheCarHub.Core.Entities
             Photos = new Collection<Photo>();
         }
         
-        public string FullVehicleName { get; set; }
+        
         public string VIN { get; set; }
         public double Mileage { get; set; }
         public int Year { get; set; }
