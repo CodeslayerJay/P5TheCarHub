@@ -2,9 +2,11 @@
 
 Auto Sales And Inventory Management App
 
-## Getting Started
+## Additional Information
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+The app is built utilizing "clean architecture" design patterns and 95% decoupling from most frameworks that are commonly used
+(i.e. Entity Framework, Identity). Although the final implementation uses a few choice frameworking tools, the "core" project/layer is left interchangeable with other ORMs, Identity Providers, Validation, etc. You can change these in the "Infrastructure" and "UI" layers
+respectivily.
 
 ### Prerequisites
 
@@ -32,4 +34,4 @@ This project is licensed under the MIT License
 
 ## Acknowledgments
 
-* [Openclassrom](www.openclassrooms.com) - Accredited online degree coding school.
+* [Openclassroom](www.openclassrooms.com) - Accredited online degree coding school.
