@@ -2,6 +2,7 @@
 using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Interfaces.Repositories;
 using P5TheCarHub.Core.Specifications.InvoiceSpecifications;
+using P5TheCarHub.Core.Specifications.VehicleSpecifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,13 @@ namespace P5TheCarHub.Core.Services
     public class InvoiceService
     {
         private readonly IInvoiceRepository _invoiceRepo;
+        private readonly IVehicleRepository _vehicleRepo;
         private const string APP_NAME_INITIALS = "TCH";
 
-        public InvoiceService(IInvoiceRepository invoiceRepository)
+        public InvoiceService(IInvoiceRepository invoiceRepository, IVehicleRepository vehicleRepository)
         {
             _invoiceRepo = invoiceRepository;
+            _vehicleRepo = vehicleRepository;
         }
 
         public IEnumerable<Invoice> GetAll()
@@ -36,6 +39,10 @@ namespace P5TheCarHub.Core.Services
 
         public Invoice AddInvoice(Invoice invoice)
         {
+            var spec = new VehicleExistsSpecification(_vehicleRepo);
+            if (!spec.IsSatisfiedBy(invoice.VehicleId))
+                throw new VehicleNotFoundException(invoice.VehicleId);
+
             if(!CheckInvoiceIsUniqueToVehicle(invoice))
                 throw new InvoiceAlreadyExistsForVehicleException(invoice.VehicleId);
 

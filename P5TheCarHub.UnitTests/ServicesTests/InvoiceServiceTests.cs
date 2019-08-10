@@ -11,11 +11,13 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 {
     public class InvoiceServiceTests
     {
+        private readonly VehicleRepositoryMock _vehicleRepo;
         private readonly InvoiceService _invoiceService;
 
         public InvoiceServiceTests()
-        {            
-            _invoiceService = new InvoiceService(new InvoiceRepositoryMock());
+        {
+            _vehicleRepo = new VehicleRepositoryMock();
+            _invoiceService = new InvoiceService(new InvoiceRepositoryMock(), _vehicleRepo);
         }
 
         [Fact]
@@ -61,6 +63,14 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 
             Assert.Throws<InvoiceAlreadyExistsForVehicleException>(() => _invoiceService.AddInvoice(invoice));
 
+        }
+
+        [Fact]
+        public void AddInvoice_WhenVehicleDoesNotExist_ThrowsVehicleNotFoundException()
+        {
+            var invoice = new Invoice { Id = 3, CustomerName = "John Doe", DateSold = DateTime.Now, PriceSold = 3000, InvoiceNumber = "TCH-V3" };
+
+            Assert.Throws<VehicleNotFoundException>(() => _invoiceService.AddInvoice(invoice));
         }
 
         [Fact]

@@ -1,6 +1,7 @@
 ﻿using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Interfaces.Repositories;
+using P5TheCarHub.Core.Specifications.VehicleSpecifications;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,6 +21,10 @@ namespace P5TheCarHub.Core.Services
 
         public Repair AddRepair(Repair repair)
         {
+            var spec = new VehicleExistsSpecification(_vehicleRepo);
+            if (!spec.IsSatisfiedBy(repair.VehicleId))
+                throw new VehicleNotFoundException(repair.VehicleId);
+
             UpdateVehicleSalePrice(repair);
             return _repairRepo.Add(repair);
         }

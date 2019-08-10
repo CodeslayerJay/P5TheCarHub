@@ -1,6 +1,7 @@
 ﻿using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Interfaces.Repositories;
+using P5TheCarHub.Core.Specifications.VehicleSpecifications;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,7 +23,8 @@ namespace P5TheCarHub.Core.Services
         {
             var vehicle = _vehicleRepo.GetById(photo.VehicleId);
 
-            if (vehicle == null)
+            var spec = new VehicleExistsSpecification(_vehicleRepo);
+            if(!spec.IsSatisfiedBy(photo.VehicleId))
                 throw new VehicleNotFoundException(photo.VehicleId);
             
 

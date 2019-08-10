@@ -39,6 +39,20 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
+        public void AddRepair_WhenVehicleDoesNotExist_ThrowsVehicleNotFoundException()
+        {
+            var repair = new Repair
+            {
+                Description = "Wash",
+                Details = "Washed and waxed car",
+                Cost = 5,
+                RepairDate = DateTime.Today
+            };
+
+            Assert.Throws<VehicleNotFoundException>(() => _repairService.AddRepair(repair));
+        }
+
+        [Fact]
         public void GetAllByVehicleId_WhenCalled_ReturnsListOfRepairsByVehicleId()
         {
             var results = _repairService.GetAllByVehicleId(vehicleId: 2);
