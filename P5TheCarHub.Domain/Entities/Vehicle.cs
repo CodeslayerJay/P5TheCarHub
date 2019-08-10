@@ -27,7 +27,9 @@ namespace P5TheCarHub.Core.Entities
         public DateTime LotDate { get; set; }
         public decimal SalePrice { get; set; }
 
-        public bool IsSold { get; set; } = false;
+        public DateTime? SaleDate { get; set; }
+
+        public bool IsSold { get; set; }
 
         public DateTime LastUpdated { get; set; } = DateTime.Now;
 

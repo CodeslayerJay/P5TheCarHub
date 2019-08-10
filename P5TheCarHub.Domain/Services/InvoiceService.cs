@@ -40,15 +40,26 @@ namespace P5TheCarHub.Core.Services
 
         public Invoice AddInvoice(Invoice invoice)
         {
-            var spec = new VehicleExistsSpecification(_vehicleRepo);
-            if (!spec.IsSatisfiedBy(invoice.VehicleId))
+
+            var vehicle = _vehicleRepo.GetById(invoice.VehicleId);
+
+            var spec = new VehicleExistsSpecification();
+            if (!spec.IsSatisfiedBy(vehicle))
                 throw new VehicleNotFoundException(invoice.VehicleId);
 
             if(!CheckInvoiceIsUniqueToVehicle(invoice))
                 throw new InvoiceAlreadyExistsForVehicleException(invoice.VehicleId);
 
             invoice.InvoiceNumber = GenerateInvoiceNumber(invoice.VehicleId);
+
+            SetVehicleToSoldStatus(vehicle);
+
             return _invoiceRepo.Add(invoice);
+        }
+
+        private void SetVehicleToSoldStatus(Vehicle vehicle)
+        {
+            vehicle.IsSold = true;
         }
 
         private string GenerateInvoiceNumber(int vehicleId)

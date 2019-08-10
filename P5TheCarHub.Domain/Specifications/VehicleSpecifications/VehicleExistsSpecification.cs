@@ -7,19 +7,11 @@ using System.Text;
 
 namespace P5TheCarHub.Core.Specifications.VehicleSpecifications
 {
-    public class VehicleExistsSpecification : ISpecification<int>
+    public class VehicleExistsSpecification : ISpecification<Vehicle>
     {
-        private readonly IVehicleRepository _vehicleRepository;
-
-        public VehicleExistsSpecification(IVehicleRepository vehicleRepository)
+             
+        public bool IsSatisfiedBy(Vehicle vehicle)
         {
-            _vehicleRepository = vehicleRepository;
-        }
-
-        public bool IsSatisfiedBy(int vehicleId)
-        {
-            var vehicle = _vehicleRepository.GetById(vehicleId);
-
             return (vehicle != null) ? true : false;
         }
     }

@@ -9,8 +9,22 @@ namespace P5TheCarHub.Infrastructure.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        //public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        //{ 
+
+        private readonly string _connString = "Server=(localdb)\\MSSQLLocalDB;Database=P5TheCarHub;Trusted_Connection=True;MultipleActiveResultSets=true";
+
+        public ApplicationDbContext()
         { }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+
+                optionsBuilder.UseSqlServer(_connString);
+            }
+        }
 
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
@@ -25,6 +39,8 @@ namespace P5TheCarHub.Infrastructure.Data
             builder.Entity<Repair>(dbConfiguation.ConfigureRepair);
             builder.Entity<Photo>(dbConfiguation.ConfigurePhoto);
             builder.Entity<Invoice>(dbConfiguation.ConfigureInvoice);
+
+            var dbSeeds = new DbSeeds(builder);
 
             // Used for Identity
             base.OnModelCreating(builder);

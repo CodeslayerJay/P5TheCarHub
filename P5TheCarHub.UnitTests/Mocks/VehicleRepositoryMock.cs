@@ -59,7 +59,7 @@ namespace P5TheCarHub.UnitTests.Mocks
                     Model = "Optima",
                     Trim = "Ex",
                     Mileage = 30000,
-                    VIN = "1234-1234",
+                    VIN = "555",
                     LotDate = DateTime.Today,
                     PurchaseDate = DateTime.Today,
                     PurchasePrice = 3000M,

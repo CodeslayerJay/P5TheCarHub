@@ -10,7 +10,7 @@ namespace P5TheCarHub.Core.Entities
         public string Description { get; set; }
         public decimal Cost { get; set; }
         public string Details { get; set; }
-        public DateTime RepairDate { get; set; } = DateTime.Now;
+        public DateTime? RepairDate { get; set; }
 
         public int VehicleId { get; set; }
         public Vehicle Vehicle { get; set; }

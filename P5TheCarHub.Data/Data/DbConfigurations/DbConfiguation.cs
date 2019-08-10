@@ -15,9 +15,9 @@ namespace P5TheCarHub.Infrastructure.Data.DbConfigurations
 
             builder.Property(v => v.VIN)
                 .HasMaxLength(500)
-                .IsRequired(true);
+                .IsRequired(false);
             builder.Property(v => v.Mileage)
-                .IsRequired(true);
+                .IsRequired(false);
             builder.Property(v => v.Year)
                .IsRequired(true);
             builder.Property(v => v.Make)
@@ -28,7 +28,7 @@ namespace P5TheCarHub.Infrastructure.Data.DbConfigurations
                .IsRequired(true);
             builder.Property(v => v.Trim)
                .HasMaxLength(100)
-               .IsRequired(true);
+               .IsRequired(false);
             builder.Property(v => v.Color)
                 .HasMaxLength(100)
                 .IsRequired(false);
@@ -45,6 +45,8 @@ namespace P5TheCarHub.Infrastructure.Data.DbConfigurations
                 .IsRequired(true);
             builder.Property(v => v.LotDate)
                 .IsRequired(true);
+            builder.Property(v => v.SaleDate)
+                .IsRequired(false);
 
         }
 
@@ -60,7 +62,7 @@ namespace P5TheCarHub.Infrastructure.Data.DbConfigurations
                .IsRequired(true)
                .HasColumnType("decimal(18,2)");
             builder.Property(r => r.RepairDate)
-                .IsRequired(true);
+                .IsRequired(false);
             builder.Property(r => r.LastUpdated)
                 .IsRequired(true);
         }
@@ -88,7 +90,7 @@ namespace P5TheCarHub.Infrastructure.Data.DbConfigurations
 
             builder.Property(r => r.CustomerName)
                .HasMaxLength(200)
-               .IsRequired(true);
+               .IsRequired(false);
 
             builder.Property(r => r.InvoiceNumber)
                 .HasMaxLength(255)
@@ -97,7 +99,7 @@ namespace P5TheCarHub.Infrastructure.Data.DbConfigurations
                .IsRequired(true)
                .HasColumnType("decimal(18,2)");
             builder.Property(i => i.DateSold)
-                 .IsRequired(true);
+                 .IsRequired(false);
 
         }
     }
