@@ -5,8 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
-    <Folder Include="Repositories\" />
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="Data\" />
+    <Folder Include="Data\Repositories\" />
   </ItemGroup>
 
 </Project>
