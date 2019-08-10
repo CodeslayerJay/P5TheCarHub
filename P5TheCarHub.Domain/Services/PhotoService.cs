@@ -1,6 +1,7 @@
 ﻿using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Interfaces.Repositories;
+using P5TheCarHub.Core.Interfaces.Services;
 using P5TheCarHub.Core.Specifications.VehicleSpecifications;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace P5TheCarHub.Core.Services
 {
-    public class PhotoService
+    public class PhotoService : IPhotoService
     {
         private readonly IPhotoRepository _photoRepo;
         private readonly IVehicleRepository _vehicleRepo;

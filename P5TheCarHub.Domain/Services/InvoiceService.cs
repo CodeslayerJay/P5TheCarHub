@@ -1,6 +1,7 @@
 ﻿using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Interfaces.Repositories;
+using P5TheCarHub.Core.Interfaces.Services;
 using P5TheCarHub.Core.Specifications.InvoiceSpecifications;
 using P5TheCarHub.Core.Specifications.VehicleSpecifications;
 using System;
@@ -10,7 +11,7 @@ using System.Text;
 
 namespace P5TheCarHub.Core.Services
 {
-    public class InvoiceService
+    public class InvoiceService : IInvoiceService
     {
         private readonly IInvoiceRepository _invoiceRepo;
         private readonly IVehicleRepository _vehicleRepo;

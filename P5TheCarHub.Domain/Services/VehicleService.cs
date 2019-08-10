@@ -1,6 +1,7 @@
 ﻿using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Interfaces.Repositories;
+using P5TheCarHub.Core.Interfaces.Services;
 using P5TheCarHub.Core.Specifications.VehicleSpecifications;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace P5TheCarHub.Core.Services
 {
-    public class VehicleService
+    public class VehicleService : IVehicleService
     {
         private readonly IVehicleRepository _vehicleRepo;
         private const decimal MARKUPFEE = 500M;
