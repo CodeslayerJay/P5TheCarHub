@@ -23,6 +23,7 @@ namespace P5TheCarHub.UnitTests.Mocks
             var seedData = new List<Photo>()
             {
                 new Photo { Id = ++id, IsMain = true, VehicleId = 1 },
+                new Photo { Id = ++id, IsMain = false, VehicleId = 1 },
                 new Photo { Id = ++id, IsMain = false, VehicleId = 2 }
             };
 

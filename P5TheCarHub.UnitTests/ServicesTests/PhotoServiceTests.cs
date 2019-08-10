@@ -77,7 +77,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         [Fact]
         public void DeletePhoto_WhenFound_DeletesPhoto()
         {
-            var vehicleId = 1;
+           var vehicleId = 1;
            var photo = new Photo { VehicleId = vehicleId, ImageUrl = "TEST", IsMain = true };
 
             var result = _photoService.AddPhoto(photo);
@@ -86,6 +86,34 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             _photoService.DeletePhoto(result.Id);
 
             Assert.NotEqual(photosCount, _photoRepo.GetAllByVehicleId(vehicleId).Count());
+        }
+
+        [Fact]
+        public void GetPhoto_WhenFound_ReturnsPhoto()
+        {
+            var result = _photoService.GetPhoto(1);
+
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void GetPhoto_WhenNotFound_ThrowsPhotoNotFoundException()
+        {
+            Assert.Throws<PhotoNotFoundException>(() => _photoService.GetPhoto(999));
+        }
+
+        [Fact]
+        public void UpdateVehicleMainPhoto_WhenFound_UpdatesMainPhoto()
+        {
+            var vehicleId = 1;
+            var photoId = 2;
+            var currentMainPhoto = _photoRepo.GetVehicleMainPhoto(vehicleId);
+
+            _photoService.UpdateVehicleMainPhoto(vehicleId, photoId);
+            var newMainPhoto = _photoRepo.GetVehicleMainPhoto(vehicleId);
+
+            Assert.NotEqual(currentMainPhoto, newMainPhoto);
+            Assert.Equal(newMainPhoto.Id, photoId);
         }
     }
 }
