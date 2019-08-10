@@ -46,6 +46,28 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
+        public void AddVehicle_WhenVehicleYearIsNotGreaterThanRequiredYear_ThrowsVehicleNotGreaterThanRequiredYearException()
+        {
+
+            var vehicle = new Vehicle
+            {
+                Year = 1998,
+                Make = "Kia",
+                Model = "Optima",
+                Trim = "Ex",
+                Mileage = 30000,
+                VIN = "qwerty-1234",
+                LotDate = DateTime.Today,
+                PurchaseDate = DateTime.Today,
+                PurchasePrice = 3000M,
+
+            };
+
+            Assert.Throws<VehicleNotGreaterThanRequiredYearException>(() => _vehicleService.AddVehicle(vehicle));
+
+        }
+
+        [Fact]
         public void GetVehicle_ById_ReturnsVehicleOrNullWhenNotFound()
         {
             var result = _vehicleService.GetVehicle(1);

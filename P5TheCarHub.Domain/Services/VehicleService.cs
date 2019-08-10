@@ -1,6 +1,7 @@
 ﻿using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Interfaces.Repositories;
+using P5TheCarHub.Core.Specifications.VehicleSpecifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,11 @@ namespace P5TheCarHub.Core.Services
 
         public Vehicle AddVehicle(Vehicle vehicle)
         {
+
+            var spec = new VehicleIsGreaterThanRequiredYear();
+            if (!spec.IsSatisfiedBy(vehicle))
+                throw new VehicleNotGreaterThanRequiredYearException(spec.RequiredYear);
+
             vehicle.FullVehicleName = VehicleFullNameStringBuilder(vehicle);
             vehicle.SalePrice = CalculateVehicleSalePrice(vehicle.PurchasePrice);
             _vehicleRepo.Add(vehicle);
