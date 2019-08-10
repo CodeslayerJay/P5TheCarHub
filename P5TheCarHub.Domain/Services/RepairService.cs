@@ -49,7 +49,7 @@ namespace P5TheCarHub.Core.Services
             var repairToUpdate = GetById(repair.Id);
 
             if (repairToUpdate == null)
-                return null;
+                throw new RepairNotFoundException(repair.Id);
 
             UpdateVehicleSalePrice(repair);
 

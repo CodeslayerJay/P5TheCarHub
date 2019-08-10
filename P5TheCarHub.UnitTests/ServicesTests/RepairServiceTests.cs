@@ -1,4 +1,5 @@
 ﻿using P5TheCarHub.Core.Entities;
+using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Services;
 using P5TheCarHub.UnitTests.Mocks;
 using System;
@@ -75,5 +76,6 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             Assert.Equal((currentSalePrice + result.Cost), vehicle.SalePrice);
             Assert.NotEqual(currentSalePrice, vehicle.SalePrice);
         }
+
     }
 }
