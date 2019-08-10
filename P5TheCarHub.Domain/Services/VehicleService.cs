@@ -11,6 +11,7 @@ namespace P5TheCarHub.Core.Services
     public class VehicleService
     {
         private readonly IVehicleRepository _vehicleRepo;
+        private const decimal MARKUPFEE = 500M;
 
         public VehicleService(IVehicleRepository vehicleRepository)
         {
@@ -25,7 +26,7 @@ namespace P5TheCarHub.Core.Services
 
         private decimal CalculateSalePrice(decimal purchasePrice)
         {
-            return purchasePrice + 500M;
+            return purchasePrice + MARKUPFEE;
         }
 
         public Vehicle AddVehicle(Vehicle vehicle)
