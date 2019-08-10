@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace P5TheCarHub.Core.Specifications
+namespace P5TheCarHub.Core.Specifications.InvoiceSpecifications
 {
     public class UniqueInvoiceSpecification : ISpecification<Invoice>
     {

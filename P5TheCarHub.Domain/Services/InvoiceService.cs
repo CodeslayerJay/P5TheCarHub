@@ -1,7 +1,7 @@
 ﻿using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Interfaces.Repositories;
-using P5TheCarHub.Core.Specifications;
+using P5TheCarHub.Core.Specifications.InvoiceSpecifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,9 +36,7 @@ namespace P5TheCarHub.Core.Services
 
         public Invoice AddInvoice(Invoice invoice)
         {
-            var spec = new UniqueInvoiceSpecification(_invoiceRepo);
-
-            if (!spec.IsSatisfiedBy(invoice))
+            if(!CheckInvoiceIsUniqueToVehicle(invoice))
                 throw new InvoiceAlreadyExistsForVehicleException(invoice.VehicleId);
 
             invoice.InvoiceNumber = GenerateInvoiceNumber(invoice.VehicleId);
@@ -55,19 +53,19 @@ namespace P5TheCarHub.Core.Services
         {
             var invoiceToUpdate = GetInvoice(invoice.Id);
 
-            if (invoice == null)
-                //throw new InvoiceNotFoundException();
-                return null;
-
-            invoiceToUpdate.CustomerName = invoice.CustomerName;
-            invoiceToUpdate.DateSold = invoice.DateSold;
-            invoiceToUpdate.PriceSold = invoice.PriceSold;
-
-            //TODO: Implement UoW to update?
-            _invoiceRepo.Delete(invoice.Id);
-            _invoiceRepo.Add(invoiceToUpdate);
+            if (invoiceToUpdate == null)
+                throw new InvoiceNotFoundException(invoice.Id);
+                
+            //if(!CheckInvoiceIsUniqueToVehicle(invoice))
+            //    throw new InvoiceAlreadyExistsForVehicleException(invoice.VehicleId);
 
             return invoiceToUpdate;
+        }
+
+        private bool CheckInvoiceIsUniqueToVehicle(Invoice invoice)
+        {
+            var spec = new UniqueInvoiceSpecification(_invoiceRepo);
+            return spec.IsSatisfiedBy(invoice);
         }
 
     }
