@@ -35,7 +35,11 @@ namespace P5TheCarHub.UnitTests.Mocks
 
         public Photo Add(Photo entity)
         {
-            throw new NotImplementedException();
+            if (entity.Id == 0)
+                entity.Id = SetId();
+
+            _context.Add(entity);
+            return entity;
         }
 
         public void Delete(int id)
@@ -45,7 +49,18 @@ namespace P5TheCarHub.UnitTests.Mocks
 
         public ICollection<Photo> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Where(x => x.Id > 0).ToList();
+        }
+
+        public IEnumerable<Photo> GetAllByVehicleId(int vehicleId)
+        {
+            return _context.Where(x => x.VehicleId == vehicleId).ToList();
+        }
+
+        public Photo GetVehicleMainPhoto(int vehicleId)
+        {
+            return _context.Where(x => x.VehicleId == vehicleId)
+                .SingleOrDefault(x => x.IsMain == true);
         }
 
         public Photo GetById(int id)

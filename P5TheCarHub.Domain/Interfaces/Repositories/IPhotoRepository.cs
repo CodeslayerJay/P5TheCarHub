@@ -7,5 +7,7 @@ namespace P5TheCarHub.Core.Interfaces.Repositories
 {
     public interface IPhotoRepository : IBaseRespository<Photo>
     {
+        IEnumerable<Photo> GetAllByVehicleId(int vehicleId);
+        Photo GetVehicleMainPhoto(int vehicleId);
     }
 }
