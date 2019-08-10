@@ -51,5 +51,24 @@ namespace P5TheCarHub.Core.Services
             return $"{APP_NAME_INITIALS}-V{vehicleId}I{invoiceCount}";
         }
 
+        public Invoice UpdateInvoice(Invoice invoice)
+        {
+            var invoiceToUpdate = GetInvoice(invoice.Id);
+
+            if (invoice == null)
+                //throw new InvoiceNotFoundException();
+                return null;
+
+            invoiceToUpdate.CustomerName = invoice.CustomerName;
+            invoiceToUpdate.DateSold = invoice.DateSold;
+            invoiceToUpdate.PriceSold = invoice.PriceSold;
+
+            //TODO: Implement UoW to update?
+            _invoiceRepo.Delete(invoice.Id);
+            _invoiceRepo.Add(invoiceToUpdate);
+
+            return invoiceToUpdate;
+        }
+
     }
 }

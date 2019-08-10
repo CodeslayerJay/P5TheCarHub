@@ -61,7 +61,23 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 
             Assert.Throws<InvoiceAlreadyExistsForVehicleException>(() => _invoiceService.AddInvoice(invoice));
 
-            
+        }
+
+        [Fact]
+        public void UpdateInvoice_WhenCalled_UpdatesAndReturnsInvoice()
+        {
+            var invoice = _invoiceService.GetInvoice(id: 1);
+            var orgNameValue = invoice.CustomerName;
+            var orgVehicleId = invoice.VehicleId;
+            var orgInvoiceNumber = invoice.InvoiceNumber;
+
+            invoice.CustomerName = "New Guy";
+            var result = _invoiceService.UpdateInvoice(invoice);
+
+            Assert.NotNull(result);
+            Assert.NotEqual(orgNameValue, result.CustomerName);
+            Assert.Equal(orgVehicleId, result.VehicleId);
+            Assert.Equal(orgInvoiceNumber, result.InvoiceNumber);
         }
     }
 }
