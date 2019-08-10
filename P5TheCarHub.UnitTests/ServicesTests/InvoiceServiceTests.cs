@@ -1,4 +1,5 @@
 ﻿using P5TheCarHub.Core.Entities;
+using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Services;
 using P5TheCarHub.UnitTests.Mocks;
 using System;
@@ -43,7 +44,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void AddInvoice_WhenCalled_AddsAndReturnsNewlyCreatedInvoice()
+        public void AddInvoice_WhenIsUniqueToVehicle_AddsAndReturnsNewlyCreatedInvoice()
         {
             var invoice = new Invoice { Id = 3, CustomerName = "John Doe", DateSold = DateTime.Now, PriceSold = 3000, VehicleId = 3, InvoiceNumber = "TCH-V3" };
 
@@ -51,6 +52,16 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 
             Assert.NotNull(result);
             Assert.NotEqual("TCH-V3", result.InvoiceNumber);
+        }
+
+        [Fact]
+        public void AddInvoice_WhenVehicleAlreadyHasInvoice_ThrowsInvoiceAlreadyExistsForVehicleException()
+        {
+            var invoice = new Invoice { CustomerName = "John Doe", DateSold = DateTime.Now, PriceSold = 3000, VehicleId = 1, InvoiceNumber = "TCH-V3" };
+
+            Assert.Throws<InvoiceAlreadyExistsForVehicleException>(() => _invoiceService.AddInvoice(invoice));
+
+            
         }
     }
 }

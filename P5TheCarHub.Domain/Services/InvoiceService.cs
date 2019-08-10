@@ -1,5 +1,7 @@
 ﻿using P5TheCarHub.Core.Entities;
+using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Interfaces.Repositories;
+using P5TheCarHub.Core.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +36,11 @@ namespace P5TheCarHub.Core.Services
 
         public Invoice AddInvoice(Invoice invoice)
         {
-            //TODO: Apply business rules: Unique Invoice Number, must be auto-generated. Vehicle can only have 1 invoice
+            var spec = new UniqueInvoiceSpecification(_invoiceRepo);
+
+            if (spec.IsSatisfiedBy(invoice))
+                throw new InvoiceAlreadyExistsForVehicleException(invoice.VehicleId);
+
             invoice.InvoiceNumber = GenerateInvoiceNumber(invoice.VehicleId);
             return _invoiceRepo.Add(invoice);
         }
