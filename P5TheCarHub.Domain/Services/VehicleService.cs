@@ -24,7 +24,7 @@ namespace P5TheCarHub.Core.Services
             
         }
 
-        private decimal CalculateSalePrice(decimal purchasePrice)
+        private decimal CalculateVehicleSalePrice(decimal purchasePrice)
         {
             return purchasePrice + MARKUPFEE;
         }
@@ -32,7 +32,7 @@ namespace P5TheCarHub.Core.Services
         public Vehicle AddVehicle(Vehicle vehicle)
         {
             vehicle.FullVehicleName = VehicleFullNameStringBuilder(vehicle);
-            vehicle.SalePrice = CalculateSalePrice(vehicle.PurchasePrice);
+            vehicle.SalePrice = CalculateVehicleSalePrice(vehicle.PurchasePrice);
             _vehicleRepo.Add(vehicle);
             
             return vehicle;
@@ -63,6 +63,8 @@ namespace P5TheCarHub.Core.Services
 
             if (vehicleToUpdate == null)
                 throw new VehicleNotFoundException(vehicle.Id);
+
+            vehicle.SalePrice = CalculateVehicleSalePrice(vehicle.PurchasePrice);
 
             //TODO: Change This
             _vehicleRepo.Delete(vehicle.Id);
