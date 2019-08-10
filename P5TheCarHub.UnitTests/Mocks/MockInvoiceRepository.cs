@@ -52,7 +52,7 @@ namespace P5TheCarHub.UnitTests.Mocks
 
         public ICollection<Invoice> GetAll()
         {
-            return _context;
+            return _context.ToList();
         }
 
         public Invoice GetById(int id)

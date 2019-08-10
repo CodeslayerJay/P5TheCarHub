@@ -87,7 +87,7 @@ namespace P5TheCarHub.UnitTests.Mocks
 
         public ICollection<Vehicle> GetAll()
         {
-            return _context;
+            return _context.ToList();
         }
 
         public IEnumerable<Vehicle> GetAllByFilter(string filter)
