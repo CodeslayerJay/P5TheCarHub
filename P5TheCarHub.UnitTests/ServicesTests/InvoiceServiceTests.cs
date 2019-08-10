@@ -50,6 +50,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             var result = _invoiceService.AddInvoice(invoice);
 
             Assert.NotNull(result);
+            Assert.NotEqual("TCH-V3", result.InvoiceNumber);
         }
     }
 }
