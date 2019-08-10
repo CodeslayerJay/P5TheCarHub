@@ -38,5 +38,10 @@ namespace P5TheCarHub.Core.Services
         {
             return _repairRepo.GetAllByVehicleId(vehicleId);
         }
+
+        public Repair GetById(int id)
+        {
+            return _repairRepo.GetById(id);
+        }
     }
 }

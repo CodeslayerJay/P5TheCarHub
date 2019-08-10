@@ -43,6 +43,22 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             Assert.NotEmpty(results);
         }
 
+        [Fact]
+        public void GetById_WhenFound_ReturnsRepair()
+        {
+            var result = _repairService.GetById(id: 1);
+
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void GetById_WhenNotFound_ReturnsNull()
+        {
+            var result = _repairService.GetById(id: 9999);
+
+            Assert.Null(result);
+        }
+
 
         [Fact]
         public void UpdateRepair_WHenFound_UpdatesVehicleSalePriceAndReturnsUpdatedRepair()
