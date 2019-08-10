@@ -25,5 +25,10 @@ namespace P5TheCarHub.Core.Services
             return _invoiceRepo.GetById(id);
         }
 
+        public Invoice GetInvoiceByVehicleId(int vehicleId)
+        {
+            return _invoiceRepo.GetByVehicleId(vehicleId);
+        }
+
     }
 }

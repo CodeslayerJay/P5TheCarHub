@@ -50,6 +50,12 @@ namespace P5TheCarHub.UnitTests.Mocks
                 _context.Remove(invoice);
         }
 
+        public Invoice GetByVehicleId(int vehicleId)
+        {
+            return _context.Where(x => x.VehicleId == vehicleId).FirstOrDefault();
+        }
+
+
         public ICollection<Invoice> GetAll()
         {
             return _context.ToList();

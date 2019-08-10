@@ -7,6 +7,6 @@ namespace P5TheCarHub.Core.Interfaces.Repositories
 {
     public interface IInvoiceRepository : IBaseRespository<Invoice>
     {
-
+        Invoice GetByVehicleId(int vehicleId);
     }
 }

@@ -29,7 +29,15 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         [Fact]
         public void GetInvoice_WhenFound_ReturnsInvoice()
         {
-            var result = _invoiceService.GetInvoice(1);
+            var result = _invoiceService.GetInvoice(id: 1);
+
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void GetByVehicleId_WhenCalled_ReturnsInvoice()
+        {
+            var result = _invoiceService.GetInvoiceByVehicleId(vehicleId: 1);
 
             Assert.NotNull(result);
         }
