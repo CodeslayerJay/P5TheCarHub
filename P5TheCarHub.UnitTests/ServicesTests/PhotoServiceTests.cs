@@ -63,5 +63,15 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             Assert.NotNull(result);
             Assert.True(result.IsMain);
         }
+
+        [Fact]
+        public void GetVehicleMainPhoto_WhenCalled_ReturnsPhoto()
+        {
+            var vehicleId = 1;
+            var result = _photoService.GetVehicleMainPhoto(vehicleId);
+
+            Assert.NotNull(result);
+            Assert.Equal(vehicleId, result.VehicleId);
+        }
     }
 }

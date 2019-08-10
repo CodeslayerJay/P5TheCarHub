@@ -39,17 +39,22 @@ namespace P5TheCarHub.Core.Services
 
         private bool CheckCurrentMainPhotoExists(int vehicleId)
         {
-            var photo = _photoRepo.GetVehicleMainPhoto(vehicleId);
+            var photo = GetVehicleMainPhoto(vehicleId);
 
             return (photo != null) ? true : false;
         }
 
         private void SetNewMainPhoto(int vehicleId)
         {
-            var currentMainPhoto = _photoRepo.GetVehicleMainPhoto(vehicleId);
+            var currentMainPhoto = GetVehicleMainPhoto(vehicleId);
 
             if (currentMainPhoto != null)
                 currentMainPhoto.IsMain = false;
+        }
+
+        public Photo GetVehicleMainPhoto(int vehicleId)
+        {
+            return _photoRepo.GetVehicleMainPhoto(vehicleId);
         }
     }
 }
