@@ -25,5 +25,13 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             Assert.NotEmpty(result);
             Assert.IsAssignableFrom<IEnumerable<Invoice>>(result);
         }
+
+        [Fact]
+        public void GetInvoice_WhenFound_ReturnsInvoice()
+        {
+            var result = _invoiceService.GetInvoice(1);
+
+            Assert.NotNull(result);
+        }
     }
 }
