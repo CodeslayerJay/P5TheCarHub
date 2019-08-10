@@ -22,7 +22,8 @@ namespace P5TheCarHub.UnitTests.Mocks
             var id = 0;
             var seedData = new List<Photo>()
             {
-                new Photo { Id = ++id, IsMain = true, VehicleId = 1 }
+                new Photo { Id = ++id, IsMain = true, VehicleId = 1 },
+                new Photo { Id = ++id, IsMain = false, VehicleId = 2 }
             };
 
             _context.AddRange(seedData);

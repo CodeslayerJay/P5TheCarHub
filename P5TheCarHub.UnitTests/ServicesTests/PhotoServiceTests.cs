@@ -52,5 +52,16 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             Assert.NotNull(result);
             Assert.NotEqual(orignalPhoto, mainPhoto);
         }
+
+        [Fact]
+        public void AddPhoto_WhenVehicleDoesNotHaveMainPhoto_AddingNewPhotoIsSetToMainPhoto()
+        {
+            var photo = new Photo { VehicleId = 2, ImageUrl = "TEST" };
+
+            var result = _photoService.AddPhoto(photo);
+            
+            Assert.NotNull(result);
+            Assert.True(result.IsMain);
+        }
     }
 }

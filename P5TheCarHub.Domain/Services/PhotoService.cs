@@ -24,13 +24,24 @@ namespace P5TheCarHub.Core.Services
 
             if (vehicle == null)
                 throw new VehicleNotFoundException(photo.VehicleId);
+            
 
             if(photo.IsMain || isMain)
                 SetNewMainPhoto(photo.VehicleId);
+
             
-            //TODO: Determine if vehicle has no current main photo and set as main
+            if (!CheckCurrentMainPhotoExists(photo.VehicleId))
+                photo.IsMain = true;
+
             return _photoRepo.Add(photo);
             
+        }
+
+        private bool CheckCurrentMainPhotoExists(int vehicleId)
+        {
+            var photo = _photoRepo.GetVehicleMainPhoto(vehicleId);
+
+            return (photo != null) ? true : false;
         }
 
         private void SetNewMainPhoto(int vehicleId)
