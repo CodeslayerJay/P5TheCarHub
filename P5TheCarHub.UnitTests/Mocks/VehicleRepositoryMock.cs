@@ -8,11 +8,11 @@ using System.Text;
 
 namespace P5TheCarHub.UnitTests.Mocks
 {
-    public class MockVehicleRepository : IVehicleRepository
+    public class VehicleRepositoryMock : IVehicleRepository
     {
         private List<Vehicle> _context;
 
-        public MockVehicleRepository()
+        public VehicleRepositoryMock()
         {
             _context = new List<Vehicle>();
             SetupFakeData();

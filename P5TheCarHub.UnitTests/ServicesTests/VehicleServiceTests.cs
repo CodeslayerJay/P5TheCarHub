@@ -16,7 +16,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 
         public VehicleServiceTests()
         {
-            _vehicleService = new VehicleService(new MockVehicleRepository());
+            _vehicleService = new VehicleService(new VehicleRepositoryMock());
         }
 
         [Fact]

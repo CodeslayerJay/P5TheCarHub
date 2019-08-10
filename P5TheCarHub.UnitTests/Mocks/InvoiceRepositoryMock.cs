@@ -7,11 +7,11 @@ using System.Text;
 
 namespace P5TheCarHub.UnitTests.Mocks
 {
-    public class MockInvoiceRepository : IInvoiceRepository
+    public class InvoiceRepositoryMock : IInvoiceRepository
     {
         private List<Invoice> _context;
 
-        public MockInvoiceRepository()
+        public InvoiceRepositoryMock()
         {
             _context = new List<Invoice>();
             SetupFakeData();

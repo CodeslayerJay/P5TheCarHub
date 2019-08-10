@@ -15,7 +15,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 
         public InvoiceServiceTests()
         {            
-            _invoiceService = new InvoiceService(new MockInvoiceRepository());
+            _invoiceService = new InvoiceService(new InvoiceRepositoryMock());
         }
 
         [Fact]

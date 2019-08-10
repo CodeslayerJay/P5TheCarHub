@@ -7,7 +7,7 @@ namespace P5TheCarHub.Core.Entities
     public class Repair : BaseEntity
     {
         
-        public string Name { get; set; }
+        public string Description { get; set; }
         public decimal Cost { get; set; }
         public string Details { get; set; }
         public DateTime RepairDate { get; set; }
