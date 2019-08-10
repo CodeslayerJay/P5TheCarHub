@@ -1,4 +1,5 @@
 ﻿using P5TheCarHub.Core.Entities;
+using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
@@ -60,8 +61,7 @@ namespace P5TheCarHub.Core.Services
             var vehicleToUpdate = GetVehicle(vehicle.Id);
 
             if (vehicleToUpdate == null)
-                return null;
-                //throw new VehicleNotFoundException();
+                throw new VehicleNotFoundException(vehicle.Id);
 
             //TODO: Change This
             _vehicleRepo.Delete(vehicle.Id);

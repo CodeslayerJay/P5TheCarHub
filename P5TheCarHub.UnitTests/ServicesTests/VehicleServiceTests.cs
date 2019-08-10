@@ -1,4 +1,5 @@
 ﻿using P5TheCarHub.Core.Entities;
+using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Services;
 using P5TheCarHub.UnitTests.Mocks;
 using System;
@@ -75,13 +76,13 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void UpdateVehicle_WhenNotFound_ReturnsNull()
+        public void UpdateVehicle_WhenNotFound_ThrowsVehicleNotFoundException()
         {
             var vehicle = new Vehicle();
             
-            var result = _vehicleService.UpdateVehicle(vehicle);
-
-            Assert.Null(result);
+            //var result = _vehicleService.UpdateVehicle(vehicle);
+            
+            Assert.Throws<VehicleNotFoundException>(() => _vehicleService.UpdateVehicle(vehicle));
         }
 
         [Fact]
