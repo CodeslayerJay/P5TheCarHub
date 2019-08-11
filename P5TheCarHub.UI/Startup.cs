@@ -48,7 +48,7 @@ namespace P5TheCarHub.UI
             services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IInvoiceRepository, InvoiceRepository>();
             services.AddScoped<IRepairRepository, RepairRepository>();
-            services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("P5Referential")));
