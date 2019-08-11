@@ -6,9 +6,17 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using P5TheCarHub.Core.Interfaces.Repositories;
+using P5TheCarHub.Core.Interfaces.Services;
+using P5TheCarHub.Core.Services;
+using P5TheCarHub.Infrastructure.Data;
+using P5TheCarHub.Infrastructure.Data.Repositories;
+using P5TheCarHub.Infrastructure.Identity;
 
 namespace P5TheCarHub.UI
 {
@@ -31,6 +39,23 @@ namespace P5TheCarHub.UI
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddScoped<IVehicleService, VehicleService>();
+            services.AddScoped<IInvoiceService, InvoiceService>();
+            services.AddScoped<IRepairService, RepairService>();
+            services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
+            services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+            services.AddScoped<IRepairRepository, RepairRepository>();
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("P5Referential")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddSession();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -53,12 +78,16 @@ namespace P5TheCarHub.UI
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseAuthentication();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            IdentitySeed.EnsurePopulated(app);
         }
     }
 }
