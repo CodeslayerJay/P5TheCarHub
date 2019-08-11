@@ -10,7 +10,5 @@ namespace P5TheCarHub.Core.Interfaces.Repositories
         void Delete(int id);
         TEntity GetById(int id);
         ICollection<TEntity> GetAll();
-        void Update();
-        void SaveChanges();
     }
 }
