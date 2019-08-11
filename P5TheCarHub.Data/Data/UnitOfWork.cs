@@ -1,5 +1,6 @@
 ﻿using P5TheCarHub.Core.Interfaces;
 using P5TheCarHub.Core.Interfaces.Repositories;
+using P5TheCarHub.Infrastructure.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,6 +15,10 @@ namespace P5TheCarHub.Infrastructure.Data
         public UnitOfWork(ApplicationDbContext dbContext)
         {
             _context = dbContext;
+            Vehicles = new VehicleRepository(_context);
+            Invoices = new InvoiceRepository(_context);
+            Repairs = new RepairRepository(_context);
+            Photos = new PhotoRepository(_context);
         }
 
         public IInvoiceRepository Invoices { get; set; }
