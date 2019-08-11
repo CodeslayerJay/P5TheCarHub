@@ -1,4 +1,5 @@
-﻿using P5TheCarHub.Core.Entities;
+﻿using Moq;
+using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Services;
 using P5TheCarHub.UnitTests.Mocks;
@@ -19,6 +20,8 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         {
             _photoRepo = new PhotoRepositoryMock();
             var vehicleRepo = new VehicleRepositoryMock();
+
+            
             _photoService = new PhotoService(_photoRepo, vehicleRepo);
         }
 

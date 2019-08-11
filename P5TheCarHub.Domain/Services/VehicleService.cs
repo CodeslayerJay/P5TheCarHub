@@ -1,5 +1,6 @@
 ﻿using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Exceptions;
+using P5TheCarHub.Core.Interfaces;
 using P5TheCarHub.Core.Interfaces.Repositories;
 using P5TheCarHub.Core.Interfaces.Services;
 using P5TheCarHub.Core.Specifications.VehicleSpecifications;
@@ -13,11 +14,13 @@ namespace P5TheCarHub.Core.Services
     public class VehicleService : IVehicleService
     {
         private readonly IVehicleRepository _vehicleRepo;
+        
         private const decimal MARKUPFEE = 500M;
 
         public VehicleService(IVehicleRepository vehicleRepository)
         {
             _vehicleRepo = vehicleRepository;
+             
         }
 
         public string GetFullVehicleName(Vehicle vehicle)
@@ -38,9 +41,8 @@ namespace P5TheCarHub.Core.Services
                 throw new VehicleNotGreaterThanRequiredYearException(spec.RequiredYear);
 
             vehicle.SalePrice = CalculateVehicleSalePrice(vehicle.PurchasePrice);
-            _vehicleRepo.Add(vehicle);
-            
-            return vehicle;
+                       
+            return _vehicleRepo.Add(vehicle);
         }
 
         public Vehicle GetVehicle(int id)
@@ -66,10 +68,7 @@ namespace P5TheCarHub.Core.Services
 
             vehicle.SalePrice = CalculateVehicleSalePrice(vehicle.PurchasePrice);
 
-            //TODO: Change This
-            _vehicleRepo.Delete(vehicle.Id);
-            _vehicleRepo.Add(vehicle);
-
+            _vehicleRepo.Update();
             return vehicle;
         }
         
@@ -83,8 +82,11 @@ namespace P5TheCarHub.Core.Services
         {
             var vehicle = GetVehicle(id);
 
-            if (vehicle != null)
-                _vehicleRepo.Delete(id);
+            if (vehicle == null)
+                throw new VehicleNotFoundException(id);
+            
+            _vehicleRepo.Delete(id);
+                    
         }
 
         public IEnumerable<string> ValidateModel()

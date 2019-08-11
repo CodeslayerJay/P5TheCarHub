@@ -13,27 +13,30 @@ namespace P5TheCarHub.Core.Services
     {
         private readonly IRepairRepository _repairRepo;
         private readonly IVehicleRepository _vehicleRepo;
+        
 
         public RepairService(IRepairRepository repairRepository, IVehicleRepository vehicleRepository)
         {
             _repairRepo = repairRepository;
             _vehicleRepo = vehicleRepository;
+             
         }
 
         public Repair AddRepair(Repair repair)
         {
-            var spec = new VehicleExistsSpecification(_vehicleRepo);
-            if (!spec.IsSatisfiedBy(repair.VehicleId))
+            var vehicle = _vehicleRepo.GetById(repair.VehicleId);
+
+            var spec = new VehicleExistsSpecification();
+            if (!spec.IsSatisfiedBy(vehicle))
                 throw new VehicleNotFoundException(repair.VehicleId);
 
-            UpdateVehicleSalePrice(repair);
+            UpdateVehicleSalePrice(vehicle, repair);
+
             return _repairRepo.Add(repair);
         }
 
-        private void UpdateVehicleSalePrice(Repair repair)
+        private void UpdateVehicleSalePrice(Vehicle vehicle, Repair repair)
         {
-            var vehicle = _vehicleRepo.GetById(id: repair.VehicleId);
-
             if (vehicle == null)
                 throw new VehicleNotFoundException(repair.VehicleId);
 
@@ -57,16 +60,21 @@ namespace P5TheCarHub.Core.Services
 
         public Repair UpdateRepair(Repair repair)
         {
+
+            var vehicle = _vehicleRepo.GetById(repair.VehicleId);
+
+            var spec = new VehicleExistsSpecification();
+            if (!spec.IsSatisfiedBy(vehicle))
+                throw new VehicleNotFoundException(repair.VehicleId);
+            
             var repairToUpdate = GetById(repair.Id);
 
             if (repairToUpdate == null)
                 throw new RepairNotFoundException(repair.Id);
 
-            UpdateVehicleSalePrice(repair);
+            UpdateVehicleSalePrice(vehicle, repair);
 
-            //TODO: Implement updating
-            _repairRepo.Delete(repair.Id);
-            _repairRepo.Add(repair);
+            _repairRepo.Update();
 
             return repair;
         }
@@ -79,6 +87,7 @@ namespace P5TheCarHub.Core.Services
                 throw new RepairNotFoundException(id);
 
             _repairRepo.Delete(id);
+            
         }
     }
 }

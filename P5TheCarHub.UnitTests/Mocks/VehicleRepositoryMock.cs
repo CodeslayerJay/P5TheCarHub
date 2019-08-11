@@ -108,5 +108,15 @@ namespace P5TheCarHub.UnitTests.Mocks
         {
             return _context.SingleOrDefault(x => x.Id == id);
         }
+
+        public void Update()
+        {
+            
+        }
+
+        public void SaveChanges()
+        {
+            
+        }
     }
 }

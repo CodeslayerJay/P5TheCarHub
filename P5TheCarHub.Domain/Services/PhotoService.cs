@@ -1,5 +1,6 @@
 ﻿using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Exceptions;
+using P5TheCarHub.Core.Interfaces;
 using P5TheCarHub.Core.Interfaces.Repositories;
 using P5TheCarHub.Core.Interfaces.Services;
 using P5TheCarHub.Core.Specifications.VehicleSpecifications;
@@ -13,19 +14,21 @@ namespace P5TheCarHub.Core.Services
     {
         private readonly IPhotoRepository _photoRepo;
         private readonly IVehicleRepository _vehicleRepo;
+        
 
         public PhotoService(IPhotoRepository photoRepository, IVehicleRepository vehicleRepository)
         {
             _photoRepo = photoRepository;
             _vehicleRepo = vehicleRepository;
+             
         }
 
         public Photo AddPhoto(Photo photo, bool isMain = false)
         {
             var vehicle = _vehicleRepo.GetById(photo.VehicleId);
 
-            var spec = new VehicleExistsSpecification(_vehicleRepo);
-            if(!spec.IsSatisfiedBy(photo.VehicleId))
+            var spec = new VehicleExistsSpecification();
+            if(!spec.IsSatisfiedBy(vehicle))
                 throw new VehicleNotFoundException(photo.VehicleId);
             
 
@@ -68,6 +71,7 @@ namespace P5TheCarHub.Core.Services
                 throw new PhotoNotFoundException(id);
 
             _photoRepo.Delete(id);
+           
         }
 
         public Photo GetPhoto(int id)
@@ -95,6 +99,7 @@ namespace P5TheCarHub.Core.Services
             }
 
             photo.IsMain = true;
+            _photoRepo.SaveChanges();
         }
     }
 }

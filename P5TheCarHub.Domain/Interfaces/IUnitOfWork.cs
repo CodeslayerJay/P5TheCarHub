@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace P5TheCarHub.Core.Interfaces
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         void SaveChanges();
         Task SaveChangesAsync();
-
     }
 }

@@ -101,8 +101,6 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         {
             var vehicle = new Vehicle();
             
-            //var result = _vehicleService.UpdateVehicle(vehicle);
-            
             Assert.Throws<VehicleNotFoundException>(() => _vehicleService.UpdateVehicle(vehicle));
         }
 
@@ -142,14 +140,11 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void DeleteVehicle_WhenNotFound_DoesNothing()
+        public void DeleteVehicle_WhenNotFound_ThrowsVehicleNotFoundException()
         {
             var orgVehicleCount = _vehicleService.GetAll().Count();
-            _vehicleService.DeleteVehicle(99999);
-
-            var newVehicleCount = _vehicleService.GetAll().Count();
-
-            Assert.Equal(orgVehicleCount, newVehicleCount);
+            
+            Assert.Throws<VehicleNotFoundException>(() => _vehicleService.DeleteVehicle(99999));
         }
 
         [Fact]

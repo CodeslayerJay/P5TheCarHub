@@ -69,5 +69,15 @@ namespace P5TheCarHub.UnitTests.Mocks
         {
             return _context.Where(x => x.VehicleId == vehicleId).ToList();
         }
+
+        public void Update()
+        {
+            
+        }
+
+        public void SaveChanges()
+        {
+            
+        }
     }
 }

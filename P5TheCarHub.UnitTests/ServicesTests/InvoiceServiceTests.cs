@@ -1,4 +1,5 @@
-﻿using P5TheCarHub.Core.Entities;
+﻿using Moq;
+using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Services;
 using P5TheCarHub.UnitTests.Mocks;
@@ -17,6 +18,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         public InvoiceServiceTests()
         {
             _vehicleRepo = new VehicleRepositoryMock();
+            
             _invoiceService = new InvoiceService(new InvoiceRepositoryMock(), _vehicleRepo);
         }
 
@@ -80,15 +82,12 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             var orgNameValue = invoice.CustomerName;
             
             invoice.CustomerName = "New Guy";
-            //invoice.VehicleId = 999;
+            
             invoice.InvoiceNumber = "TEST";
 
             var result = _invoiceService.UpdateInvoice(invoice);
 
             Assert.NotNull(result);
-            //Assert.NotEqual(orgNameValue, result.CustomerName);
-            //Assert.NotEqual(999, result.VehicleId);
-            //Assert.NotEqual("TEST", result.InvoiceNumber);
         }
                 
     }

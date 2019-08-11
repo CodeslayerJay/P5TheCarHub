@@ -9,7 +9,7 @@ namespace P5TheCarHub.Core.Specifications.VehicleSpecifications
 {
     public class VehicleExistsSpecification : ISpecification<Vehicle>
     {
-             
+        
         public bool IsSatisfiedBy(Vehicle vehicle)
         {
             return (vehicle != null) ? true : false;
