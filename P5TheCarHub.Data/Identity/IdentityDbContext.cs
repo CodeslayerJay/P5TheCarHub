@@ -10,7 +10,7 @@ namespace P5TheCarHub.Infrastructure.Identity
     public class IdentityDbContext : IdentityDbContext<ApplicationUser>
     {
 
-        private readonly string _connString = "Server=(localdb)\\MSSQLLocalDB;Database=P5TheCarHub;Trusted_Connection=True;MultipleActiveResultSets=true";
+        private readonly string _connString = "Server=(localdb)\\MSSQLLocalDB;Database=P5TheCarHub_Identity;Trusted_Connection=True;MultipleActiveResultSets=true";
 
 
         public IdentityDbContext()

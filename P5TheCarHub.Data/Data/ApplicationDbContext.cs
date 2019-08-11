@@ -12,7 +12,7 @@ namespace P5TheCarHub.Infrastructure.Data
         //public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         //{ 
 
-        private readonly string _connString = "Server=(localdb)\\MSSQLLocalDB;Database=P5TheCarHub;Trusted_Connection=True;MultipleActiveResultSets=true";
+        private readonly string _connString = "Server=(localdb)\\MSSQLLocalDB;Database=P5TheCarHub_App;Trusted_Connection=True;MultipleActiveResultSets=true";
 
         public ApplicationDbContext()
         { }
@@ -41,6 +41,7 @@ namespace P5TheCarHub.Infrastructure.Data
             builder.Entity<Invoice>(dbConfiguation.ConfigureInvoice);
 
             var dbSeeds = new DbSeeds(builder);
+            dbSeeds.ExecuteSeed();
 
             // Used for Identity
             base.OnModelCreating(builder);
