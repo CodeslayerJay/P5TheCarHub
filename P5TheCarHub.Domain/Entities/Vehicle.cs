@@ -15,7 +15,7 @@ namespace P5TheCarHub.Core.Entities
         
         
         public string VIN { get; set; }
-        public double Mileage { get; set; }
+        public string Mileage { get; set; }
         public int Year { get; set; }
         public string Color { get; set; }
         public string Make { get; set; }
