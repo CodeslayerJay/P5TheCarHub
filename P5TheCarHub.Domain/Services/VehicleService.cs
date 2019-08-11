@@ -13,13 +13,12 @@ namespace P5TheCarHub.Core.Services
 {
     public class VehicleService : IVehicleService
     {
-        private readonly IVehicleRepository _vehicleRepo;
-        
         private const decimal MARKUPFEE = 500M;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public VehicleService(IVehicleRepository vehicleRepository)
+        public VehicleService(IUnitOfWork unitOfWork)
         {
-            _vehicleRepo = vehicleRepository;
+            _unitOfWork = unitOfWork;
              
         }
 
@@ -41,13 +40,16 @@ namespace P5TheCarHub.Core.Services
                 throw new VehicleNotGreaterThanRequiredYearException(spec.RequiredYear);
 
             vehicle.SalePrice = CalculateVehicleSalePrice(vehicle.PurchasePrice);
-                       
-            return _vehicleRepo.Add(vehicle);
+
+            var newVehicle = _unitOfWork.Vehicles.Add(vehicle);
+            _unitOfWork.SaveChanges();
+
+            return newVehicle;
         }
 
         public Vehicle GetVehicle(int id)
         {
-            return _vehicleRepo.GetById(id);
+            return _unitOfWork.Vehicles.GetById(id);
         }
 
         public Vehicle GetVehicle(string vin)
@@ -55,7 +57,7 @@ namespace P5TheCarHub.Core.Services
             if (String.IsNullOrEmpty(vin))
                 return null;
 
-            return _vehicleRepo.GetByVin(vin);
+            return _unitOfWork.Vehicles.GetByVin(vin);
         }
 
         public Vehicle UpdateVehicle(Vehicle vehicle)
@@ -68,14 +70,14 @@ namespace P5TheCarHub.Core.Services
 
             vehicle.SalePrice = CalculateVehicleSalePrice(vehicle.PurchasePrice);
 
-            _vehicleRepo.Update();
+            _unitOfWork.SaveChanges();
             return vehicle;
         }
         
 
         public IEnumerable<Vehicle> GetAll()
         {
-            return _vehicleRepo.GetAll();
+            return _unitOfWork.Vehicles.GetAll();
         }
 
         public void DeleteVehicle(int id)
@@ -85,13 +87,9 @@ namespace P5TheCarHub.Core.Services
             if (vehicle == null)
                 throw new VehicleNotFoundException(id);
             
-            _vehicleRepo.Delete(id);
+            _unitOfWork.Vehicles.Delete(id);
+            _unitOfWork.SaveChanges();
                     
-        }
-
-        public IEnumerable<string> ValidateModel()
-        {
-            throw new NotImplementedException();
         }
 
         public IEnumerable<Vehicle> GetVehiclesBySoldStatus(bool isSold)

@@ -12,14 +12,14 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 {
     public class InvoiceServiceTests
     {
-        private readonly VehicleRepositoryMock _vehicleRepo;
+        private readonly UnitOfWorkMock _unitOfWork;
         private readonly InvoiceService _invoiceService;
 
         public InvoiceServiceTests()
         {
-            _vehicleRepo = new VehicleRepositoryMock();
+            _unitOfWork = new UnitOfWorkMock();
             
-            _invoiceService = new InvoiceService(new InvoiceRepositoryMock(), _vehicleRepo);
+            _invoiceService = new InvoiceService(_unitOfWork);
         }
 
         [Fact]

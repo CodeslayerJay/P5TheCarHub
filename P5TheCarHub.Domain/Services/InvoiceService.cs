@@ -14,37 +14,35 @@ namespace P5TheCarHub.Core.Services
 {
     public class InvoiceService : IInvoiceService
     {
-        private readonly IInvoiceRepository _invoiceRepo;
-        private readonly IVehicleRepository _vehicleRepo;
         
+        private readonly IUnitOfWork _unitOfWork;
         private const string APP_NAME_INITIALS = "TCH";
 
-        public InvoiceService(IInvoiceRepository invoiceRepository, IVehicleRepository vehicleRepository)
+        public InvoiceService(IUnitOfWork unitOfWork)
         {
-            _invoiceRepo = invoiceRepository;
-            _vehicleRepo = vehicleRepository;
+            _unitOfWork = unitOfWork;
             
         }
 
         public IEnumerable<Invoice> GetAll()
         {
-            return _invoiceRepo.GetAll();
+            return _unitOfWork.Invoices.GetAll();
         }
 
         public Invoice GetInvoice(int id)
         {
-            return _invoiceRepo.GetById(id);
+            return _unitOfWork.Invoices.GetById(id);
         }
 
         public Invoice GetInvoiceByVehicleId(int vehicleId)
         {
-            return _invoiceRepo.GetByVehicleId(vehicleId);
+            return _unitOfWork.Invoices.GetByVehicleId(vehicleId);
         }
 
         public Invoice AddInvoice(Invoice invoice)
         {
 
-            var vehicle = _vehicleRepo.GetById(invoice.VehicleId);
+            var vehicle = _unitOfWork.Vehicles.GetById(invoice.VehicleId);
 
             var spec = new VehicleExistsSpecification();
             if (!spec.IsSatisfiedBy(vehicle))
@@ -57,7 +55,10 @@ namespace P5TheCarHub.Core.Services
 
             SetVehicleToSoldStatus(vehicle);
 
-            return _invoiceRepo.Add(invoice);
+            var newInvoice = _unitOfWork.Invoices.Add(invoice);
+            _unitOfWork.SaveChanges();
+
+            return newInvoice;
         }
 
         private void SetVehicleToSoldStatus(Vehicle vehicle)
@@ -67,7 +68,7 @@ namespace P5TheCarHub.Core.Services
 
         private string GenerateInvoiceNumber(int vehicleId)
         {
-            var invoiceCount = _invoiceRepo.GetAll().Count() + 1;
+            var invoiceCount = _unitOfWork.Invoices.GetAll().Count() + 1;
             return $"{APP_NAME_INITIALS}-V{vehicleId}I{invoiceCount}";
         }
 
@@ -84,13 +85,13 @@ namespace P5TheCarHub.Core.Services
                     throw new InvoiceAlreadyExistsForVehicleException(invoice.VehicleId);
             }
             
-            _invoiceRepo.SaveChanges();
+            _unitOfWork.SaveChanges();
             return invoiceToUpdate;
         }
 
         private bool CheckInvoiceIsUniqueToVehicle(Invoice invoice)
         {
-            var spec = new UniqueInvoiceSpecification(_invoiceRepo);
+            var spec = new UniqueInvoiceSpecification(_unitOfWork.Invoices);
             return spec.IsSatisfiedBy(invoice);
         }
 

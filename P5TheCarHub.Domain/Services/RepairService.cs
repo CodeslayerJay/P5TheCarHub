@@ -1,5 +1,6 @@
 ﻿using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Exceptions;
+using P5TheCarHub.Core.Interfaces;
 using P5TheCarHub.Core.Interfaces.Repositories;
 using P5TheCarHub.Core.Interfaces.Services;
 using P5TheCarHub.Core.Specifications.VehicleSpecifications;
@@ -11,20 +12,16 @@ namespace P5TheCarHub.Core.Services
 {
     public class RepairService : IRepairService
     {
-        private readonly IRepairRepository _repairRepo;
-        private readonly IVehicleRepository _vehicleRepo;
-        
+        private readonly IUnitOfWork _unitOfWork;
 
-        public RepairService(IRepairRepository repairRepository, IVehicleRepository vehicleRepository)
+        public RepairService(IUnitOfWork unitOfWork)
         {
-            _repairRepo = repairRepository;
-            _vehicleRepo = vehicleRepository;
-             
+            _unitOfWork = unitOfWork;            
         }
 
         public Repair AddRepair(Repair repair)
         {
-            var vehicle = _vehicleRepo.GetById(repair.VehicleId);
+            var vehicle = _unitOfWork.Vehicles.GetById(repair.VehicleId);
 
             var spec = new VehicleExistsSpecification();
             if (!spec.IsSatisfiedBy(vehicle))
@@ -32,7 +29,10 @@ namespace P5TheCarHub.Core.Services
 
             UpdateVehicleSalePrice(vehicle, repair);
 
-            return _repairRepo.Add(repair);
+            var newRepair = _unitOfWork.Repairs.Add(repair);
+            _unitOfWork.SaveChanges();
+
+            return newRepair;
         }
 
         private void UpdateVehicleSalePrice(Vehicle vehicle, Repair repair)
@@ -45,12 +45,12 @@ namespace P5TheCarHub.Core.Services
 
         public IEnumerable<Repair> GetAllByVehicleId(int vehicleId)
         {
-            return _repairRepo.GetAllByVehicleId(vehicleId);
+            return _unitOfWork.Repairs.GetAllByVehicleId(vehicleId);
         }
 
         public Repair GetById(int id)
         {
-            var repair = _repairRepo.GetById(id);
+            var repair = _unitOfWork.Repairs.GetById(id);
 
             if (repair == null)
                 throw new RepairNotFoundException(id);
@@ -61,7 +61,7 @@ namespace P5TheCarHub.Core.Services
         public Repair UpdateRepair(Repair repair)
         {
 
-            var vehicle = _vehicleRepo.GetById(repair.VehicleId);
+            var vehicle = _unitOfWork.Vehicles.GetById(repair.VehicleId);
 
             var spec = new VehicleExistsSpecification();
             if (!spec.IsSatisfiedBy(vehicle))
@@ -74,20 +74,20 @@ namespace P5TheCarHub.Core.Services
 
             UpdateVehicleSalePrice(vehicle, repair);
 
-            _repairRepo.Update();
+            _unitOfWork.SaveChanges();
 
             return repair;
         }
 
         public void DeleteRepair(int id)
         {
-            var repair = _repairRepo.GetById(id);
+            var repair = _unitOfWork.Repairs.GetById(id);
 
             if (repair == null)
                 throw new RepairNotFoundException(id);
 
-            _repairRepo.Delete(id);
-            
+            _unitOfWork.Repairs.Delete(id);
+            _unitOfWork.SaveChanges();
         }
     }
 }

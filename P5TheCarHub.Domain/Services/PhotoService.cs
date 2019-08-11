@@ -12,20 +12,16 @@ namespace P5TheCarHub.Core.Services
 {
     public class PhotoService : IPhotoService
     {
-        private readonly IPhotoRepository _photoRepo;
-        private readonly IVehicleRepository _vehicleRepo;
-        
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PhotoService(IPhotoRepository photoRepository, IVehicleRepository vehicleRepository)
+        public PhotoService(IUnitOfWork unitOfWork)
         {
-            _photoRepo = photoRepository;
-            _vehicleRepo = vehicleRepository;
-             
+            _unitOfWork = unitOfWork;
         }
 
         public Photo AddPhoto(Photo photo, bool isMain = false)
         {
-            var vehicle = _vehicleRepo.GetById(photo.VehicleId);
+            var vehicle = _unitOfWork.Vehicles.GetById(photo.VehicleId);
 
             var spec = new VehicleExistsSpecification();
             if(!spec.IsSatisfiedBy(vehicle))
@@ -39,7 +35,10 @@ namespace P5TheCarHub.Core.Services
             if (!CheckCurrentMainPhotoExists(photo.VehicleId))
                 photo.IsMain = true;
 
-            return _photoRepo.Add(photo);
+            var newPhoto = _unitOfWork.Photos.Add(photo);
+            _unitOfWork.SaveChanges();
+
+            return newPhoto;
             
         }
 
@@ -60,7 +59,7 @@ namespace P5TheCarHub.Core.Services
 
         public Photo GetVehicleMainPhoto(int vehicleId)
         {
-            return _photoRepo.GetVehicleMainPhoto(vehicleId);
+            return _unitOfWork.Photos.GetVehicleMainPhoto(vehicleId);
         }
 
         public void DeletePhoto(int id)
@@ -70,13 +69,13 @@ namespace P5TheCarHub.Core.Services
             if (photo == null)
                 throw new PhotoNotFoundException(id);
 
-            _photoRepo.Delete(id);
-           
+            _unitOfWork.Photos.Delete(id);
+            _unitOfWork.SaveChanges();
         }
 
         public Photo GetPhoto(int id)
         {
-            var photo = _photoRepo.GetById(id);
+            var photo = _unitOfWork.Photos.GetById(id);
 
             if (photo == null)
                 throw new PhotoNotFoundException(id);
@@ -99,7 +98,7 @@ namespace P5TheCarHub.Core.Services
             }
 
             photo.IsMain = true;
-            _photoRepo.SaveChanges();
+            _unitOfWork.SaveChanges();
         }
     }
 }

@@ -12,6 +12,6 @@ namespace P5TheCarHub.Core.Interfaces.Services
         Vehicle GetVehicle(string vin);
         IEnumerable<Vehicle> GetVehiclesBySoldStatus(bool isSold);
         Vehicle UpdateVehicle(Vehicle vehicle);
-        IEnumerable<string> ValidateModel();
+        
     }
 }

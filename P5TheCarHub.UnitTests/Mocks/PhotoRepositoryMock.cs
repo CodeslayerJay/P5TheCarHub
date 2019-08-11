@@ -3,6 +3,7 @@ using P5TheCarHub.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace P5TheCarHub.UnitTests.Mocks
@@ -50,7 +51,7 @@ namespace P5TheCarHub.UnitTests.Mocks
             _context.Remove(photo);
         }
 
-        public ICollection<Photo> GetAll()
+        public IEnumerable<Photo> GetAll()
         {
             return _context.Where(x => x.Id > 0).ToList();
         }
@@ -71,14 +72,9 @@ namespace P5TheCarHub.UnitTests.Mocks
             return _context.SingleOrDefault(x => x.Id == id);
         }
 
-        public void Update()
+        public IEnumerable<Photo> Find(Expression<Func<Photo, bool>> predicate)
         {
-            
-        }
-
-        public void SaveChanges()
-        {
-            
+            throw new NotImplementedException();
         }
     }
 }

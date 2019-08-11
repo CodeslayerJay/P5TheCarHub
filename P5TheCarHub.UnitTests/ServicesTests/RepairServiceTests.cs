@@ -12,14 +12,15 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 {
     public class RepairServiceTests
     {
+        private readonly UnitOfWorkMock _unitOfWork;
         private readonly RepairService _repairService;
         private readonly VehicleService _vehicleService;
 
         public RepairServiceTests()
         {
-            var vehicleRepo = new VehicleRepositoryMock();
-            _repairService = new RepairService(new RepairRepositoryMock(), vehicleRepo);
-            _vehicleService = new VehicleService(vehicleRepo);
+            _unitOfWork = new UnitOfWorkMock();
+            _repairService = new RepairService(_unitOfWork);
+            _vehicleService = new VehicleService(_unitOfWork);
         }
 
         [Fact]

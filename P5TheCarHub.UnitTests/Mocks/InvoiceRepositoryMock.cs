@@ -3,6 +3,7 @@ using P5TheCarHub.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace P5TheCarHub.UnitTests.Mocks
@@ -56,7 +57,7 @@ namespace P5TheCarHub.UnitTests.Mocks
         }
 
 
-        public ICollection<Invoice> GetAll()
+        public IEnumerable<Invoice> GetAll()
         {
             return _context.ToList();
         }
@@ -66,12 +67,10 @@ namespace P5TheCarHub.UnitTests.Mocks
             return _context.SingleOrDefault(x => x.Id == id);
         }
 
-        public void Update()
-        {            
-        }
-
-        public void SaveChanges()
+        
+        public IEnumerable<Invoice> Find(Expression<Func<Invoice, bool>> predicate)
         {
+            throw new NotImplementedException();
         }
     }
 }

@@ -13,16 +13,13 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 {
     public class PhotoServiceTests
     {
+        private readonly UnitOfWorkMock _unitOfWork;
         private readonly PhotoService _photoService;
-        private readonly PhotoRepositoryMock _photoRepo;
-
+        
         public PhotoServiceTests()
         {
-            _photoRepo = new PhotoRepositoryMock();
-            var vehicleRepo = new VehicleRepositoryMock();
-
-            
-            _photoService = new PhotoService(_photoRepo, vehicleRepo);
+            _unitOfWork = new UnitOfWorkMock();
+            _photoService = new PhotoService(_unitOfWork);
         }
 
         [Fact]
@@ -46,11 +43,11 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         [Fact]
         public void AddPhoto_WhenVehicleAlreadyHasMainPhoto_AddingNewMainPhotoUpdates()
         {
-            var orignalPhoto = _photoRepo.GetAllByVehicleId(1).SingleOrDefault(x => x.IsMain == true);
+            var orignalPhoto = _unitOfWork.Photos.GetAllByVehicleId(1).SingleOrDefault(x => x.IsMain == true);
             var photo = new Photo { VehicleId = 1, ImageUrl = "TEST", IsMain = true };
 
             var result = _photoService.AddPhoto(photo);
-            var mainPhoto = _photoRepo.GetAllByVehicleId(1).SingleOrDefault(x => x.IsMain == true);
+            var mainPhoto = _unitOfWork.Photos.GetAllByVehicleId(1).SingleOrDefault(x => x.IsMain == true);
 
             Assert.NotNull(result);
             Assert.NotEqual(orignalPhoto, mainPhoto);
@@ -84,11 +81,11 @@ namespace P5TheCarHub.UnitTests.ServicesTests
            var photo = new Photo { VehicleId = vehicleId, ImageUrl = "TEST", IsMain = true };
 
             var result = _photoService.AddPhoto(photo);
-            var photosCount = _photoRepo.GetAllByVehicleId(vehicleId).Count();
+            var photosCount = _unitOfWork.Photos.GetAllByVehicleId(vehicleId).Count();
 
             _photoService.DeletePhoto(result.Id);
 
-            Assert.NotEqual(photosCount, _photoRepo.GetAllByVehicleId(vehicleId).Count());
+            Assert.NotEqual(photosCount, _unitOfWork.Photos.GetAllByVehicleId(vehicleId).Count());
         }
 
         [Fact]
@@ -110,10 +107,10 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         {
             var vehicleId = 1;
             var photoId = 2;
-            var currentMainPhoto = _photoRepo.GetVehicleMainPhoto(vehicleId);
+            var currentMainPhoto = _unitOfWork.Photos.GetVehicleMainPhoto(vehicleId);
 
             _photoService.UpdateVehicleMainPhoto(vehicleId, photoId);
-            var newMainPhoto = _photoRepo.GetVehicleMainPhoto(vehicleId);
+            var newMainPhoto = _unitOfWork.Photos.GetVehicleMainPhoto(vehicleId);
 
             Assert.NotEqual(currentMainPhoto, newMainPhoto);
             Assert.Equal(newMainPhoto.Id, photoId);
