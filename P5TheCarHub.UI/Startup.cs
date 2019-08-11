@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using P5TheCarHub.Core.Interfaces;
 using P5TheCarHub.Core.Interfaces.Repositories;
 using P5TheCarHub.Core.Interfaces.Services;
 using P5TheCarHub.Core.Services;
@@ -47,6 +48,7 @@ namespace P5TheCarHub.UI
             services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IInvoiceRepository, InvoiceRepository>();
             services.AddScoped<IRepairRepository, RepairRepository>();
+            services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("P5Referential")));
