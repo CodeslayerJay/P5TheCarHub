@@ -22,6 +22,17 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
+        public void GetFullVehicleName_WhenCalled_ReturnsFullVehicleNameAsString()
+        {
+            var vehicle = _vehicleService.GetVehicle(id: 1);
+            var result = _vehicleService.GetFullVehicleName(vehicle);
+
+            Assert.NotNull(result);
+            Assert.IsType<string>(result);
+            Assert.Contains(vehicle.Make.ToUpper(), result);
+        }
+
+        [Fact]
         public void AddVehicle_WhenCalled_StoresAndReturnsNewVehicle()
         {
             
