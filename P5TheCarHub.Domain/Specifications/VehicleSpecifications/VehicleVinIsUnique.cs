@@ -10,18 +10,17 @@ namespace P5TheCarHub.Core.Specifications.VehicleSpecifications
     public class VehicleVinIsUnique : ISpecification<Vehicle>
     {
         
-        private readonly IUnitOfWork _unitOfwork;
+        private readonly IVehicleRepository _vehicleRepo;
 
-        public VehicleVinIsUnique(IUnitOfWork unitOfwork)
+        public VehicleVinIsUnique(IVehicleRepository vehicleRepo)
         {
-            
-            _unitOfwork = unitOfwork;
+            _vehicleRepo = vehicleRepo;
         }
 
         public bool IsSatisfiedBy(Vehicle candidate)
         {
 
-            var vehicle = _unitOfwork.Vehicles.GetByVin(candidate.VIN.ToUpper());
+            var vehicle = _vehicleRepo.GetByVin(candidate.VIN.ToUpper());
 
             if (vehicle != null && vehicle?.Id != candidate.Id)
                 return false;

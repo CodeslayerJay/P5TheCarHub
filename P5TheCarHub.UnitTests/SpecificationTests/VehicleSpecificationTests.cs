@@ -10,11 +10,11 @@ namespace P5TheCarHub.UnitTests.SpecificationTests
 {
     public class VehicleSpecificationTests
     {
-        private readonly UnitOfWorkMock _unitOfWork;
+        private readonly VehicleRepositoryMock _vehicleRepo;
 
         public VehicleSpecificationTests()
         {
-            _unitOfWork = new UnitOfWorkMock();
+            _vehicleRepo = new VehicleRepositoryMock();
         }
 
         [Fact]
@@ -46,7 +46,7 @@ namespace P5TheCarHub.UnitTests.SpecificationTests
         {
             var vehicle = new Vehicle { VIN = "1234-1234" };
 
-            var spec = new VehicleVinIsUnique(_unitOfWork);
+            var spec = new VehicleVinIsUnique(_vehicleRepo);
 
             var result = spec.IsSatisfiedBy(vehicle);
 
@@ -58,7 +58,7 @@ namespace P5TheCarHub.UnitTests.SpecificationTests
         {
             var vehicle = new Vehicle { VIN = "1234-1234-NEW-TESTING" };
 
-            var spec = new VehicleVinIsUnique(_unitOfWork);
+            var spec = new VehicleVinIsUnique(_vehicleRepo);
 
             var result = spec.IsSatisfiedBy(vehicle);
 
@@ -68,10 +68,10 @@ namespace P5TheCarHub.UnitTests.SpecificationTests
         [Fact]
         public void VehicleVinIsUniqueSpec_WhenUpdatingVin_IsSatisfied_ReturnsTrue()
         {
-            var vehicle = _unitOfWork.Vehicles.GetById(1);
+            var vehicle = _vehicleRepo.GetById(1);
             vehicle.VIN = "new vin number for tests";
 
-            var spec = new VehicleVinIsUnique(_unitOfWork);
+            var spec = new VehicleVinIsUnique(_vehicleRepo);
 
             var result = spec.IsSatisfiedBy(vehicle);
 
@@ -81,10 +81,10 @@ namespace P5TheCarHub.UnitTests.SpecificationTests
         [Fact]
         public void VehicleVinIsUniqueSpec_WhenUpdatingVehicleButNotVin_IsSatisfied_ReturnsTrue()
         {
-            var vehicle = _unitOfWork.Vehicles.GetById(1);
+            var vehicle = _vehicleRepo.GetById(1);
             vehicle.Year = 2015;
 
-            var spec = new VehicleVinIsUnique(_unitOfWork);
+            var spec = new VehicleVinIsUnique(_vehicleRepo);
 
             var result = spec.IsSatisfiedBy(vehicle);
 

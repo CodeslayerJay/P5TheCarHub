@@ -39,7 +39,7 @@ namespace P5TheCarHub.Core.Services
             if (!vehicleGreaterThanYearSpec.IsSatisfiedBy(vehicle))
                 throw new VehicleNotGreaterThanRequiredYearException(vehicleGreaterThanYearSpec.RequiredYear);
 
-            var vehicleVinIsUniqueSpec = new VehicleVinIsUnique(_unitOfWork);
+            var vehicleVinIsUniqueSpec = new VehicleVinIsUnique(_unitOfWork.Vehicles);
             if (!vehicleVinIsUniqueSpec.IsSatisfiedBy(vehicle))
                 throw new DuplicateVehicleVinException(vehicle.VIN);
 
@@ -74,7 +74,7 @@ namespace P5TheCarHub.Core.Services
             if(!vehicleExistsSpec.IsSatisfiedBy(vehicleToUpdate))
                 throw new VehicleNotFoundException(vehicle.Id);
 
-            var vehicleVinIsUniqueSpec = new VehicleVinIsUnique(_unitOfWork);
+            var vehicleVinIsUniqueSpec = new VehicleVinIsUnique(_unitOfWork.Vehicles);
             if (!vehicleVinIsUniqueSpec.IsSatisfiedBy(vehicle))
                 throw new DuplicateVehicleVinException(vehicle.VIN);
 
