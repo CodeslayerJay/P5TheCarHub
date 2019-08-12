@@ -1,8 +1,117 @@
-﻿@{
+﻿@model HomeViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="section-area col-12">
+    <div class="text-center">
+        <div class="jumbotron">
+            <h1 class="display-3">TheCarHub</h1>
+            <p class="lead">We can help you find your next vehicle.</p>
+
+            <p class="lead mt-5">
+                <a class="btn btn-primary btn-lg" asp-action="Index" asp-controller="Inventory" role="button">View Inventory</a>
+            </p>
+        </div>
+    </div>
 </div>
+
+<div class="section-area">
+    <h3>Latest Additions</h3>
+    <div class="row pt-5">
+        @if (Model.Cars.Any())
+        {
+            @foreach(var car in Model.Cars)
+            {
+                <div class="card text-white bg-primary mb-3 col-4">
+                    <div class="card-header">@car.FullCarName</div>
+                    <div class="card-body">
+                        @if (car.IsSold)
+                        {
+                            <h4 class="card-title">SOLD!</h4>
+                        }
+                        else
+                        {
+                            <h4 class="card-title">@car.SalePrice.ToString("c")</h4>
+                        }
+
+                        @if (car.MainPhoto != null)
+                        {
+                            <img src="@car.MainPhoto.ImageUrl" height="200" width="300"/>
+                        }
+                        else
+                        {
+                            <img src="~/img/car-suv-blank.png" height="200" width="400"/>
+                        }
+
+                        <p class="card-text pt-3">
+                            @car.Mileage.ToString("N0") mile(s)
+                        </p>
+                    </div>
+                </div>
+            }
+            
+        }
+    </div>
+</div>
+
+<div class="section-area">
+    <h3>Browse Vehicle Types</h3>
+    <hr />
+    <div class="row pt-5 p-3">
+        <ul class="list-inline">
+            @foreach (var carType in Model.CarTypesAndQuantity)
+            {
+                @if (carType.Value > 0)
+                {
+                    var type = (int)carType.Key;
+                    <li class="list-inline-item">
+                        <h5>
+                            <a asp-controller="Inventory" asp-action="Index" asp-route-type="@type">
+                                @carType.Key (@carType.Value.ToString())
+                            </a> /
+                        </h5>
+                    </li>
+                }
+
+            }
+        </ul>
+    </div>
+
+    <h3 class="mt-5">Browse By Price Range</h3>
+    <hr />
+    <div class="row pt-5 p-3">
+        <ul class="list-inline">
+            <li class="list-inline-item">
+                <h5>
+                    <a asp-controller="Inventory" asp-action="Index" asp-route-minPrice="500" asp-route-maxPrice="2000">
+                        $500-$2,000
+                    </a> /
+                </h5>
+            </li>
+            <li class="list-inline-item">
+                <h5>
+                    <a asp-controller="Inventory" asp-action="Index" asp-route-minPrice="2000" asp-route-maxPrice="5000"> 
+                        $2,000-$5,000
+                    </a> /
+                </h5>
+            </li>
+            <li class="list-inline-item">
+                <h5>
+                    <a asp-controller="Inventory" asp-action="Index" asp-route-minPrice="5000" asp-route-maxPrice="10000">
+                        $5,000-$10,000
+                    </a> /
+                </h5>
+            </li>
+            <li class="list-inline-item">
+                <h5>
+                    <a asp-controller="Inventory" asp-action="Index" asp-route-minPrice="10000">
+                        $10,000+
+                    </a> /
+                </h5>
+            </li>
+        </ul>
+    </div>
+</div>
+
+

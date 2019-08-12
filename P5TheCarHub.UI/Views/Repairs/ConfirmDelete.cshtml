@@ -1,0 +1,39 @@
+﻿@model RepairViewModel
+@{
+    ViewData["Title"] = "Inventory Management";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+
+<div class="pt-5">
+    <h4 class="text-center">Delete Repair</h4>
+
+    <div class="row pt-3">
+        <div class="col-6 m-auto card">
+            <form method="post" asp-action="Delete" asp-controller="Repairs">
+                <input asp-for="Id" type="hidden" value="@Model.Id" />
+                <input asp-for="CarId" type="hidden" value="@Model.CarId"/>
+
+                <div class="form-group p-3">
+                    <h5 class="pt-1 text-center">Are you sure you want to delete?</h5>
+                    <dl class="row pt-3">
+                        <dt class="col-sm-4">Name</dt>
+                        <dd class="col-sm-6">@Model.Name</dd>
+                        <dt class="col-sm-4">Repair Cost</dt>
+                        <dd class="col-sm-6">@Model.Cost.ToString("c")</dd>
+                        <dt class="col-sm-4">Repair Date</dt>
+                        <dd class="col-sm-6">@Model.RepairDate.ToShortDateString()</dd>
+                        <dt class="col-sm-4">Note</dt>
+                        <dd class="col-sm-6">@Model.Details</dd>
+                    </dl>
+                </div>
+                
+                <hr />
+                <div class="form-group">
+                    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                    <a asp-controller="Cars" asp-action="Details" asp-route-id="@Model.CarId" class="btn">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

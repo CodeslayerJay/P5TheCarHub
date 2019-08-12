@@ -1,0 +1,125 @@
+﻿@model ContactFormModel
+
+@{
+    ViewData["Title"] = "Contact Us!";
+}
+
+@if (TempData["ContactSuccess"] != null)
+{
+    <div class="alert alert-success">
+        <h5 class="alert-header">Thanks for submitting your request!</h5>
+        <p>
+            This is a demo, you can either send another request or go back to
+            <a asp-action="Index" asp-controller="Home">Home</a>
+        </p>
+    </div>
+}
+
+<div class="row pt-5">
+    <div class="col-6">
+        <h4 class="display-4">Contact Us</h4>
+        <address>
+            Address: 123 Street<br />
+            Hours: M-F 8AM to 5PM<br />
+            Phone: 555-555-555
+        </address>
+        <hr />
+        @if (Model.Car != null)
+        {
+            <div class="card p-3 mb-3">
+                <div class="media">
+                    @if (Model.Car.Photo != null)
+                    {
+                        <img src="@Model.Car.Photo" class="mr-3" alt="...">
+                    }
+
+                    <div class="media-body">
+                        <h5 class="mt-0">@Model.Car.FullCarName</h5>
+                        @Model.Car.SalePrice | @Model.Car.Mileage mile(s) | VIN: @Model.Car.VIN
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+
+    <div class="col-6">
+       <form asp-action="Contact" asp-controller="Home" method="post">
+            <div class="form-group">
+                <label asp-for="Name" class="label-col"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label asp-for="Email" class="label-col"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="PhoneNumber" class="label-col"></label>
+                    <input asp-for="PhoneNumber" class="form-control" type="tel" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            @if (Model.Car == null)
+            {
+                <div class="form-group">
+                    <label asp-for="CarInfo" class="label-col">Name or type of vehicle your are looking for:</label>
+                    <input asp-for="CarInfo" class="form-control" />
+                    <span asp-validation-for="CarInfo" class="text-danger"></span>
+                </div>
+            }
+            else
+            {
+                <input asp-for="CarInfo" type="hidden" value="carId: @Model.Car.Id name:@Model.Car.FullCarName vin:@Model.Car.VIN " />
+            }
+
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label class="form-label">Preferred Contact Method</label><br />
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ContactMethod" id="inlineRadio1" value="phone">
+                        <label class="form-check-label" for="inlineRadio1">Phone</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ContactMethod" id="inlineRadio2" value="email">
+                        <label class="form-check-label" for="inlineRadio2">Email</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ContactMethod" id="inlineRadio2" value="both" checked="checked">
+                        <label class="form-check-label" for="inlineRadio2">Both</label>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <label asp-for="BestTimeToCall"></label>
+                    <select name="BestTimeToCall" class="custom-select">
+                        <option value="Morning" selected="selected">Morning</option>
+                        <option value="Afternoon">Afternoon</option>
+                        <option value="Evening">Evening</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Note" class="label-col">Additional Information</label>
+                <textarea asp-for="Note" rows="5" class="form-control form-textarea"></textarea>
+            </div>
+
+            <hr />
+            <div class="form-group">
+                <button class="btn btn-primary btn-wide" type="submit">Submit</button>
+                <a asp-action="Index" asp-controller="Home" class="btn btn-default">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
