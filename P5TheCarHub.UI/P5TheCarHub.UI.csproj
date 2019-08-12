@@ -17,4 +17,11 @@
     <ProjectReference Include="..\P5TheCarHub.Domain\P5TheCarHub.Core.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Models\Validators\" />
+    <Folder Include="Models\ViewModels\" />
+    <Folder Include="wwwroot\vehicle_images\" />
+  </ItemGroup>
+
 </Project>
