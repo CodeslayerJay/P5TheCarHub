@@ -1,0 +1,45 @@
+﻿
+/*.form-control {
+    background-color: #111!important;
+    color: #ccc!important;
+}
+
+select {
+    background-color: #111!important;
+    color: #ccc!important;
+}
+
+input[disabled] {
+    background-color: #555!important;
+}*/
+
+.tab-content.card {
+    border-top: none;
+    border-color: #ccc;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.navbar {
+    padding: 4px!important;
+}
+
+.navbar .container {
+    padding: 0px;
+    margin: 0px 5px;
+}
+
+.alert-dismissible {
+    position: fixed;
+    top: 50px;
+    right: 5px;
+    width: 30%;
+    z-index: 500;
+    padding: 20px;
+    
+}
+
+input.form-control-plaintext {
+    border-bottom: 1px solid #ccc;
+    border-radius: 0px;
+}
