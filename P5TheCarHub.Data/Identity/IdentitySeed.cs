@@ -16,14 +16,13 @@ namespace P5TheCarHub.Infrastructure.Identity
         {
             using (var scope = app.ApplicationServices.CreateScope())
             {
-                var userManager = (UserManager<IdentityUser>)scope.ServiceProvider.GetService(typeof(UserManager<IdentityUser>));
+                var userManager = (UserManager<ApplicationUser>)scope.ServiceProvider.GetService(typeof(UserManager<ApplicationUser>));
                
-                IdentityUser user = await userManager.FindByIdAsync(AdminUser);
+                ApplicationUser user = await userManager.FindByIdAsync(AdminUser);
 
                 if (user == null)
                 {
-                    user = new IdentityUser("Admin");
-                    await userManager.CreateAsync(user, AdminPassword);
+                   await userManager.CreateAsync(new ApplicationUser("Admin"), AdminPassword);
                 }
             }
         }

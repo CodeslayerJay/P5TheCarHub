@@ -53,11 +53,11 @@ namespace P5TheCarHub.UI
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("P5Referential")));
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("P5Identity")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddSession();
@@ -92,7 +92,7 @@ namespace P5TheCarHub.UI
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            IdentitySeed.EnsurePopulated(app);
+            //IdentitySeed.EnsurePopulated(app);
         }
     }
 }

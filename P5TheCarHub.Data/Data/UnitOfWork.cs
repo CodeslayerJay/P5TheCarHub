@@ -12,13 +12,21 @@ namespace P5TheCarHub.Infrastructure.Data
     {
         private readonly ApplicationDbContext _context;
 
-        public UnitOfWork(ApplicationDbContext dbContext)
+        public UnitOfWork(ApplicationDbContext dbContext, IInvoiceRepository invoiceRepository,
+            IPhotoRepository photoRepository, IRepairRepository repairRepository,
+            IVehicleRepository vehicleRepository)
         {
             _context = dbContext;
-            Vehicles = new VehicleRepository(_context);
-            Invoices = new InvoiceRepository(_context);
-            Repairs = new RepairRepository(_context);
-            Photos = new PhotoRepository(_context);
+            // USE This process for using with a console app without DI
+            //Vehicles = new VehicleRepository(_context);
+            //Invoices = new InvoiceRepository(_context);
+            //Repairs = new RepairRepository(_context);
+            //Photos = new PhotoRepository(_context);
+            Invoices = invoiceRepository;
+            Photos = photoRepository;
+            Repairs = repairRepository;
+            Vehicles = vehicleRepository;
+
         }
 
         public IInvoiceRepository Invoices { get; set; }
