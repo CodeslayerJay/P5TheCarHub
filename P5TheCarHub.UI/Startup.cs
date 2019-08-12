@@ -19,7 +19,6 @@ using P5TheCarHub.Core.Services;
 using P5TheCarHub.Infrastructure.Data;
 using P5TheCarHub.Infrastructure.Data.Repositories;
 using P5TheCarHub.Infrastructure.Identity;
-using P5TheCarHub.Infrastructure.Logging;
 
 namespace P5TheCarHub.UI
 {

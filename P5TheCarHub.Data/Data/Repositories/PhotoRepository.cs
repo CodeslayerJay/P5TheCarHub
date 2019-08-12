@@ -29,8 +29,11 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
             _context.Remove(photo);
         }
 
-        public IEnumerable<Photo> GetAll()
+        public IEnumerable<Photo> GetAll(int? amount)
         {
+            if (amount.HasValue)
+                return _context.Photos.Where(x => x.Id > 0).Take(amount.Value).ToList();
+
             return _context.Photos.Where(x => x.Id > 0).ToList();
         }
 

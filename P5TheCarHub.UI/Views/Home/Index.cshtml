@@ -1,6 +1,6 @@
 ﻿@model HomeViewModel
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "TheCarHub";
 }
 
 <div class="section-area col-12">
@@ -18,7 +18,7 @@
 
 <div class="section-area">
     <h3>Latest Additions</h3>
-    <div class="row pt-5">
+    @*<div class="row pt-5">
         @if (Model.Cars.Any())
         {
             @foreach(var car in Model.Cars)
@@ -52,10 +52,10 @@
             }
             
         }
-    </div>
+    </div>*@
 </div>
 
-<div class="section-area">
+@*<div class="section-area">
     <h3>Browse Vehicle Types</h3>
     <hr />
     <div class="row pt-5 p-3">
@@ -112,6 +112,6 @@
             </li>
         </ul>
     </div>
-</div>
+</div>*@
 
 
