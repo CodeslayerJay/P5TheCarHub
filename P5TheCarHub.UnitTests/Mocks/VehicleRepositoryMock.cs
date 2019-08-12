@@ -99,8 +99,11 @@ namespace P5TheCarHub.UnitTests.Mocks
                 _context.Remove(vehicle);
         }
 
-        public IEnumerable<Vehicle> GetAll()
+        public IEnumerable<Vehicle> GetAll(int? amount)
         {
+            if (amount != null)
+                return _context.Take(amount.Value).ToList();
+
             return _context.ToList();
         }
 

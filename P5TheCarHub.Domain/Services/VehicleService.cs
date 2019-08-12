@@ -85,8 +85,11 @@ namespace P5TheCarHub.Core.Services
         }
         
 
-        public IEnumerable<Vehicle> GetAll()
+        public IEnumerable<Vehicle> GetAll(int? amount = null)
         {
+            if (amount.HasValue)
+                return _unitOfWork.Vehicles.GetAll(amount);
+
             return _unitOfWork.Vehicles.GetAll();
         }
 

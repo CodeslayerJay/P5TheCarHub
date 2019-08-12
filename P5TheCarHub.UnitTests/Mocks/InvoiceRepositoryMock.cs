@@ -57,8 +57,11 @@ namespace P5TheCarHub.UnitTests.Mocks
         }
 
 
-        public IEnumerable<Invoice> GetAll()
+        public IEnumerable<Invoice> GetAll(int? amount)
         {
+            if (amount != null)
+                return _context.Take(amount.Value).ToList();
+
             return _context.ToList();
         }
 

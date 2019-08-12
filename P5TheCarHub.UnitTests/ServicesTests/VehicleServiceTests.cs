@@ -126,7 +126,16 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             Assert.IsAssignableFrom<IEnumerable<Vehicle>>(result);
         }
 
-        
+        [Fact]
+        public void GetAll_WithAmount_ReturnsListOfVehiclesBasedOnAmount()
+        {
+            var result = _vehicleService.GetAll(1);
+
+            Assert.NotEmpty(result);
+            Assert.Single(result);
+        }
+
+
         [Fact]
         public void DeleteVehicle_WhenFound_FindsAndRemovesVehicle()
         {

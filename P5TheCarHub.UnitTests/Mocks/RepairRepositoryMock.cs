@@ -56,7 +56,7 @@ namespace P5TheCarHub.UnitTests.Mocks
                 _context.Remove(repair);
         }
 
-        public IEnumerable<Repair> GetAll()
+        public IEnumerable<Repair> GetAll(int? amount)
         {
             throw new NotImplementedException();
         }

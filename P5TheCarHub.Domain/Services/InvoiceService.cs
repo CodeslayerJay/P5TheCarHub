@@ -24,9 +24,9 @@ namespace P5TheCarHub.Core.Services
             
         }
 
-        public IEnumerable<Invoice> GetAll()
+        public IEnumerable<Invoice> GetAll(int? amount = null)
         {
-            return _unitOfWork.Invoices.GetAll();
+            return _unitOfWork.Invoices.GetAll(amount);
         }
 
         public Invoice GetInvoice(int id)

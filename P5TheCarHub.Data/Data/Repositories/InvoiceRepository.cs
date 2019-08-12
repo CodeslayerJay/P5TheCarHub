@@ -37,8 +37,11 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
         }
 
 
-        public IEnumerable<Invoice> GetAll()
+        public IEnumerable<Invoice> GetAll(int? amount = null)
         {
+            if (amount.HasValue)
+                return _context.Invoices.Where(x => x.Id > 0).Take(amount.Value).ToList();
+
             return _context.Invoices.Where(x => x.Id > 0).ToList();
         }
 

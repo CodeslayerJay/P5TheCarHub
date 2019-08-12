@@ -31,8 +31,11 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
                 _context.Remove(repair);
         }
 
-        public IEnumerable<Repair> GetAll()
+        public IEnumerable<Repair> GetAll(int? amount = null)
         {
+            if (amount.HasValue)
+                return _context.Repairs.Where(x => x.Id > 0).Take(amount.Value).ToList();
+
             return _context.Repairs.Where(x => x.Id > 0).ToList();
         }
 

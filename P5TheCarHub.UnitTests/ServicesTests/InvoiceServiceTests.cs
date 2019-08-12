@@ -5,6 +5,7 @@ using P5TheCarHub.Core.Services;
 using P5TheCarHub.UnitTests.Mocks;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 
@@ -28,7 +29,16 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             var result = _invoiceService.GetAll();
 
             Assert.NotEmpty(result);
-            Assert.IsAssignableFrom<IEnumerable<Invoice>>(result);
+            
+        }
+
+        [Fact]
+        public void GetAll_WithAmountSet_ReturnsTotalListOfInvoicesBasedOnAmount()
+        {
+            var result = _invoiceService.GetAll(1);
+
+            Assert.NotEmpty(result);
+            Assert.Single(result);
         }
 
         [Fact]

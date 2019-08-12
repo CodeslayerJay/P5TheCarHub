@@ -51,8 +51,11 @@ namespace P5TheCarHub.UnitTests.Mocks
             _context.Remove(photo);
         }
 
-        public IEnumerable<Photo> GetAll()
+        public IEnumerable<Photo> GetAll(int? amount)
         {
+            if (amount != null)
+                return _context.Take(amount.Value).ToList();
+
             return _context.Where(x => x.Id > 0).ToList();
         }
 
