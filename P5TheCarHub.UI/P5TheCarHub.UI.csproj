@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <Folder Include="Models\Validators\" />
-    <Folder Include="Models\ViewModels\" />
     <Folder Include="wwwroot\vehicle_images\" />
   </ItemGroup>
 

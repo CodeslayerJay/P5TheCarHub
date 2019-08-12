@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using P5TheCarHub.UI.Models;
+using P5TheCarHub.UI.Models.ViewModels;
+using P5TheCarHub.UI.Utilities;
 
 namespace P5TheCarHub.UI.Controllers
 {
@@ -61,7 +62,7 @@ namespace P5TheCarHub.UI.Controllers
                 catch(Exception ex)
                 {
                     _logger.LogError(ex.Message);
-                    TempData["Message"] = MagicStrings.GenericErrorMsg;
+                    TempData["Message"] = AppStrings.GenericErrorMsg;
                     return View();
                 }
                 
