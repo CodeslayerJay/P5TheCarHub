@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using P5TheCarHub.Infrastructure.Identity;
 using P5TheCarHub.UI.Models.ViewModels;
 using P5TheCarHub.UI.Utilities;
 
@@ -13,12 +14,12 @@ namespace P5TheCarHub.UI.Controllers
 {
     public class AccountController : Controller
     {
-        private SignInManager<IdentityUser> _signInManager;
-        private UserManager<IdentityUser> _userManager;
+        private SignInManager<ApplicationUser> _signInManager;
+        private UserManager<ApplicationUser> _userManager;
         private ILogger<AccountController> _logger;
 
-        public AccountController(SignInManager<IdentityUser> signInManger, 
-            UserManager<IdentityUser> userManager, ILogger<AccountController> logger)
+        public AccountController(SignInManager<ApplicationUser> signInManger, 
+            UserManager<ApplicationUser> userManager, ILogger<AccountController> logger)
         {
             _signInManager = signInManger;
             _userManager = userManager;
