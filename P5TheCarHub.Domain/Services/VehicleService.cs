@@ -35,10 +35,15 @@ namespace P5TheCarHub.Core.Services
         public Vehicle AddVehicle(Vehicle vehicle)
         {
 
-            var spec = new VehicleIsGreaterThanRequiredYear();
-            if (!spec.IsSatisfiedBy(vehicle))
-                throw new VehicleNotGreaterThanRequiredYearException(spec.RequiredYear);
+            var vehicleGreaterThanYearSpec = new VehicleIsGreaterThanRequiredYear();
+            if (!vehicleGreaterThanYearSpec.IsSatisfiedBy(vehicle))
+                throw new VehicleNotGreaterThanRequiredYearException(vehicleGreaterThanYearSpec.RequiredYear);
 
+            var vehicleVinIsUniqueSpec = new VehicleVinIsUnique(_unitOfWork);
+            if (!vehicleVinIsUniqueSpec.IsSatisfiedBy(vehicle))
+                throw new DuplicateVehicleVinException(vehicle.VIN);
+
+            vehicle.VIN = vehicle.VIN.ToUpper();
             vehicle.SalePrice = CalculateVehicleSalePrice(vehicle.PurchasePrice);
 
             var newVehicle = _unitOfWork.Vehicles.Add(vehicle);
@@ -65,8 +70,13 @@ namespace P5TheCarHub.Core.Services
             
             var vehicleToUpdate = GetVehicle(vehicle.Id);
 
-            if (vehicleToUpdate == null)
+            var vehicleExistsSpec = new VehicleExistsSpecification();
+            if(!vehicleExistsSpec.IsSatisfiedBy(vehicleToUpdate))
                 throw new VehicleNotFoundException(vehicle.Id);
+
+            var vehicleVinIsUniqueSpec = new VehicleVinIsUnique(_unitOfWork);
+            if (!vehicleVinIsUniqueSpec.IsSatisfiedBy(vehicle))
+                throw new DuplicateVehicleVinException(vehicle.VIN);
 
             vehicle.SalePrice = CalculateVehicleSalePrice(vehicle.PurchasePrice);
 
