@@ -80,7 +80,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void GetVehicle_ById_ReturnsVehicleOrNullWhenNotFound()
+        public void GetVehicle_WithId_ReturnsVehicleOrNullWhenNotFound()
         {
             var result = _vehicleService.GetVehicle(1);
 
@@ -88,9 +88,9 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void GetVehicle_ByVin_ReturnsVehicleOrNullWhenNotFound()
+        public void GetVehicleByVin_WhenCalled_ReturnsVehicleOrNullWhenNotFound()
         {
-            var result = _vehicleService.GetVehicle("1234-1234");
+            var result = _vehicleService.GetVehicleByVin("1234-1234");
 
             Assert.NotNull(result);
         }

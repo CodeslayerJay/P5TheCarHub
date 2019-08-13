@@ -57,7 +57,7 @@ namespace P5TheCarHub.Core.Services
             return _unitOfWork.Vehicles.GetById(id);
         }
 
-        public Vehicle GetVehicle(string vin)
+        public Vehicle GetVehicleByVin(string vin)
         {
             if (String.IsNullOrEmpty(vin))
                 return null;
