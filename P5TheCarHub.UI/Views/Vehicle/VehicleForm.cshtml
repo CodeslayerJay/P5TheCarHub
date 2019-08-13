@@ -4,19 +4,15 @@
 }
 
 <div class="pt-5">
-    <h4 class="text-center">Add Vehicle</h4>
+    <h4 class="text-center">Manage Vehicle</h4>
 
-    <div class="row pt-1">
+    <div class="row pt-2">
         <div class="col-10 m-auto">
             <form method="post" asp-action="Save" asp-controller="Vehicle">
                 <input asp-for="VehicleId" type="hidden" />
 
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="main-tab" data-toggle="tab" href="#main" role="tab" aria-controls="main" aria-selected="true">Vehicle</a>
-                    </li>
-                </ul>
-                <div class="tab-content card p-3" id="myTabContent">
+                
+                <div class="card p-3">
                     <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="main-tab">
                         <div class="form-row">
                             <div class="col-9">
@@ -43,19 +39,19 @@
                                 <span asp-validation-for="Model" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-3">
-                                <label asp-for="Trim" class="col-form-label">Trim*</label>
+                                <label asp-for="Trim" class="col-form-label">Trim</label>
                                 <input asp-for="Trim" class="form-control form-control-sm" />
                                 <span asp-validation-for="Trim" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-3">
-                                <label asp-for="VIN" class="col-form-label">VIN*</label>
+                                <label asp-for="VIN" class="col-form-label">VIN</label>
                                 <input asp-for="VIN" class="form-control form-control-sm" />
                                 <span asp-validation-for="VIN" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-3">
-                                <label asp-for="Mileage" class="col-form-label">Mileage*</label>
+                                <label asp-for="Mileage" class="col-form-label">Mileage</label>
                                 <input asp-for="Mileage" class="form-control form-control-sm" />
                                 <span asp-validation-for="Mileage" class="text-danger"></span>
                             </div>
@@ -65,6 +61,7 @@
                                 <span asp-validation-for="Color" class="text-danger"></span>
                             </div>
                         </div>
+                        
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label asp-for="PurchasePrice" class="col-form-label">Purchase Price*</label>

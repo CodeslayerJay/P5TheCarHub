@@ -16,8 +16,6 @@ namespace P5CarSalesAppBasic.Models.Validators
         {
             
             RuleFor(x => x.VIN).Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty()
-                    .WithMessage("VIN is required.")
                 .MaximumLength(500)
                     .WithMessage("Maximum length is 500 characters.");
             RuleFor(x => x.Make).Cascade(CascadeMode.StopOnFirstFailure)
@@ -27,16 +25,17 @@ namespace P5CarSalesAppBasic.Models.Validators
                 .NotEmpty().WithMessage("Model is required.")
                 .MaximumLength(100).WithMessage("Maximum length is 100 characters.");
             RuleFor(x => x.Trim).Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage("Trim is required.")
                 .MaximumLength(100).WithMessage("Maximum length is 100 characters.");
             RuleFor(x => x.Color).Cascade(CascadeMode.StopOnFirstFailure)
                 .MaximumLength(100).WithMessage("Maximum length is 100 characters.");
-            
+
+
             RuleFor(x => x.Mileage).Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage("Mileage is required.")
-                .Must(Mileage => Double.TryParse(Mileage.ToString(), out double result))
+                .Must(Mileage => Double.TryParse(Mileage, out double result))
+                    .When(vm => vm.Mileage != null)
                     .WithMessage("Mileage must contain only numbers and commas.")
-                .Must(Mileage => double.Parse(Mileage.ToString()) >= 0)
+                .Must(Mileage => double.Parse(Mileage) >= 0)
+                    .When(vm => vm.Mileage != null)
                     .WithMessage("Mileage must 0 or greater.");
 
             RuleFor(x => x.Year).Cascade(CascadeMode.StopOnFirstFailure)
@@ -64,6 +63,8 @@ namespace P5CarSalesAppBasic.Models.Validators
                 .GreaterThanOrEqualTo(x => x.PurchaseDate).WithMessage("Date cannot be before purchase date.");
 
         }
+
+        
 
     }
 }
