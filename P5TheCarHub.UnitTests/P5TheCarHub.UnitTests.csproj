@@ -14,11 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ControllerTests\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\P5TheCarHub.Domain\P5TheCarHub.Core.csproj" />
+    <ProjectReference Include="..\P5TheCarHub.UI\P5TheCarHub.UI.csproj" />
   </ItemGroup>
 
 </Project>

@@ -8,5 +8,7 @@ namespace P5TheCarHub.UI.Utilities
     public static class AppStrings
     {
         public const string GenericErrorMsg = "There was an error. Please try again.";
+        public const int NotSet = 0;
+        public const string VehicleAddSuccessMsg = "Vehicle Added Successfullly";
     }
 }
