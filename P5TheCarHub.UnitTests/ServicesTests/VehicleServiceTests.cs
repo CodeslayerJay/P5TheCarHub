@@ -33,7 +33,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void AddVehicle_WhenCalled_StoresAndReturnsNewVehicle()
+        public void SaveVehicle_WhenCalled_StoresAndReturnsNewVehicle()
         {
             
             var vehicle = new Vehicle
@@ -50,7 +50,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
                 
             };
 
-            var result = _vehicleService.AddVehicle(vehicle);
+            var result = _vehicleService.SaveVehicle(vehicle);
             
             Assert.NotNull(result);
             Assert.Equal(3500M, result.SalePrice);
@@ -58,7 +58,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void AddVehicle_WhenVehicleYearIsNotGreaterThanRequiredYear_ThrowsVehicleNotGreaterThanRequiredYearException()
+        public void SaveVehicle_WhenVehicleYearIsNotGreaterThanRequiredYear_ThrowsVehicleNotGreaterThanRequiredYearException()
         {
 
             var vehicle = new Vehicle
@@ -75,7 +75,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 
             };
 
-            Assert.Throws<VehicleNotGreaterThanRequiredYearException>(() => _vehicleService.AddVehicle(vehicle));
+            Assert.Throws<VehicleNotGreaterThanRequiredYearException>(() => _vehicleService.SaveVehicle(vehicle));
 
         }
 
@@ -96,27 +96,19 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void UpdateVehicle_WhenFound_UpdatesAndReturnsVehicle()
+        public void SaveVehicle_WhenVehicleIdIsNotZero_UpdatesAndReturnsVehicle()
         {
             var vehicle = _vehicleService.GetVehicle(2);
             var orgMakeValue = vehicle.Make;
             vehicle.Make = "New Make";
 
-            var result = _vehicleService.UpdateVehicle(vehicle);
+            var result = _vehicleService.SaveVehicle(vehicle);
 
             Assert.NotNull(result);
             Assert.NotEqual(orgMakeValue, result.Make);
 
         }
-
-        [Fact]
-        public void UpdateVehicle_WhenNotFound_ThrowsVehicleNotFoundException()
-        {
-            var vehicle = new Vehicle();
-            
-            Assert.Throws<VehicleNotFoundException>(() => _vehicleService.UpdateVehicle(vehicle));
-        }
-
+        
         [Fact]
         public void GetAll_WhenCalled_ReturnsListOfVehicles()
         {
@@ -153,7 +145,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
                 SalePrice = 500
             };
 
-            var vehicle = _vehicleService.AddVehicle(seedVehicle);
+            var vehicle = _vehicleService.SaveVehicle(seedVehicle);
             Assert.NotNull(vehicle);
 
             _vehicleService.DeleteVehicle(vehicle.Id);

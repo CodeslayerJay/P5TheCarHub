@@ -5,10 +5,10 @@ namespace P5TheCarHub.Core.Interfaces.Services
 {
     public interface IRepairService
     {
-        Repair AddRepair(Repair repair);
+        Repair SaveRepair(Repair repair);
         void DeleteRepair(int id);
         IEnumerable<Repair> GetAllByVehicleId(int vehicleId);
         Repair GetById(int id);
-        Repair UpdateRepair(Repair repair);
+        
     }
 }

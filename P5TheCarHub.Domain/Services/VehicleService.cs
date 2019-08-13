@@ -32,7 +32,7 @@ namespace P5TheCarHub.Core.Services
             return purchasePrice + MARKUPFEE;
         }
 
-        public Vehicle AddVehicle(Vehicle vehicle)
+        public Vehicle SaveVehicle(Vehicle vehicle)
         {
 
             var vehicleGreaterThanYearSpec = new VehicleIsGreaterThanRequiredYear();
@@ -46,10 +46,13 @@ namespace P5TheCarHub.Core.Services
             vehicle.VIN = vehicle.VIN.ToUpper();
             vehicle.SalePrice = CalculateVehicleSalePrice(vehicle.PurchasePrice);
 
-            var newVehicle = _unitOfWork.Vehicles.Add(vehicle);
+
+            if(vehicle.Id == 0)
+                _unitOfWork.Vehicles.Add(vehicle);
+            
             _unitOfWork.SaveChanges();
 
-            return newVehicle;
+            return vehicle;
         }
 
         public Vehicle GetVehicle(int id)
@@ -64,26 +67,6 @@ namespace P5TheCarHub.Core.Services
 
             return _unitOfWork.Vehicles.GetByVin(vin);
         }
-
-        public Vehicle UpdateVehicle(Vehicle vehicle)
-        {
-            
-            var vehicleToUpdate = GetVehicle(vehicle.Id);
-
-            var vehicleExistsSpec = new VehicleExistsSpecification();
-            if(!vehicleExistsSpec.IsSatisfiedBy(vehicleToUpdate))
-                throw new VehicleNotFoundException(vehicle.Id);
-
-            var vehicleVinIsUniqueSpec = new VehicleVinIsUnique(_unitOfWork.Vehicles);
-            if (!vehicleVinIsUniqueSpec.IsSatisfiedBy(vehicle))
-                throw new DuplicateVehicleVinException(vehicle.VIN);
-
-            vehicle.SalePrice = CalculateVehicleSalePrice(vehicle.PurchasePrice);
-
-            _unitOfWork.SaveChanges();
-            return vehicle;
-        }
-        
 
         public IEnumerable<Vehicle> GetAll(int? amount = null)
         {

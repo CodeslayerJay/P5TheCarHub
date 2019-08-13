@@ -5,13 +5,12 @@ namespace P5TheCarHub.Core.Interfaces.Services
 {
     public interface IVehicleService
     {
-        Vehicle AddVehicle(Vehicle vehicle);
+        Vehicle SaveVehicle(Vehicle vehicle);
         void DeleteVehicle(int id);
         IEnumerable<Vehicle> GetAll(int? amount = null);
         Vehicle GetVehicle(int id);
         Vehicle GetVehicleByVin(string vin);
         IEnumerable<Vehicle> GetVehiclesBySoldStatus(bool isSold);
-        Vehicle UpdateVehicle(Vehicle vehicle);
         
     }
 }

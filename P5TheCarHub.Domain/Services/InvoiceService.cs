@@ -39,26 +39,32 @@ namespace P5TheCarHub.Core.Services
             return _unitOfWork.Invoices.GetByVehicleId(vehicleId);
         }
 
-        public Invoice AddInvoice(Invoice invoice)
+        public Invoice SaveInvoice(Invoice invoice)
         {
 
             var vehicle = _unitOfWork.Vehicles.GetById(invoice.VehicleId);
 
-            var spec = new VehicleExistsSpecification();
-            if (!spec.IsSatisfiedBy(vehicle))
+            var vehicleExistsSpec = new VehicleExistsSpecification();
+            if (!vehicleExistsSpec.IsSatisfiedBy(vehicle))
                 throw new VehicleNotFoundException(invoice.VehicleId);
 
-            if(!CheckInvoiceIsUniqueToVehicle(invoice))
-                throw new InvoiceAlreadyExistsForVehicleException(invoice.VehicleId);
-
+            if(invoice.Id == 0 || invoice.Id != vehicle.Id)
+            {
+                var uniqueInvoiceSpec = new UniqueInvoiceSpecification(_unitOfWork.Invoices);
+                if (!uniqueInvoiceSpec.IsSatisfiedBy(invoice))
+                    throw new InvoiceAlreadyExistsForVehicleException(invoice.VehicleId);
+            }
+            
             invoice.InvoiceNumber = GenerateInvoiceNumber(invoice.VehicleId);
 
             SetVehicleToSoldStatus(vehicle);
 
-            var newInvoice = _unitOfWork.Invoices.Add(invoice);
+            if(invoice.Id == 0)
+                _unitOfWork.Invoices.Add(invoice);
+
             _unitOfWork.SaveChanges();
 
-            return newInvoice;
+            return invoice;
         }
 
         private void SetVehicleToSoldStatus(Vehicle vehicle)
@@ -70,23 +76,6 @@ namespace P5TheCarHub.Core.Services
         {
             var invoiceCount = _unitOfWork.Invoices.GetAll().Count() + 1;
             return $"{APP_NAME_INITIALS}-V{vehicleId}I{invoiceCount}";
-        }
-
-        public Invoice UpdateInvoice(Invoice invoice)
-        {
-            var invoiceToUpdate = GetInvoice(invoice.Id);
-
-            if (invoiceToUpdate == null)
-                throw new InvoiceNotFoundException(invoice.Id);
-
-            if(invoice.VehicleId != invoiceToUpdate.VehicleId)
-            {
-                if (!CheckInvoiceIsUniqueToVehicle(invoice))
-                    throw new InvoiceAlreadyExistsForVehicleException(invoice.VehicleId);
-            }
-            
-            _unitOfWork.SaveChanges();
-            return invoiceToUpdate;
         }
 
         private bool CheckInvoiceIsUniqueToVehicle(Invoice invoice)

@@ -12,19 +12,19 @@ namespace P5TheCarHub.Infrastructure.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
 
-        //private readonly string _connString = "Server=(localdb)\\MSSQLLocalDB;Database=P5TheCarHub_App;Trusted_Connection=True;MultipleActiveResultSets=true";
+        private readonly string _connString = "Server=(localdb)\\MSSQLLocalDB;Database=P5TheCarHub_App;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-        //public ApplicationDbContext()
-        //{ }
+        public ApplicationDbContext()
+        { }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
 
-        //        optionsBuilder.UseSqlServer(_connString);
-        //    }
-        //}
+                optionsBuilder.UseSqlServer(_connString);
+            }
+        }
 
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Invoice> Invoices { get; set; }

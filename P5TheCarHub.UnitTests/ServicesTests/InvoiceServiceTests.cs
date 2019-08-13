@@ -58,35 +58,35 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void AddInvoice_WhenIsUniqueToVehicle_AddsAndReturnsNewlyCreatedInvoice()
+        public void SaveInvoice_WhenIsUniqueToVehicle_AddsAndReturnsNewlyCreatedInvoice()
         {
             var invoice = new Invoice { Id = 3, CustomerName = "John Doe", DateSold = DateTime.Now, PriceSold = 3000, VehicleId = 3, InvoiceNumber = "TCH-V3" };
 
-            var result = _invoiceService.AddInvoice(invoice);
+            var result = _invoiceService.SaveInvoice(invoice);
 
             Assert.NotNull(result);
             Assert.NotEqual("TCH-V3", result.InvoiceNumber);
         }
 
         [Fact]
-        public void AddInvoice_WhenVehicleAlreadyHasInvoice_ThrowsInvoiceAlreadyExistsForVehicleException()
+        public void SaveInvoice_WhenVehicleAlreadyHasInvoice_ThrowsInvoiceAlreadyExistsForVehicleException()
         {
             var invoice = new Invoice { CustomerName = "John Doe", DateSold = DateTime.Now, PriceSold = 3000, VehicleId = 1, InvoiceNumber = "TCH-V3" };
 
-            Assert.Throws<InvoiceAlreadyExistsForVehicleException>(() => _invoiceService.AddInvoice(invoice));
+            Assert.Throws<InvoiceAlreadyExistsForVehicleException>(() => _invoiceService.SaveInvoice(invoice));
 
         }
 
         [Fact]
-        public void AddInvoice_WhenVehicleDoesNotExist_ThrowsVehicleNotFoundException()
+        public void SaveInvoice_WhenVehicleDoesNotExist_ThrowsVehicleNotFoundException()
         {
             var invoice = new Invoice { Id = 3, CustomerName = "John Doe", DateSold = DateTime.Now, PriceSold = 3000, InvoiceNumber = "TCH-V3" };
 
-            Assert.Throws<VehicleNotFoundException>(() => _invoiceService.AddInvoice(invoice));
+            Assert.Throws<VehicleNotFoundException>(() => _invoiceService.SaveInvoice(invoice));
         }
 
         [Fact]
-        public void UpdateInvoice_WhenCalled_UpdatesAndReturnsInvoice()
+        public void SaveInvoice_WhenInvoiceIdNotZero_UpdatesAndReturnsInvoice()
         {
             var invoice = _invoiceService.GetInvoice(id: 1);
             var orgNameValue = invoice.CustomerName;
@@ -95,7 +95,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             
             invoice.InvoiceNumber = "TEST";
 
-            var result = _invoiceService.UpdateInvoice(invoice);
+            var result = _invoiceService.SaveInvoice(invoice);
 
             Assert.NotNull(result);
         }

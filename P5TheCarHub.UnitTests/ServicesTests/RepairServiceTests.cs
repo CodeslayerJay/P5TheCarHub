@@ -24,7 +24,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void AddRepair_WhenCalled_UpdatesVehicleSalePriceAndReturnsNewlyCreatedRepair()
+        public void SaveRepair_WhenCalled_UpdatesVehicleSalePriceAndReturnsNewlyCreatedRepair()
         {
             var vehicle = _vehicleService.GetVehicle(id: 2);
             var currentSalePrice = vehicle.SalePrice;
@@ -32,7 +32,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             var repair = new Repair { Description = "Wash", Details = "Washed and waxed car", Cost = 5, VehicleId = vehicle.Id,
                 RepairDate = DateTime.Today };
 
-            var result = _repairService.AddRepair(repair);
+            var result = _repairService.SaveRepair(repair);
 
             Assert.NotNull(result);
             Assert.NotEqual(0, result.Id);
@@ -40,7 +40,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void AddRepair_WhenVehicleDoesNotExist_ThrowsVehicleNotFoundException()
+        public void SaveRepair_WhenVehicleDoesNotExist_ThrowsVehicleNotFoundException()
         {
             var repair = new Repair
             {
@@ -50,7 +50,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
                 RepairDate = DateTime.Today
             };
 
-            Assert.Throws<VehicleNotFoundException>(() => _repairService.AddRepair(repair));
+            Assert.Throws<VehicleNotFoundException>(() => _repairService.SaveRepair(repair));
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 
 
         [Fact]
-        public void UpdateRepair_WhenRepairIsFound_UpdatesVehicleSalePriceAndReturnsUpdatedRepair()
+        public void SaveRepair_WhenRepairIsFound_AndRepairIdIsNotZero_UpdatesVehicleSalePriceAndReturnsUpdatedRepair()
         {
             var vehicle = _vehicleService.GetVehicle(id: 1);
             var currentSalePrice = vehicle.SalePrice;
@@ -85,7 +85,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             var repair = _repairService.GetById(id: 1);
             repair.Cost = 10;
 
-            var result = _repairService.UpdateRepair(repair);
+            var result = _repairService.SaveRepair(repair);
 
             Assert.NotNull(result);
             Assert.Equal((currentSalePrice + result.Cost), vehicle.SalePrice);
@@ -105,7 +105,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
                 RepairDate = DateTime.Today
             };
 
-            var result = _repairService.AddRepair(repair);
+            var result = _repairService.SaveRepair(repair);
             var orgCount = _repairService.GetAllByVehicleId(vehicleId).Count();
 
             _repairService.DeleteRepair(result.Id);

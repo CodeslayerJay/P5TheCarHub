@@ -61,7 +61,7 @@ namespace P5TheCarHub.UI.Controllers
                 {
                     if (formModel.VehicleId == AppStrings.NotSet)
                     {
-                        _vehicleService.AddVehicle(formModel.Adapt<Vehicle>());
+                        _vehicleService.SaveVehicle(formModel.Adapt<Vehicle>());
                         TempData["SuccessMessage"] = AppStrings.VehicleAddSuccessMsg;
                         return RedirectToAction(nameof(Add));
                     }

@@ -19,7 +19,7 @@ namespace P5TheCarHub.Core.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Photo AddPhoto(Photo photo, bool isMain = false)
+        public Photo SavePhoto(Photo photo, bool isMain = false)
         {
             var vehicle = _unitOfWork.Vehicles.GetById(photo.VehicleId);
 
@@ -35,10 +35,12 @@ namespace P5TheCarHub.Core.Services
             if (!CheckCurrentMainPhotoExists(photo.VehicleId))
                 photo.IsMain = true;
 
-            var newPhoto = _unitOfWork.Photos.Add(photo);
+            if(photo.Id == 0)
+                _unitOfWork.Photos.Add(photo);
+
             _unitOfWork.SaveChanges();
 
-            return newPhoto;
+            return photo;
             
         }
 
