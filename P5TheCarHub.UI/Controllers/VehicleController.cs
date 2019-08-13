@@ -21,14 +21,14 @@ namespace P5TheCarHub.UI.Controllers
     [Route("manage/vehicles")]
     public class VehicleController : Controller
     {
-        private readonly Adapter _mapper;
+        
         private readonly IVehicleService _vehicleService;
         private readonly ILogger<VehicleController> _logger;
         private readonly VehicleValidationService _vehicleValidator;
 
         public VehicleController(IVehicleService vehicleService, ILogger<VehicleController> logger)
         {
-            _mapper = new Adapter();
+          
             _vehicleService = vehicleService;
             _logger = logger;
             _vehicleValidator = new VehicleValidationService();
@@ -86,6 +86,21 @@ namespace P5TheCarHub.UI.Controllers
 
         }
 
-        
+        [HttpGet("details/{id}")]
+        public IActionResult Details(int id, string vehicleVin = null)
+        {
+
+            var vehicle = (String.IsNullOrEmpty(vehicleVin)) ? _vehicleService.GetVehicle(id) : _vehicleService.GetVehicleByVin(vehicleVin);
+
+            if (vehicle == null)
+            {
+                ViewData["InfoMessage"] = "Vehicle not found";
+                return RedirectToAction(nameof(Index));
+            }
+           
+            var vm = vehicle.Adapt<VehicleViewModel>();
+            
+            return View(vm);
+        }
     }
 }

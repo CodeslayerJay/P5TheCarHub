@@ -1,0 +1,83 @@
+﻿@model VehicleViewModel
+<div class="form-row">
+    <div class="col-10">
+        <h5 class="text-muted pt-1 pb-3">Vehicle Information</h5>
+    </div>
+    @*<div class="col-2">
+        @if(Model.Invoice == null)
+        {
+            <p>Sale Price: @Model.SalePrice.ToString("c")</p>
+        }
+        else
+        {
+            <p>Vehicle Sold For: @Model.Invoice.PriceSold.ToString("c")</p>
+        }
+
+    </div>*@
+
+</div>
+<div class="form-row">
+    <div class="form-group col-md-2">
+        <label asp-for="Year" class="col-form-label">Year</label>
+        <input asp-for="Year" class="form-control form-control-sm" maxlength="4" disabled/>
+
+    </div>
+    <div class="form-group col-md-3">
+        <label asp-for="Make" class="col-form-label">Make</label>
+        <input asp-for="Make" class="form-control form-control-sm" disabled />
+
+    </div>
+    <div class="form-group col-md-3">
+        <label asp-for="Model" class="col-form-label">Model</label>
+        <input asp-for="Model" class="form-control form-control-sm" disabled />
+
+    </div>
+    <div class="form-group col-md-3">
+        <label asp-for="Trim" class="col-form-label">Trim</label>
+        <input asp-for="Trim" class="form-control form-control-sm" disabled />
+
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-3">
+        <label asp-for="VIN" class="col-form-label">VIN</label>
+        <input asp-for="VIN" class="form-control form-control-sm" disabled />
+
+    </div>
+    <div class="form-group col-md-3">
+        <label asp-for="Mileage" class="col-form-label">Mileage</label>
+        <input asp-for="Mileage" class="form-control form-control-sm" disabled />
+
+    </div>
+    <div class="form-group col-md-2">
+        <label asp-for="Color" class="col-form-label">Color</label>
+        <input asp-for="Color" class="form-control form-control-sm" disabled />
+
+    </div>
+    
+</div>
+<div class="form-row">
+    <div class="form-group col-md-4">
+        <label asp-for="PurchasePrice" class="col-form-label">Purchase Price</label>
+        <input asp-for="PurchasePrice" class="form-control form-control-sm" disabled />
+
+    </div>
+    <div class="form-group col-md-4">
+        <label asp-for="PurchaseDate" class="col-form-label">Purchase Date</label>
+        <input asp-for="PurchaseDate" class="form-control form-control-sm" type="date" disabled />
+
+    </div>
+    <div class="form-group col-md-4">
+        <label asp-for="LotDate" class="col-form-label">Lot Date</label>
+        <input asp-for="LotDate" class="form-control form-control-sm" type="date" disabled />
+
+    </div>
+</div>
+<hr />
+<div class="form-row">
+
+    <div class="form-group col-12">
+        <a asp-action="Edit" asp-controller="Vehicle" asp-route-id="@Model.VehicleId" class="btn btn-info">Edit Vehicle</a>
+        <a asp-controller="Cars" asp-action="ConfirmDelete" asp-route-id="@Model.VehicleId" class="btn btn-outline-danger float-right">Delete Vehicle</a>
+    </div>
+</div>
