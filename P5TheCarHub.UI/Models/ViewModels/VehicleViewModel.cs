@@ -1,4 +1,7 @@
-﻿using System;
+﻿
+using P5TheCarHub.Core.Entities;
+using P5TheCarHub.UI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +17,7 @@ namespace P5TheCarHub.UI.Models.ViewModels
         }
 
         public int VehicleId { get; set; }
-        public string FullCarName { get; set; }
+        public string FullVehicleName { get; set; }
         public string Year { get; set; }
         public string Make { get; set; }
         public string Model { get; set; }
@@ -30,12 +33,12 @@ namespace P5TheCarHub.UI.Models.ViewModels
 
         public decimal SalePrice { get; set; }
 
-        //public Photo MainPhoto { get; set; }
+        public Photo MainPhoto { get; set; }
 
         //public IEnumerable<RepairViewModel> Repairs { get; set; }
         //public IEnumerable<PhotoViewModel> Photos { get; set; }
 
-        //public InvoiceViewModel Invoice { get; set; }
+        public InvoiceViewModel Invoice { get; set; }
 
         //public decimal TotalRepairCosts => CalculateTotalRepairCosts();
 

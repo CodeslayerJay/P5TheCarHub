@@ -13,7 +13,7 @@
             <form method="post" asp-action="Delete" asp-controller="Cars">
                 <input asp-for="VehicleId" type="hidden" value="@Model.VehicleId" />
                 <div class="form-group pt-4 pb-3">
-                    <h3 class="text-center">@Model.FullCarName</h3>
+                    <h3 class="text-center">@Model.FullVehicleName</h3>
                     <p class="text-center">VIN: @Model.VIN</p>
 
                     <p class="text-center text-danger font-weight-bold">You will lose ALL information attached to this vehicle!</p>

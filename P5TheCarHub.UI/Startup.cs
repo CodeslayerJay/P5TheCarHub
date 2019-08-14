@@ -19,6 +19,7 @@ using P5TheCarHub.Core.Services;
 using P5TheCarHub.Infrastructure.Data;
 using P5TheCarHub.Infrastructure.Data.Repositories;
 using P5TheCarHub.Infrastructure.Identity;
+using P5TheCarHub.UI.Models.ViewModels;
 
 namespace P5TheCarHub.UI
 {
@@ -50,7 +51,7 @@ namespace P5TheCarHub.UI
             services.AddScoped<IInvoiceRepository, InvoiceRepository>();
             services.AddScoped<IRepairRepository, RepairRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            
+            services.AddSingleton<MapsterConfiguration>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("P5Referential")));

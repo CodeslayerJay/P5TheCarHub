@@ -1,6 +1,7 @@
 ﻿using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Services;
+using P5TheCarHub.UI.Models.ViewModels;
 using P5TheCarHub.UnitTests.Mocks;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             _unitOfWork = new UnitOfWorkMock();
             _vehicleService = new VehicleService(_unitOfWork);
         }
+
 
         [Fact]
         public void GetFullVehicleName_WhenCalled_ReturnsFullVehicleNameAsString()

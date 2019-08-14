@@ -36,7 +36,30 @@ namespace P5TheCarHub.UI.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var vehicles = _vehicleService.GetAll().Select(v => new VehicleViewModel
+            {
+                VehicleId = v.Id,
+                Year = v.Year.ToString(),
+                Make = v.Make,
+                Model = v.Model,
+                Trim = v.Trim,
+                PurchaseDate = v.PurchaseDate,
+                PurchasePrice = v.PurchasePrice,
+                VIN = v.VIN,
+                SalePrice = v.SalePrice,
+                IsSold = v.IsSold,
+                Color = v.Color,
+                FullVehicleName = $"{v.Year} {v.Make} {v.Model} {v.Trim}",
+                LotDate = v.LotDate,
+                Mileage = v.Mileage
+            }).ToList();
+
+            var vm = new VehicleIndexViewModel
+            {
+                Vehicles = vehicles
+            };
+
+            return View(vm);
         }
 
         [HttpGet("Add")]

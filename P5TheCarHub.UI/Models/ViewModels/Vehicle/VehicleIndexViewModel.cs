@@ -7,5 +7,12 @@ namespace P5TheCarHub.UI.Models.ViewModels
 {
     public class VehicleIndexViewModel
     {
+        public VehicleIndexViewModel()
+        {
+            Vehicles = new HashSet<VehicleViewModel>();
+        }
+
+        public IEnumerable<VehicleViewModel> Vehicles { get; set; }
+        public bool IsFilterApplied { get; set; }
     }
 }
