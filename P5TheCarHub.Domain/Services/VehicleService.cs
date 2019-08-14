@@ -51,10 +51,25 @@ namespace P5TheCarHub.Core.Services
             {
                 _unitOfWork.Vehicles.Add(vehicle);
             }
+            else
+            {
+                UpdateVehicle(vehicle);
+            }
             
             _unitOfWork.SaveChanges();
 
             return vehicle;
+        }
+
+        public void UpdateVehicle(Vehicle vehicle)
+        {
+            var vehicleToUpdate = _unitOfWork.Vehicles.GetById(vehicle.Id);
+
+            var vehicleRequiredSpec = new VehicleExistsSpecification();
+            if (!vehicleRequiredSpec.IsSatisfiedBy(vehicle))
+                throw new VehicleNotFoundException(vehicle.Id);
+
+            _unitOfWork.SaveChanges();
         }
         
         public Vehicle GetVehicle(int id)
