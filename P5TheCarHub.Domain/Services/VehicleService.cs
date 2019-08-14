@@ -72,17 +72,17 @@ namespace P5TheCarHub.Core.Services
             _unitOfWork.SaveChanges();
         }
         
-        public Vehicle GetVehicle(int id)
+        public Vehicle GetVehicle(int id, bool withIncludes = false)
         {
-            return _unitOfWork.Vehicles.GetById(id);
+            return _unitOfWork.Vehicles.GetById(id, withIncludes);
         }
 
-        public Vehicle GetVehicleByVin(string vin)
+        public Vehicle GetVehicleByVin(string vin, bool withIncludes = false)
         {
             if (String.IsNullOrEmpty(vin))
                 return null;
 
-            return _unitOfWork.Vehicles.GetByVin(vin);
+            return _unitOfWork.Vehicles.GetByVin(vin, withIncludes);
         }
 
         public IEnumerable<Vehicle> GetAll(int? amount = null)

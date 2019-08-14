@@ -5,7 +5,7 @@ using System.Text;
 
 namespace P5TheCarHub.Core.Interfaces.Repositories
 {
-    public interface IRepairRepository : IBaseRespository<Repair>
+    public interface IRepairRepository : IBaseRepository<Repair>
     {
         IEnumerable<Repair> GetAllByVehicleId(int vehicleId);
     }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace P5TheCarHub.Core.Interfaces.Repositories
 {
-    public interface IInvoiceRepository : IBaseRespository<Invoice>
+    public interface IInvoiceRepository : IBaseRepository<Invoice>
     {
         Invoice GetByVehicleId(int vehicleId);
     }

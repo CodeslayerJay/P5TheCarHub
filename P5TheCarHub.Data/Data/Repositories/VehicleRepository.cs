@@ -1,4 +1,5 @@
-﻿using P5TheCarHub.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,17 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
             _context = dbContext;
         }
 
-        public Vehicle GetByVin(string vin)
+        public Vehicle GetByVin(string vin, bool withIncludes = false)
         {
-            return _context.Vehicles.Where(x => x.VIN.ToUpper() == vin.ToUpper()).SingleOrDefault();
+
+            if(!withIncludes)
+                return _context.Vehicles.Where(x => x.VIN.ToUpper() == vin.ToUpper()).SingleOrDefault();
+
+            return _context.Vehicles.Where(x => x.VIN.ToUpper() == vin.ToUpper())
+                .Include(x => x.Repairs)
+                .Include(x => x.Photos)
+                .Include(x => x.Invoice)
+                .SingleOrDefault();
         }
 
         public Vehicle Add(Vehicle entity)
@@ -36,6 +45,7 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
                 _context.Vehicles.Remove(vehicle);
         }
 
+
         public IEnumerable<Vehicle> GetAll(int? amount = null)
         {
             if (amount.HasValue)
@@ -48,6 +58,18 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
         public Vehicle GetById(int id)
         {
             return _context.Vehicles.SingleOrDefault(x => x.Id == id);
+        }
+
+        public Vehicle GetById(int id, bool withIncludes)
+        {
+            if (!withIncludes)
+                return _context.Vehicles.Where(x => x.Id == id).SingleOrDefault();
+
+            return _context.Vehicles.Where(x => x.Id == id)
+                .Include(x => x.Repairs)
+                .Include(x => x.Photos)
+                .Include(x => x.Invoice)
+                .SingleOrDefault();
         }
 
         public IEnumerable<Vehicle> Find(Expression<Func<Vehicle, bool>> predicate)

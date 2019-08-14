@@ -6,8 +6,9 @@ using System.Linq;
 
 namespace P5TheCarHub.Core.Interfaces.Repositories
 {
-    public interface IVehicleRepository : IBaseRespository<Vehicle>
+    public interface IVehicleRepository : IBaseRepository<Vehicle>
     {
-        Vehicle GetByVin(string vin);
+        Vehicle GetByVin(string vin, bool withIncludes);
+        Vehicle GetById(int id, bool withIncludes);
     }
 }

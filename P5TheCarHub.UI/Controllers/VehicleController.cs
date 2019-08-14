@@ -48,14 +48,14 @@ namespace P5TheCarHub.UI.Controllers
         [HttpGet("Edit/{id}")]
         public IActionResult Edit(int id)
         {
-            var vehicle = _vehicleService.GetVehicle(id);
+            var vehicle = _vehicleService.GetVehicle(id, withIncludes: false);
 
             if(vehicle == null)
             {
                 ViewData["InfoMessage"] = AppStrings.VehicleNotFoundMsg;
                 return RedirectToAction(nameof(Index));
             }
-            var test = new MapsterConfiguration();
+            
             var vm = vehicle.Adapt<VehicleFormModel>();
             
 
@@ -81,7 +81,7 @@ namespace P5TheCarHub.UI.Controllers
                 try
                 {
                     var vehicle = (formModel.VehicleId == 0) ? formModel.Adapt<Vehicle>() :
-                        formModel.Adapt(_vehicleService.GetVehicle(formModel.VehicleId));
+                        formModel.Adapt(_vehicleService.GetVehicle(formModel.VehicleId, withIncludes: false));
 
                     _vehicleService.SaveVehicle(vehicle);
 
@@ -107,10 +107,10 @@ namespace P5TheCarHub.UI.Controllers
         }
 
         [HttpGet("details/{id}")]
-        public IActionResult Details(int id, string vehicleVin = null)
+        public IActionResult Details(int id)
         {
 
-            var vehicle = (String.IsNullOrEmpty(vehicleVin)) ? _vehicleService.GetVehicle(id) : _vehicleService.GetVehicleByVin(vehicleVin);
+            var vehicle = _vehicleService.GetVehicle(id, withIncludes: true);
 
             if (vehicle == null)
             {

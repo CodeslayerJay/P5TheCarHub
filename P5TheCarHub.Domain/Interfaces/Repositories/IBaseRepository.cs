@@ -5,7 +5,7 @@ using System.Text;
 
 namespace P5TheCarHub.Core.Interfaces.Repositories
 {
-    public interface IBaseRespository<TEntity> where TEntity : class
+    public interface IBaseRepository<TEntity> where TEntity : class
     {
         TEntity Add(TEntity entity);
         void Delete(int id);

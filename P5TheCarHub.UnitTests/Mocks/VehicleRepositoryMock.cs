@@ -77,7 +77,7 @@ namespace P5TheCarHub.UnitTests.Mocks
             return _context.Count() + 1;
         }
 
-        public Vehicle GetByVin(string vin)
+        public Vehicle GetByVin(string vin, bool withIncludes = false)
         {
             return _context.Where(x => x.VIN.ToUpper() == vin.ToUpper()).SingleOrDefault();
         }
@@ -108,6 +108,11 @@ namespace P5TheCarHub.UnitTests.Mocks
         }
 
         
+        public Vehicle GetById(int id, bool withIncludes = false)
+        {
+            return _context.SingleOrDefault(x => x.Id == id);
+        }
+
         public Vehicle GetById(int id)
         {
             return _context.SingleOrDefault(x => x.Id == id);

@@ -8,8 +8,8 @@ namespace P5TheCarHub.Core.Interfaces.Services
         Vehicle SaveVehicle(Vehicle vehicle);
         void DeleteVehicle(int id);
         IEnumerable<Vehicle> GetAll(int? amount = null);
-        Vehicle GetVehicle(int id);
-        Vehicle GetVehicleByVin(string vin);
+        Vehicle GetVehicle(int id, bool withIncludes);
+        Vehicle GetVehicleByVin(string vin, bool withIncludes);
         IEnumerable<Vehicle> GetVehiclesBySoldStatus(bool isSold);
         
     }

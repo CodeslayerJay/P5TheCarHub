@@ -20,7 +20,7 @@ namespace P5TheCarHub.Core.Specifications.VehicleSpecifications
         public bool IsSatisfiedBy(Vehicle candidate)
         {
 
-            var vehicle = _vehicleRepo.GetByVin(candidate.VIN.ToUpper());
+            var vehicle = _vehicleRepo.GetByVin(candidate.VIN.ToUpper(), withIncludes: false);
 
             if (vehicle != null && vehicle?.Id != candidate.Id)
                 return false;
