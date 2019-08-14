@@ -45,7 +45,24 @@ namespace P5TheCarHub.UI.Controllers
             return View("VehicleForm", new VehicleFormModel());
         }
 
-        [HttpPost]
+        [HttpGet("Edit/{id}")]
+        public IActionResult Edit(int id)
+        {
+            var vehicle = _vehicleService.GetVehicle(id);
+
+            if(vehicle == null)
+            {
+                ViewData["InfoMessage"] = AppStrings.VehicleNotFoundMsg;
+                return RedirectToAction(nameof(Index));
+            }
+            var test = new MapsterConfiguration();
+            var vm = vehicle.Adapt<VehicleFormModel>();
+            
+
+            return View("VehicleForm", vm);
+        }
+
+        [HttpPost("save")]
         [ValidateAntiForgeryToken]
         public IActionResult Save(VehicleFormModel formModel)
         {
@@ -63,10 +80,13 @@ namespace P5TheCarHub.UI.Controllers
             {
                 try
                 {
-                    _vehicleService.SaveVehicle(formModel.Adapt<Vehicle>());
+                    var vehicle = (formModel.VehicleId == 0) ? formModel.Adapt<Vehicle>() :
+                        formModel.Adapt(_vehicleService.GetVehicle(formModel.VehicleId));
+
+                    _vehicleService.SaveVehicle(vehicle);
 
                     TempData["SuccessMessage"] = AppStrings.VehicleSavedSuccessMsg;
-                    return RedirectToAction(nameof(Add));
+                    return RedirectToAction(nameof(Details), new { id = vehicle.Id });
                 }
                 catch(DuplicateVehicleVinException ex)
                 {
@@ -98,7 +118,9 @@ namespace P5TheCarHub.UI.Controllers
                 return RedirectToAction(nameof(Index));
             }
            
+            //TODO: Figure out mapping id -> vehicleId
             var vm = vehicle.Adapt<VehicleViewModel>();
+            vm.VehicleId = vehicle.Id;
             
             return View(vm);
         }

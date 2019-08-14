@@ -48,13 +48,15 @@ namespace P5TheCarHub.Core.Services
 
 
             if(vehicle.Id == 0)
+            {
                 _unitOfWork.Vehicles.Add(vehicle);
+            }
             
             _unitOfWork.SaveChanges();
 
             return vehicle;
         }
-
+        
         public Vehicle GetVehicle(int id)
         {
             return _unitOfWork.Vehicles.GetById(id);
