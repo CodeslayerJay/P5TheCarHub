@@ -61,7 +61,7 @@ namespace P5TheCarHub.Core.Services
             return vehicle;
         }
 
-        public void UpdateVehicle(Vehicle vehicle)
+        private void UpdateVehicle(Vehicle vehicle)
         {
             var vehicleToUpdate = _unitOfWork.Vehicles.GetById(vehicle.Id);
 
