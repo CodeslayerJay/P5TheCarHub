@@ -10,7 +10,7 @@
     <h5 class="text-center">Are you sure you want to delete?</h5>
     <div class="row pt-3">
         <div class="col-6 m-auto card">
-            <form method="post" asp-action="Delete" asp-controller="Cars">
+            <form method="post" asp-action="Delete" asp-controller="Vehicle">
                 <input asp-for="VehicleId" type="hidden" value="@Model.VehicleId" />
                 <div class="form-group pt-4 pb-3">
                     <h3 class="text-center">@Model.FullVehicleName</h3>
@@ -21,7 +21,7 @@
                 <hr />
                 <div class="form-group">
                     <button type="submit" class="btn btn-danger">Confirm Delete</button>
-                    <a asp-controller="Cars" asp-action="Details" asp-route-id="@Model.VehicleId" class="btn">Cancel</a>
+                    <a asp-controller="Vehicle" asp-action="Details" asp-route-id="@Model.VehicleId" class="btn">Cancel</a>
                 </div>
             </form>
         </div>

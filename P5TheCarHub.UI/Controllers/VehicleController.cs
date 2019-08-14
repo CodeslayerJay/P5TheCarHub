@@ -55,18 +55,28 @@ namespace P5TheCarHub.UI.Controllers
         [HttpGet("Edit/{id}")]
         public IActionResult Edit(int id)
         {
-            var vehicle = _vehicleService.GetVehicle(id, withIncludes: false);
-
-            if(vehicle == null)
+            try
             {
-                ViewData["InfoMessage"] = AppStrings.VehicleNotFoundMsg;
+                var vehicle = _vehicleService.GetVehicle(id, withIncludes: false);
+
+                if (vehicle == null)
+                {
+                    ViewData["InfoMessage"] = AppStrings.VehicleNotFoundMsg;
+                    return RedirectToAction(nameof(Index));
+                }
+
+                var vm = _mapper.Map<VehicleFormModel>(vehicle);
+
+
+                return View("VehicleForm", vm);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogWarning(ex.Message);
+                ViewData["ErrorMsg"] = AppStrings.GenericErrorMsg;
                 return RedirectToAction(nameof(Index));
             }
-
-            var vm = _mapper.Map<VehicleFormModel>(vehicle);
             
-
-            return View("VehicleForm", vm);
         }
 
         [HttpPost("save")]
@@ -117,18 +127,79 @@ namespace P5TheCarHub.UI.Controllers
         [HttpGet("details/{id}")]
         public IActionResult Details(int id)
         {
-
-            var vehicle = _vehicleService.GetVehicle(id, withIncludes: true);
-
-            if (vehicle == null)
+            try
             {
-                ViewData["InfoMessage"] = "Vehicle not found";
+                var vehicle = _vehicleService.GetVehicle(id, withIncludes: true);
+
+                if (vehicle == null)
+                {
+                    ViewData["InfoMessage"] = "Vehicle not found";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                var vm = _mapper.Map<VehicleViewModel>(vehicle);
+
+                return View(vm);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogWarning(ex.Message);
                 return RedirectToAction(nameof(Index));
             }
-
-            var vm = _mapper.Map<VehicleViewModel>(vehicle);
             
-            return View(vm);
+        }
+
+        [HttpGet("confirm-delete/{id}")]
+        public IActionResult ConfirmDelete(int id)
+        {
+            try
+            {
+                var vehicle = _mapper.Map<VehicleViewModel>(_vehicleService.GetVehicle(id, withIncludes: false));
+
+                if (vehicle == null)
+                {
+                    ViewData["InfoMessage"] = AppStrings.VehicleNotFoundMsg;
+                    return RedirectToAction(nameof(Index));
+                }
+
+                return View(vehicle);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogWarning(ex.Message);
+                ViewData["ErrorMsg"] = AppStrings.GenericErrorMsg;
+                return RedirectToAction(nameof(Index));
+            }
+                
+
+            
+        }
+
+        [HttpPost("delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete([FromBody] int vehicleId)
+        {
+            try
+            {
+                _vehicleService.DeleteVehicle(vehicleId);
+
+                ViewData["InfoMessage"] = AppStrings.VehicleDeletedSuccessMsg;
+                
+
+            }
+            catch(VehicleNotFoundException ex)
+            {
+                ViewData["ErrorMsg"] = ex.Message;
+                
+
+            }
+            catch(Exception ex)
+            {
+                ViewData["ErrorMsg"] = AppStrings.GenericErrorMsg;
+                _logger.LogWarning($"Error occured attempting to delete vehicle {ex.Message}");
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
