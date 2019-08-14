@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +20,7 @@ using P5TheCarHub.Core.Services;
 using P5TheCarHub.Infrastructure.Data;
 using P5TheCarHub.Infrastructure.Data.Repositories;
 using P5TheCarHub.Infrastructure.Identity;
+using P5TheCarHub.UI.Models;
 using P5TheCarHub.UI.Models.ViewModels;
 
 namespace P5TheCarHub.UI
@@ -51,7 +53,7 @@ namespace P5TheCarHub.UI
             services.AddScoped<IInvoiceRepository, InvoiceRepository>();
             services.AddScoped<IRepairRepository, RepairRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddSingleton<MapsterConfiguration>();
+            services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("P5Referential")));

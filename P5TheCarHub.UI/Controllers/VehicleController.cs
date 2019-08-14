@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FluentValidation.Results;
-using Mapster;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using P5CarSalesAppBasic.Models.Validators;
 using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Interfaces.Services;
@@ -25,38 +23,24 @@ namespace P5TheCarHub.UI.Controllers
         private readonly IVehicleService _vehicleService;
         private readonly ILogger<VehicleController> _logger;
         private readonly VehicleValidationService _vehicleValidator;
+        private readonly IMapper _mapper;
 
-        public VehicleController(IVehicleService vehicleService, ILogger<VehicleController> logger)
+        public VehicleController(IVehicleService vehicleService, ILogger<VehicleController> logger,
+            IMapper mapper)
         {
           
             _vehicleService = vehicleService;
             _logger = logger;
             _vehicleValidator = new VehicleValidationService();
+            _mapper = mapper;
         }
 
         public IActionResult Index()
         {
-            var vehicles = _vehicleService.GetAll().Select(v => new VehicleViewModel
-            {
-                VehicleId = v.Id,
-                Year = v.Year.ToString(),
-                Make = v.Make,
-                Model = v.Model,
-                Trim = v.Trim,
-                PurchaseDate = v.PurchaseDate,
-                PurchasePrice = v.PurchasePrice,
-                VIN = v.VIN,
-                SalePrice = v.SalePrice,
-                IsSold = v.IsSold,
-                Color = v.Color,
-                FullVehicleName = $"{v.Year} {v.Make} {v.Model} {v.Trim}",
-                LotDate = v.LotDate,
-                Mileage = v.Mileage
-            }).ToList();
-
             var vm = new VehicleIndexViewModel
             {
-                Vehicles = vehicles
+                Vehicles = _vehicleService.GetAll().Select(v =>
+                _mapper.Map<VehicleViewModel>(v))
             };
 
             return View(vm);
@@ -78,8 +62,8 @@ namespace P5TheCarHub.UI.Controllers
                 ViewData["InfoMessage"] = AppStrings.VehicleNotFoundMsg;
                 return RedirectToAction(nameof(Index));
             }
-            
-            var vm = vehicle.Adapt<VehicleFormModel>();
+
+            var vm = _mapper.Map<VehicleFormModel>(vehicle);
             
 
             return View("VehicleForm", vm);
@@ -103,8 +87,9 @@ namespace P5TheCarHub.UI.Controllers
             {
                 try
                 {
-                    var vehicle = (formModel.VehicleId == 0) ? formModel.Adapt<Vehicle>() :
-                        formModel.Adapt(_vehicleService.GetVehicle(formModel.VehicleId, withIncludes: false));
+                    var vehicle = (formModel.VehicleId == AppStrings.NotSet) ? 
+                        _mapper.Map<Vehicle>(formModel) :
+                        _mapper.Map<VehicleFormModel, Vehicle>(formModel, _vehicleService.GetVehicle(formModel.VehicleId, withIncludes: false));
 
                     _vehicleService.SaveVehicle(vehicle);
 
@@ -140,10 +125,8 @@ namespace P5TheCarHub.UI.Controllers
                 ViewData["InfoMessage"] = "Vehicle not found";
                 return RedirectToAction(nameof(Index));
             }
-           
-            //TODO: Figure out mapping id -> vehicleId
-            var vm = vehicle.Adapt<VehicleViewModel>();
-            vm.VehicleId = vehicle.Id;
+
+            var vm = _mapper.Map<VehicleViewModel>(vehicle);
             
             return View(vm);
         }

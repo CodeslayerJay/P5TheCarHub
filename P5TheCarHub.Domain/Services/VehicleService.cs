@@ -43,7 +43,7 @@ namespace P5TheCarHub.Core.Services
             if (!vehicleVinIsUniqueSpec.IsSatisfiedBy(vehicle))
                 throw new DuplicateVehicleVinException(vehicle.VIN);
 
-            vehicle.VIN = vehicle.VIN.ToUpper();
+            vehicle.VIN = vehicle.VIN?.ToUpper();
             vehicle.SalePrice = CalculateVehicleSalePrice(vehicle.PurchasePrice);
 
 
