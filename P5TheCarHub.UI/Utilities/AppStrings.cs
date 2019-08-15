@@ -13,6 +13,8 @@ namespace P5TheCarHub.UI.Utilities
         public const string VehicleNotFoundMsg = "Vehicle not found.";
         public const string VehicleDeletedSuccessMsg = "Vehicle deleted successfully.";
 
-        public const string RepairAddSuccess = "Repair added sucessfully.";
+        public const string RepairSavedSuccessMsg = "Repair saved successfully.";
+        public const string RepairNotFoundMsg = "Repair not found.";
+        public const string RepairDeleteSuccessMsg = "Repair deleted successfully.";
     }
 }

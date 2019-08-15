@@ -8,7 +8,7 @@
         <p>Total Repair Costs: @Model.TotalRepairCosts.ToString("c")</p>
     </div>
 </div>
-<table class="table table-striped mt-3 table-bordered">
+<table class="table table-striped mt-3">
     <thead>
         <tr>
             <th>Name</th>
@@ -30,8 +30,8 @@
                 <td>@repair.Details</td>
                 <td>
                     <div class="float-right">
-                        <a asp-action="Edit" asp-controller="Repair" asp-route-id="@repair.RepairId">Edit</a> | 
-                        <a asp-action="ConfirmDelete" asp-controller="Repair" asp-route-id="@repair.RepairId" class="text-danger">Delete</a>
+                        <a asp-action="Edit" asp-controller="Repair" asp-route-id="@repair.RepairId" asp-route-vehicleId="@Model.VehicleId">Edit</a> | 
+                        <a asp-action="ConfirmDelete" asp-controller="Repair" asp-route-id="@repair.RepairId" asp-route-vehicleId="@Model.VehicleId" class="text-danger">Delete</a>
                     </div>
                     
                 </td>

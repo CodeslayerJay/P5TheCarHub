@@ -94,7 +94,7 @@ namespace P5TheCarHub.UI.Controllers
 
                 _repairService.SaveRepair(repair);
 
-                ViewData["SuccessMessage"] = AppStrings.RepairAddSuccess;
+                ViewData["SuccessMessage"] = AppStrings.RepairSavedSuccessMsg;
                 return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
             }
             catch(RepairNotFoundException ex)
@@ -109,6 +109,56 @@ namespace P5TheCarHub.UI.Controllers
                 ViewData["ErrorMessage"] = AppStrings.GenericErrorMsg;
                 return Redirect(formModel.ReturnUrl);
             }
+        }
+
+        [HttpGet("confim-delete/{id}")]
+        public IActionResult ConfirmDelete(int vehicleId, int id)
+        {
+            try
+            {
+                var repair = _mapper.Map<RepairViewModel>(_repairService.GetById(id));
+
+                if (repair == null)
+                {
+                    ViewData["InfoMessage"] = AppStrings.RepairNotFoundMsg;
+                    return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
+                }
+
+                return View(repair);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.Message);
+                ViewData["ErrorMsg"] = AppStrings.GenericErrorMsg;
+                return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
+            }
+        }
+
+        [HttpPost("delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int VehicleId, int RepairId)
+        {
+            try
+            {
+                _repairService.DeleteRepair(RepairId);
+
+                ViewData["InfoMessage"] = AppStrings.RepairDeleteSuccessMsg;
+
+
+            }
+            catch (RepairNotFoundException ex)
+            {
+                ViewData["ErrorMsg"] = ex.Message;
+                _logger.LogWarning(ex.Message);
+
+            }
+            catch (Exception ex)
+            {
+                ViewData["ErrorMsg"] = AppStrings.GenericErrorMsg;
+                _logger.LogWarning($"Error occured attempting to delete vehicle {ex.Message}");
+            }
+
+            return RedirectToAction("Details", "Vehicle", new { id = VehicleId });
         }
     }
 }
