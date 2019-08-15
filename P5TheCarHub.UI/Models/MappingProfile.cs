@@ -12,6 +12,7 @@ namespace P5TheCarHub.UI.Models
     {
         public MappingProfile()
         {
+            // Vehicle
             CreateMap<Vehicle, VehicleViewModel>()
             .ForMember(vm => vm.VehicleId, opts => opts.MapFrom(v => v.Id))
             .ForMember(vm => vm.FullVehicleName,
@@ -20,6 +21,14 @@ namespace P5TheCarHub.UI.Models
                 .ForMember(v => v.Id, opts => opts.MapFrom(vm => vm.VehicleId));
             CreateMap<Vehicle, VehicleFormModel>()
                 .ForMember(v => v.VehicleId, opts => opts.MapFrom(vm => vm.Id));
+
+            // Repair
+            CreateMap<RepairFormModel, Repair>()
+                .ForMember(r => r.Id, opts => opts.MapFrom(vm => vm.RepairId))
+                .ForMember(r => r.VehicleId, opts => opts.MapFrom(vm => vm.VehicleId));
+            CreateMap<Repair, RepairFormModel>()
+                .ForMember(vm => vm.RepairId, opts => opts.MapFrom(r => r.Id))
+                .ForMember(vm => vm.VehicleId, opts => opts.MapFrom(r => r.VehicleId));
         }
     }
 }

@@ -11,6 +11,8 @@ namespace P5TheCarHub.UI.Utilities
         public const string GenericErrorMsg = "There was an error. Please try again.";
         public const string VehicleSavedSuccessMsg = "Vehicle saved successfully.";
         public const string VehicleNotFoundMsg = "Vehicle not found.";
-        public const string VehicleDeletedSuccessMsg = "Vehicle deleted successfully";
+        public const string VehicleDeletedSuccessMsg = "Vehicle deleted successfully.";
+
+        public const string RepairAddSuccess = "Repair added sucessfully.";
     }
 }

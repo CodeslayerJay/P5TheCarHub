@@ -37,6 +37,17 @@ namespace P5TheCarHub.Core.Services
             return repair;
         }
 
+        private void UpdateRepair(Repair repair)
+        {
+            var repairToUpdate = _unitOfWork.Repairs.GetById(repair.Id);
+
+            if (repair == null)
+                throw new RepairNotFoundException(repair.Id);
+
+            _unitOfWork.SaveChanges();
+        }
+
+
         private void UpdateVehicleSalePrice(Vehicle vehicle, Repair repair)
         {
             if (vehicle == null)
