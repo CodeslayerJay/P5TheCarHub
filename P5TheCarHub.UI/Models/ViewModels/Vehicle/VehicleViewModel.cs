@@ -13,11 +13,11 @@ namespace P5TheCarHub.UI.Models.ViewModels
 
         public VehicleViewModel()
         {
-
+            
         }
 
         public int VehicleId { get; set; }
-        public string FullVehicleName { get; set; }
+        public string FullVehicleName { get; set; } 
         public string Year { get; set; }
         public string Make { get; set; }
         public string Model { get; set; }
@@ -47,5 +47,6 @@ namespace P5TheCarHub.UI.Models.ViewModels
         //    var costs = Repairs.Any() ? Repairs.Sum(x => x.Cost) : 0.0M;
         //    return costs;
         //}
+
     }
 }

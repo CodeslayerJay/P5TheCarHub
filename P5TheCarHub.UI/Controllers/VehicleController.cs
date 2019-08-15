@@ -144,6 +144,7 @@ namespace P5TheCarHub.UI.Controllers
             catch(Exception ex)
             {
                 _logger.LogWarning(ex.Message);
+                ViewData["ErrorMsg"] = AppStrings.GenericErrorMsg;
                 return RedirectToAction(nameof(Index));
             }
             
@@ -177,11 +178,11 @@ namespace P5TheCarHub.UI.Controllers
 
         [HttpPost("delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete([FromBody] int vehicleId)
+        public IActionResult Delete(int VehicleId)
         {
             try
             {
-                _vehicleService.DeleteVehicle(vehicleId);
+                _vehicleService.DeleteVehicle(VehicleId);
 
                 ViewData["InfoMessage"] = AppStrings.VehicleDeletedSuccessMsg;
                 

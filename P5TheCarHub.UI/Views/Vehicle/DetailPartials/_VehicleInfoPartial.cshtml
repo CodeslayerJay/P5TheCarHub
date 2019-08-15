@@ -78,6 +78,6 @@
 
     <div class="form-group col-12">
         <a asp-action="Edit" asp-controller="Vehicle" asp-route-id="@Model.VehicleId" class="btn btn-info">Edit Vehicle</a>
-        <a asp-controller="Cars" asp-action="ConfirmDelete" asp-route-id="@Model.VehicleId" class="btn btn-outline-danger float-right">Delete Vehicle</a>
+        <a asp-controller="Vehicle" asp-action="ConfirmDelete" asp-route-id="@Model.VehicleId" class="btn btn-outline-danger float-right">Delete Vehicle</a>
     </div>
 </div>
