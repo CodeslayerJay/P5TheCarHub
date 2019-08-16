@@ -108,10 +108,11 @@ namespace P5TheCarHub.UI.Controllers
 
                 _repairService.SaveRepair(repair);
 
-                if (formModel.AddAnotherRepair)
-                    return RedirectToAction(nameof(Edit), new { vehicleId = vehicleId });
-
                 TempData["SuccessMessage"] = AppStrings.RepairSavedSuccessMsg;
+
+                if (formModel.AddAnotherRepair)
+                    return RedirectToAction(nameof(Edit), new { vehicleId });
+
                 return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
             }
             catch(RepairNotFoundException ex)
@@ -159,7 +160,7 @@ namespace P5TheCarHub.UI.Controllers
             {
                 _repairService.DeleteRepair(RepairId);
 
-                TempData["InfoMessage"] = AppStrings.RepairDeleteSuccessMsg;
+                TempData["SuccessMessage"] = AppStrings.RepairDeleteSuccessMsg;
 
 
             }

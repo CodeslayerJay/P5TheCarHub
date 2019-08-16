@@ -57,7 +57,7 @@ namespace P5TheCarHub.UI.Controllers
 
                     if (vehicle == null)
                     {
-                        ViewData["InfoMessage"] = AppStrings.VehicleNotFoundMsg;
+                        TempData["InfoMessage"] = AppStrings.VehicleNotFoundMsg;
                         return RedirectToAction(nameof(Index));
                     }
 
@@ -69,7 +69,7 @@ namespace P5TheCarHub.UI.Controllers
             catch(Exception ex)
             {
                 _logger.LogWarning(ex.Message);
-                ViewData["ErrorMsg"] = AppStrings.GenericErrorMsg;
+                TempData["ErrorMsg"] = AppStrings.GenericErrorMsg;
                 return RedirectToAction(nameof(Index));
             }
             
@@ -99,6 +99,9 @@ namespace P5TheCarHub.UI.Controllers
                         _mapper.Map<VehicleFormModel, Vehicle>(formModel, _vehicleService.GetVehicle(formModel.VehicleId, withIncludes: false));
 
                     _vehicleService.SaveVehicle(vehicle);
+
+                    if (formModel.AddRepairOption)
+                        return RedirectToAction("Edit", "Repair", new { vehicleId = vehicle.Id });
 
                     TempData["SuccessMessage"] = AppStrings.VehicleSavedSuccessMsg;
                     return RedirectToAction(nameof(Details), new { id = vehicle.Id });
@@ -135,7 +138,7 @@ namespace P5TheCarHub.UI.Controllers
 
                 if (vehicle == null)
                 {
-                    ViewData["InfoMessage"] = "Vehicle not found";
+                    TempData["InfoMessage"] = "Vehicle not found";
                     return RedirectToAction(nameof(Index));
                 }
 
@@ -146,7 +149,7 @@ namespace P5TheCarHub.UI.Controllers
             catch(Exception ex)
             {
                 _logger.LogWarning(ex.Message);
-                ViewData["ErrorMsg"] = AppStrings.GenericErrorMsg;
+                TempData["ErrorMsg"] = AppStrings.GenericErrorMsg;
                 return RedirectToAction(nameof(Index));
             }
             
@@ -161,7 +164,7 @@ namespace P5TheCarHub.UI.Controllers
 
                 if (vehicle == null)
                 {
-                    ViewData["InfoMessage"] = AppStrings.VehicleNotFoundMsg;
+                    TempData["InfoMessage"] = AppStrings.VehicleNotFoundMsg;
                     return RedirectToAction(nameof(Index));
                 }
 
@@ -170,7 +173,7 @@ namespace P5TheCarHub.UI.Controllers
             catch(Exception ex)
             {
                 _logger.LogWarning(ex.Message);
-                ViewData["ErrorMsg"] = AppStrings.GenericErrorMsg;
+                TempData["ErrorMsg"] = AppStrings.GenericErrorMsg;
                 return RedirectToAction(nameof(Index));
             }
                 
@@ -186,20 +189,20 @@ namespace P5TheCarHub.UI.Controllers
             {
                 _vehicleService.DeleteVehicle(VehicleId);
 
-                ViewData["InfoMessage"] = AppStrings.VehicleDeletedSuccessMsg;
+                TempData["SuccessMessage"] = AppStrings.VehicleDeletedSuccessMsg;
                 
-
             }
             catch(VehicleNotFoundException ex)
             {
-                ViewData["ErrorMsg"] = ex.Message;
+                TempData["ErrorMsg"] = ex.Message;
                 
 
             }
             catch(Exception ex)
             {
-                ViewData["ErrorMsg"] = AppStrings.GenericErrorMsg;
+                TempData["ErrorMsg"] = AppStrings.GenericErrorMsg;
                 _logger.LogWarning($"Error occured attempting to delete vehicle {ex.Message}");
+                
             }
 
             return RedirectToAction(nameof(Index));
