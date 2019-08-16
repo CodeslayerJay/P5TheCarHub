@@ -48,7 +48,7 @@ namespace P5TheCarHub.Core.Services
             if (!vehicleExistsSpec.IsSatisfiedBy(vehicle))
                 throw new VehicleNotFoundException(invoice.VehicleId);
 
-            if(invoice.Id == 0 || invoice.Id != vehicle.Id)
+            if(invoice.Id == 0 || invoice.VehicleId != vehicle.Id)
             {
                 var uniqueInvoiceSpec = new UniqueInvoiceSpecification(_unitOfWork.Invoices);
                 if (!uniqueInvoiceSpec.IsSatisfiedBy(invoice))
