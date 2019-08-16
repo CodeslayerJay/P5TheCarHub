@@ -11,7 +11,7 @@ namespace P5TheCarHub.UI.Models.ViewModels
         public int InvoiceId { get; set; }
         public decimal PriceSold { get; set; }
         public string CustomerName { get; set; }
-        public DateTime DateSold { get; set; } = DateTime.Now;
+        public DateTime? DateSold { get; set; }
         public string InvoiceNumber { get; set; }
 
         public int VehicleId { get; set; }

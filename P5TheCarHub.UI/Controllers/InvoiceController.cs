@@ -8,6 +8,9 @@ using Microsoft.Extensions.Logging;
 using P5TheCarHub.Core.Interfaces.Services;
 using P5TheCarHub.UI.Utilities;
 using P5TheCarHub.UI.Models.ViewModels;
+using P5TheCarHub.UI.Models.Validators;
+using P5TheCarHub.Core.Entities;
+using P5TheCarHub.Core.Exceptions;
 
 namespace P5TheCarHub.UI.Controllers
 {
@@ -73,6 +76,47 @@ namespace P5TheCarHub.UI.Controllers
             }
         }
 
+        [HttpPost("save")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Save(int vehicleId, InvoiceFormModel formModel)
+        {
+            try
+            {
+                var validator = new InvoiceValidator();
+                var results = validator.Validate(formModel);
 
+                if (results.Errors.Any())
+                {
+                    foreach (var error in results.Errors)
+                    {
+                        ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                    }
+                }
+
+                if (!ModelState.IsValid)
+                    return View("InvoiceForm", formModel);
+
+                var invoice = (formModel.InvoiceId == AppStrings.NotSet) ?
+                        _mapper.Map<Invoice>(formModel) :
+                        _mapper.Map<InvoiceFormModel, Invoice>(formModel, _invoiceService.GetInvoice(formModel.InvoiceId));
+
+                _invoiceService.SaveInvoice(invoice);
+
+                TempData["SuccessMessage"] = AppStrings.InvoiceSavedSuccessMsg;
+                return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
+            }
+            catch (VehicleNotFoundException ex)
+            {
+                _logger.LogWarning(ex.Message);
+                TempData["ErrorMessage"] = AppStrings.GenericErrorMsg;
+                return RedirectToAction("Index", "Vehicle");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning($"Error occurred while attempting to save repair. {ex.Message}");
+                TempData["ErrorMessage"] = AppStrings.GenericErrorMsg;
+                return RedirectToAction("Index", "Vehicle");
+            }
+        }
     }
 }

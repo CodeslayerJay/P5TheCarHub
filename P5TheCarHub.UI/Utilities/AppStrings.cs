@@ -18,5 +18,6 @@ namespace P5TheCarHub.UI.Utilities
         public const string RepairDeleteSuccessMsg = "Repair deleted successfully.";
 
         public const string InvoiceNotFoundMsg = "Invoice not found.";
+        public const string InvoiceSavedSuccessMsg = "Invoice saved successfully.";
     }
 }
