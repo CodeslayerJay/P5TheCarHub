@@ -9,5 +9,6 @@ namespace P5TheCarHub.Core.Interfaces.Services
         IEnumerable<Invoice> GetAll(int? amount = null);
         Invoice GetInvoice(int id);
         Invoice GetInvoiceByVehicleId(int vehicleId);
+        void DeleteInvoice(int id);
     }
 }

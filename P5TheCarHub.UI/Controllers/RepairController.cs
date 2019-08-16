@@ -128,7 +128,7 @@ namespace P5TheCarHub.UI.Controllers
             }
         }
 
-        [HttpGet("confim-delete/{id}")]
+        [HttpGet("confirm-delete/{id}")]
         public IActionResult ConfirmDelete(int vehicleId, int id)
         {
             try

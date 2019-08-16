@@ -15,7 +15,7 @@ using P5TheCarHub.Core.Exceptions;
 namespace P5TheCarHub.UI.Controllers
 {
     // [Authroize]
-    [Route("manage/vehicles/{vehicleId}/invoice")]
+    [Route("manage/vehicle/{vehicleId}/invoice")]
     public class InvoiceController : Controller
     {
         private readonly IInvoiceService _invoiceService;
@@ -119,54 +119,54 @@ namespace P5TheCarHub.UI.Controllers
             }
         }
 
-        //[HttpGet("confim-delete/{id}")]
-        //public IActionResult ConfirmDelete(int vehicleId, int id)
-        //{
-        //    try
-        //    {
-        //        var repair = _mapper.Map<RepairViewModel>(_repairService.GetById(id));
+        [HttpGet("confirm-delete/{id}")]
+        public IActionResult ConfirmDelete(int vehicleId, int id)
+        {
+            try
+            {
+                var invoice = _mapper.Map<InvoiceViewModel>(_invoiceService.GetInvoice(id));
 
-        //        if (repair == null)
-        //        {
-        //            TempData["InfoMessage"] = AppStrings.RepairNotFoundMsg;
-        //            return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
-        //        }
+                if (invoice == null)
+                {
+                    TempData["InfoMessage"] = AppStrings.InvoiceNotFoundMsg;
+                    return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
+                }
 
-        //        return View(repair);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogWarning(ex.Message);
-        //        TempData["ErrorMsg"] = AppStrings.GenericErrorMsg;
-        //        return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
-        //    }
-        //}
+                return View(invoice);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.Message);
+                TempData["ErrorMsg"] = AppStrings.GenericErrorMsg;
+                return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
+            }
+        }
 
-        //[HttpPost("delete")]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Delete(int VehicleId, int InvoiceId)
-        //{
-        //    try
-        //    {
-        //        _invoiceService.De(RepairId);
+        [HttpPost("delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int VehicleId, int InvoiceId)
+        {
+            try
+            {
+                _invoiceService.DeleteInvoice(InvoiceId);
 
-        //        TempData["InfoMessage"] = AppStrings.RepairDeleteSuccessMsg;
+                TempData["SuccessMessage"] = AppStrings.InvoiceDeleteSuccessMsg;
 
 
-        //    }
-        //    catch (RepairNotFoundException ex)
-        //    {
-        //        TempData["ErrorMsg"] = ex.Message;
-        //        _logger.LogWarning(ex.Message);
+            }
+            catch (InvoiceNotFoundException ex)
+            {
+                TempData["ErrorMsg"] = ex.Message;
+                _logger.LogWarning(ex.Message);
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        TempData["ErrorMsg"] = AppStrings.GenericErrorMsg;
-        //        _logger.LogWarning($"Error occured attempting to delete vehicle {ex.Message}");
-        //    }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMsg"] = AppStrings.GenericErrorMsg;
+                _logger.LogWarning($"Error occured attempting to delete vehicle {ex.Message}");
+            }
 
-        //    return RedirectToAction("Details", "Vehicle", new { id = VehicleId });
-        //}
+            return RedirectToAction("Details", "Vehicle", new { id = VehicleId });
+        }
     }
 }

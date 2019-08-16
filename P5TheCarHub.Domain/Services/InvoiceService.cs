@@ -103,6 +103,7 @@ namespace P5TheCarHub.Core.Services
                 throw new InvoiceNotFoundException(id);
 
             _unitOfWork.Invoices.Delete(id);
+            _unitOfWork.SaveChanges();
         }
 
     }
