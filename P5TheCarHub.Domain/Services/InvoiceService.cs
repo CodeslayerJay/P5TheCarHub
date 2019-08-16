@@ -55,13 +55,14 @@ namespace P5TheCarHub.Core.Services
                     throw new InvoiceAlreadyExistsForVehicleException(invoice.VehicleId);
             }
             
-            invoice.InvoiceNumber = GenerateInvoiceNumber(invoice.VehicleId);
-
             SetVehicleToSoldStatus(vehicle);
 
-            if(invoice.Id == 0)
+            if (invoice.Id == 0)
+            {
+                invoice.InvoiceNumber = GenerateInvoiceNumber(invoice.VehicleId);
                 _unitOfWork.Invoices.Add(invoice);
-            
+            }
+
             _unitOfWork.SaveChanges();
 
             return invoice;
@@ -92,6 +93,16 @@ namespace P5TheCarHub.Core.Services
         {
             var spec = new UniqueInvoiceSpecification(_unitOfWork.Invoices);
             return spec.IsSatisfiedBy(invoice);
+        }
+
+        public void DeleteInvoice(int id)
+        {
+            var invoice = GetInvoice(id);
+
+            if (invoice == null)
+                throw new InvoiceNotFoundException(id);
+
+            _unitOfWork.Invoices.Delete(id);
         }
 
     }

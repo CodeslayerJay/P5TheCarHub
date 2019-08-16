@@ -118,5 +118,55 @@ namespace P5TheCarHub.UI.Controllers
                 return RedirectToAction("Index", "Vehicle");
             }
         }
+
+        //[HttpGet("confim-delete/{id}")]
+        //public IActionResult ConfirmDelete(int vehicleId, int id)
+        //{
+        //    try
+        //    {
+        //        var repair = _mapper.Map<RepairViewModel>(_repairService.GetById(id));
+
+        //        if (repair == null)
+        //        {
+        //            TempData["InfoMessage"] = AppStrings.RepairNotFoundMsg;
+        //            return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
+        //        }
+
+        //        return View(repair);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogWarning(ex.Message);
+        //        TempData["ErrorMsg"] = AppStrings.GenericErrorMsg;
+        //        return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
+        //    }
+        //}
+
+        //[HttpPost("delete")]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Delete(int VehicleId, int InvoiceId)
+        //{
+        //    try
+        //    {
+        //        _invoiceService.De(RepairId);
+
+        //        TempData["InfoMessage"] = AppStrings.RepairDeleteSuccessMsg;
+
+
+        //    }
+        //    catch (RepairNotFoundException ex)
+        //    {
+        //        TempData["ErrorMsg"] = ex.Message;
+        //        _logger.LogWarning(ex.Message);
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        TempData["ErrorMsg"] = AppStrings.GenericErrorMsg;
+        //        _logger.LogWarning($"Error occured attempting to delete vehicle {ex.Message}");
+        //    }
+
+        //    return RedirectToAction("Details", "Vehicle", new { id = VehicleId });
+        //}
     }
 }

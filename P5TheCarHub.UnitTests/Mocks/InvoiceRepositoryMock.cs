@@ -24,6 +24,7 @@ namespace P5TheCarHub.UnitTests.Mocks
             {
                 new Invoice { Id = 1, CustomerName = "John Doe", DateSold = DateTime.Now, PriceSold = 3000, VehicleId = 1, InvoiceNumber = "TCH-V1"},
                 new Invoice { Id = 2, CustomerName = "Jane Doe", DateSold = DateTime.Now, PriceSold = 3000, VehicleId = 2, InvoiceNumber = "TCH-V2"},
+               
             };
 
             _context.AddRange(seedData);

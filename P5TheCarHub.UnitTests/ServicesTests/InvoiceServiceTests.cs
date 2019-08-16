@@ -99,6 +99,24 @@ namespace P5TheCarHub.UnitTests.ServicesTests
 
             Assert.NotNull(result);
         }
-                
+             
+        [Fact]
+        public void DeleteInvoice_WhenFound_DeletesInvoice()
+        {
+            var invoiceToDelete = new Invoice { VehicleId = 999, PriceSold = 3000M };
+            var result = _invoiceService.SaveInvoice(invoiceToDelete);
+
+            _invoiceService.DeleteInvoice(invoiceToDelete.Id);
+
+            Assert.Null(_invoiceService.GetInvoice(invoiceToDelete.Id));
+
+        }
+
+        [Fact]
+        public void DeleteInvoice_WhenNotFound_ThrowsInvoiceNotFoundException()
+        {
+            Assert.Throws<InvoiceNotFoundException>(() => _invoiceService.DeleteInvoice(id: 999));
+
+        }
     }
 }

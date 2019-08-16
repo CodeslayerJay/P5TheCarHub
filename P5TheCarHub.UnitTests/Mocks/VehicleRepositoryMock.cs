@@ -66,6 +66,21 @@ namespace P5TheCarHub.UnitTests.Mocks
                     PurchasePrice = 3000M,
                     SalePrice = 500,
                     IsSold = true
+                },
+                 new Vehicle
+                {
+                    Id = 999,
+                    Year = 2008,
+                    Make = "Kia",
+                    Model = "Optima",
+                    Trim = "Ex",
+                    Mileage = "30,000",
+                    VIN = "555",
+                    LotDate = DateTime.Today,
+                    PurchaseDate = DateTime.Today,
+                    PurchasePrice = 3000M,
+                    SalePrice = 500,
+                    IsSold = true
                 }
             };
 
