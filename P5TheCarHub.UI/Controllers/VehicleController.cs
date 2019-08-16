@@ -106,18 +106,18 @@ namespace P5TheCarHub.UI.Controllers
                 catch(DuplicateVehicleVinException ex)
                 {
                     ModelState.AddModelError("VIN", ex.Message);
-                    return View("VehicleForm", formModel);
+                    
                 }
                 catch(VehicleNotGreaterThanRequiredYearException ex)
                 {
                     ModelState.AddModelError("Year", ex.Message);
-                    return View("VehicleForm", formModel);
+                    
                 }
                 catch(Exception ex)
                 {
                     _logger.LogWarning("Error attempting to save vehicle", ex.Message);
                     TempData["ErrorMessage"] = AppStrings.GenericErrorMsg;
-                    return View("VehicleForm", formModel);
+                    
                 }
                    
             }
