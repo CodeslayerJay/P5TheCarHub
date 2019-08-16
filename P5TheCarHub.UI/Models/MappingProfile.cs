@@ -32,6 +32,14 @@ namespace P5TheCarHub.UI.Models
             CreateMap<Repair, RepairViewModel>()
                 .ForMember(vm => vm.RepairId, opts => opts.MapFrom(r => r.Id))
                 .ForMember(vm => vm.VehicleId, opts => opts.MapFrom(r => r.VehicleId));
+
+            // Invoice
+            CreateMap<InvoiceFormModel, Invoice>()
+                .ForMember(i => i.Id, opt => opt.MapFrom(vm => vm.InvoiceId))
+                .ForMember(i => i.Id, opt => opt.MapFrom(vm => vm.VehicleId));
+            CreateMap<Invoice, InvoiceFormModel>()
+                .ForMember(vm => vm.InvoiceId, opt => opt.MapFrom(i => i.Id))
+                .ForMember(vm => vm.VehicleId, opt => opt.MapFrom(i => i.Vehicle));
         }
     }
 }
