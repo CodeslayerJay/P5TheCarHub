@@ -46,7 +46,7 @@ namespace P5TheCarHub.UI.Controllers
 
                 if(vehicle == null)
                 {
-                    ViewData["InfoMessage"] = AppStrings.VehicleNotFoundMsg;
+                    TempData["InfoMessage"] = AppStrings.VehicleNotFoundMsg;
                     return RedirectToAction("Index", "Vehicle");
                 }
 
@@ -61,7 +61,7 @@ namespace P5TheCarHub.UI.Controllers
 
                     if (repair == null)
                     {
-                        ViewData["InfoMessage"] = AppStrings.RepairNotFoundMsg;
+                        TempData["InfoMessage"] = AppStrings.RepairNotFoundMsg;
                         return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
                     }
 
@@ -76,7 +76,7 @@ namespace P5TheCarHub.UI.Controllers
             catch (Exception ex)
             {
                 _logger.LogWarning(ex.Message);
-                ViewData["ErrorMsg"] = AppStrings.GenericErrorMsg;
+                TempData["ErrorMsg"] = AppStrings.GenericErrorMsg;
                 return RedirectToAction("Index", "Vehicle");
             }
 
@@ -102,7 +102,7 @@ namespace P5TheCarHub.UI.Controllers
                 if (!ModelState.IsValid)
                     return View("RepairForm", formModel);
 
-                var repair = (formModel.RepairId == 0) ?
+                var repair = (formModel.RepairId == AppStrings.NotSet) ?
                         _mapper.Map<Repair>(formModel) :
                         _mapper.Map<RepairFormModel, Repair>(formModel, _repairService.GetById(formModel.RepairId));
 
@@ -111,19 +111,19 @@ namespace P5TheCarHub.UI.Controllers
                 if (formModel.AddAnotherRepair)
                     return RedirectToAction(nameof(Edit), new { vehicleId = vehicleId });
 
-                ViewData["SuccessMessage"] = AppStrings.RepairSavedSuccessMsg;
+                TempData["SuccessMessage"] = AppStrings.RepairSavedSuccessMsg;
                 return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
             }
             catch(RepairNotFoundException ex)
             {
                 _logger.LogWarning(ex.Message);
-                ViewData["ErrorMessage"] = AppStrings.GenericErrorMsg;
+                TempData["ErrorMessage"] = AppStrings.GenericErrorMsg;
                 return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
             }
             catch(Exception ex)
             {
                 _logger.LogWarning($"Error occurred while attempting to save repair. {ex.Message}");
-                ViewData["ErrorMessage"] = AppStrings.GenericErrorMsg;
+                TempData["ErrorMessage"] = AppStrings.GenericErrorMsg;
                 return RedirectToAction("Index", "Vehicle");
             }
         }
@@ -137,7 +137,7 @@ namespace P5TheCarHub.UI.Controllers
 
                 if (repair == null)
                 {
-                    ViewData["InfoMessage"] = AppStrings.RepairNotFoundMsg;
+                    TempData["InfoMessage"] = AppStrings.RepairNotFoundMsg;
                     return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
                 }
 
@@ -146,7 +146,7 @@ namespace P5TheCarHub.UI.Controllers
             catch (Exception ex)
             {
                 _logger.LogWarning(ex.Message);
-                ViewData["ErrorMsg"] = AppStrings.GenericErrorMsg;
+                TempData["ErrorMsg"] = AppStrings.GenericErrorMsg;
                 return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
             }
         }
@@ -159,19 +159,19 @@ namespace P5TheCarHub.UI.Controllers
             {
                 _repairService.DeleteRepair(RepairId);
 
-                ViewData["InfoMessage"] = AppStrings.RepairDeleteSuccessMsg;
+                TempData["InfoMessage"] = AppStrings.RepairDeleteSuccessMsg;
 
 
             }
             catch (RepairNotFoundException ex)
             {
-                ViewData["ErrorMsg"] = ex.Message;
+                TempData["ErrorMsg"] = ex.Message;
                 _logger.LogWarning(ex.Message);
 
             }
             catch (Exception ex)
             {
-                ViewData["ErrorMsg"] = AppStrings.GenericErrorMsg;
+                TempData["ErrorMsg"] = AppStrings.GenericErrorMsg;
                 _logger.LogWarning($"Error occured attempting to delete vehicle {ex.Message}");
             }
 

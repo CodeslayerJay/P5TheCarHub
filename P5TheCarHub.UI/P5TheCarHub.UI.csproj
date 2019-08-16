@@ -24,6 +24,7 @@
 
 
   <ItemGroup>
+    <Folder Include="Models\Services\" />
     <Folder Include="wwwroot\vehicle_images\" />
   </ItemGroup>
 

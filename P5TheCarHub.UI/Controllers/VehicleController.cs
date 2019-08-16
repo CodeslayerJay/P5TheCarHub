@@ -6,23 +6,22 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using P5CarSalesAppBasic.Models.Validators;
 using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Interfaces.Services;
-using P5TheCarHub.UI.Models.Services;
 using P5TheCarHub.UI.Models.ViewModels;
 using P5TheCarHub.UI.Utilities;
 
 namespace P5TheCarHub.UI.Controllers
 {
-    //TODO: Add authorization
+    // [Authorize]
     [Route("manage/vehicles")]
     public class VehicleController : Controller
     {
         
         private readonly IVehicleService _vehicleService;
         private readonly ILogger<VehicleController> _logger;
-        private readonly VehicleValidationService _vehicleValidator;
         private readonly IMapper _mapper;
 
         public VehicleController(IVehicleService vehicleService, ILogger<VehicleController> logger,
@@ -31,7 +30,6 @@ namespace P5TheCarHub.UI.Controllers
           
             _vehicleService = vehicleService;
             _logger = logger;
-            _vehicleValidator = new VehicleValidationService();
             _mapper = mapper;
         }
 
@@ -46,27 +44,25 @@ namespace P5TheCarHub.UI.Controllers
             return View(vm);
         }
 
-        [HttpGet("Add")]
-        public IActionResult Add()
-        {
-            return View("VehicleForm", new VehicleFormModel());
-        }
-
-        [HttpGet("Edit/{id}")]
-        public IActionResult Edit(int id)
+        [HttpGet("Edit/{id?}")]
+        public IActionResult Edit(int? id)
         {
             try
             {
-                var vehicle = _vehicleService.GetVehicle(id, withIncludes: false);
+                var vm = new VehicleFormModel();
 
-                if (vehicle == null)
+                if (id.HasValue)
                 {
-                    ViewData["InfoMessage"] = AppStrings.VehicleNotFoundMsg;
-                    return RedirectToAction(nameof(Index));
+                    var vehicle = _vehicleService.GetVehicle(id.Value, withIncludes: false);
+
+                    if (vehicle == null)
+                    {
+                        ViewData["InfoMessage"] = AppStrings.VehicleNotFoundMsg;
+                        return RedirectToAction(nameof(Index));
+                    }
+
+                    vm = _mapper.Map<VehicleFormModel>(vehicle);
                 }
-
-                var vm = _mapper.Map<VehicleFormModel>(vehicle);
-
 
                 return View("VehicleForm", vm);
             }
@@ -83,13 +79,14 @@ namespace P5TheCarHub.UI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Save(VehicleFormModel formModel)
         {
-            var inputErrors = _vehicleValidator.CheckForInputErrors(formModel);
+            var _validator = new VehicleValidator();
+            var results = _validator.Validate(formModel);
 
-            if (inputErrors.Any())
+            if (results.Errors.Any())
             {
-                foreach(var error in inputErrors)
+                foreach(var error in results.Errors)
                 {
-                    ModelState.AddModelError(error.Key, error.Value);
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
                 }
             }
 
@@ -97,7 +94,7 @@ namespace P5TheCarHub.UI.Controllers
             {
                 try
                 {
-                    var vehicle = (formModel.VehicleId == 0) ? 
+                    var vehicle = (formModel.VehicleId == AppStrings.NotSet) ? 
                         _mapper.Map<Vehicle>(formModel) :
                         _mapper.Map<VehicleFormModel, Vehicle>(formModel, _vehicleService.GetVehicle(formModel.VehicleId, withIncludes: false));
 
@@ -109,6 +106,11 @@ namespace P5TheCarHub.UI.Controllers
                 catch(DuplicateVehicleVinException ex)
                 {
                     ModelState.AddModelError("VIN", ex.Message);
+                    return View("VehicleForm", formModel);
+                }
+                catch(VehicleNotGreaterThanRequiredYearException ex)
+                {
+                    ModelState.AddModelError("Year", ex.Message);
                     return View("VehicleForm", formModel);
                 }
                 catch(Exception ex)
