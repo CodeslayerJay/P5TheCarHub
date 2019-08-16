@@ -1,6 +1,5 @@
 ﻿
 using P5TheCarHub.Core.Entities;
-using P5TheCarHub.UI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

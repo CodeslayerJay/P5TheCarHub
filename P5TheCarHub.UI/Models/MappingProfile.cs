@@ -36,10 +36,13 @@ namespace P5TheCarHub.UI.Models
             // Invoice
             CreateMap<InvoiceFormModel, Invoice>()
                 .ForMember(i => i.Id, opt => opt.MapFrom(vm => vm.InvoiceId))
-                .ForMember(i => i.Id, opt => opt.MapFrom(vm => vm.VehicleId));
+                .ForMember(i => i.VehicleId, opt => opt.MapFrom(vm => vm.VehicleId));
             CreateMap<Invoice, InvoiceFormModel>()
                 .ForMember(vm => vm.InvoiceId, opt => opt.MapFrom(i => i.Id))
-                .ForMember(vm => vm.VehicleId, opt => opt.MapFrom(i => i.Vehicle));
+                .ForMember(vm => vm.VehicleId, opt => opt.MapFrom(i => i.VehicleId));
+            CreateMap<Invoice, InvoiceViewModel>()
+                .ForMember(vm => vm.InvoiceId, opt => opt.MapFrom(i => i.Id))
+                .ForMember(vm => vm.VehicleId, opt => opt.MapFrom(i => i.VehicleId));
         }
     }
 }

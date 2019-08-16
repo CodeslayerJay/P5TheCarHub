@@ -37,7 +37,7 @@
                     <th>Purchase Price</th>
                     <th>Purchase Date</th>
                     <th>Lot Date</th>
-                    <th>Sold To / Date</th>
+                    <th>Sale Price</th>
                     <th><a asp-action="Edit" asp-controller="Vehicle" class="btn-outline-info btn float-right">Add Vehicle</a></th>
                 </tr>
             </thead>
@@ -64,14 +64,7 @@
                         <td>@vehicle.PurchasePrice.ToString("c")</td>
                         <td>@vehicle.PurchaseDate.ToShortDateString()</td>
                         <td>@vehicle.LotDate.ToShortDateString()</td>
-                        @if (vehicle.Invoice != null)
-                        {
-                            <td>@vehicle.Invoice.CustomerName @vehicle.Invoice.DateSold.ToShortDateString()</td>
-                        }
-                        else
-                        {
-                            <td></td>
-                        }
+                        <td>@vehicle.SalePrice.ToString("c")</td>
                         <td>
                             <a asp-action="Details" asp-controller="vehicle" asp-route-id="@vehicle.VehicleId">View</a> |
                             <a asp-action="Edit" asp-controller="vehicle" asp-route-id="@vehicle.VehicleId">Edit</a> |

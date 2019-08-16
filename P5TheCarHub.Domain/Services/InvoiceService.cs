@@ -61,10 +61,20 @@ namespace P5TheCarHub.Core.Services
 
             if(invoice.Id == 0)
                 _unitOfWork.Invoices.Add(invoice);
-
+            
             _unitOfWork.SaveChanges();
 
             return invoice;
+        }
+
+        private void UpdateInvoice(Invoice invoice)
+        {
+            var invoiceToUpdate = _unitOfWork.Invoices.GetById(invoice.Id);
+
+            if (invoiceToUpdate == null)
+                throw new InvoiceNotFoundException(invoice.Id);
+
+            _unitOfWork.SaveChanges();
         }
 
         private void SetVehicleToSoldStatus(Vehicle vehicle)
