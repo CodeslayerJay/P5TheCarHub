@@ -1,4 +1,5 @@
-﻿using P5TheCarHub.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
@@ -40,9 +41,9 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
         public IEnumerable<Invoice> GetAll(int? amount = null)
         {
             if (amount.HasValue)
-                return _context.Invoices.Where(x => x.Id > 0).Take(amount.Value).ToList();
+                return _context.Invoices.Where(x => x.Id > 0).Include(x => x.Vehicle).Take(amount.Value).ToList();
 
-            return _context.Invoices.Where(x => x.Id > 0).ToList();
+            return _context.Invoices.Where(x => x.Id > 0).Include(x => x.Vehicle).ToList();
         }
 
         public Invoice GetById(int id)
