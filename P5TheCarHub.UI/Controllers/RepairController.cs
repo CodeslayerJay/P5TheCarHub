@@ -36,13 +36,14 @@ namespace P5TheCarHub.UI.Controllers
         {
             return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
         }
-
-        [HttpGet("add")]
-        public IActionResult Add(int vehicleId)
+        
+        [HttpGet("edit/{id?}")]
+        public IActionResult Edit(int vehicleId, int? id)
         {
             try
             {
                 var vehicle = _vehicleService.GetVehicle(vehicleId, withIncludes: false);
+
                 if(vehicle == null)
                 {
                     ViewData["InfoMessage"] = AppStrings.VehicleNotFoundMsg;
@@ -51,21 +52,34 @@ namespace P5TheCarHub.UI.Controllers
 
                 var vm = new RepairFormModel
                 {
-                    VehicleId = vehicle.Id,
-                    VehicleFullName = _vehicleService.GetFullVehicleName(vehicle),
-                    ReturnUrl = $"/manage/vehicles/{vehicleId}/repairs/add"
+                    VehicleId = vehicle.Id
                 };
 
-                return View("RepairForm",vm);
+                if (id.HasValue)
+                {
+                    var repair = _repairService.GetById(id.Value);
+
+                    if (repair == null)
+                    {
+                        ViewData["InfoMessage"] = AppStrings.RepairNotFoundMsg;
+                        return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
+                    }
+
+
+                    vm = _mapper.Map<RepairFormModel>(repair);
+                }
+
+                vm.VehicleFullName = _vehicleService.GetFullVehicleName(vehicle);
+                return View("RepairForm", vm);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogWarning(ex.Message);
                 ViewData["ErrorMsg"] = AppStrings.GenericErrorMsg;
                 return RedirectToAction("Index", "Vehicle");
             }
-            
+
         }
 
         [HttpPost("save")]
@@ -94,6 +108,9 @@ namespace P5TheCarHub.UI.Controllers
 
                 _repairService.SaveRepair(repair);
 
+                if (formModel.AddAnotherRepair)
+                    return RedirectToAction(nameof(Edit), new { vehicleId = vehicleId });
+
                 ViewData["SuccessMessage"] = AppStrings.RepairSavedSuccessMsg;
                 return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
             }
@@ -101,13 +118,13 @@ namespace P5TheCarHub.UI.Controllers
             {
                 _logger.LogWarning(ex.Message);
                 ViewData["ErrorMessage"] = AppStrings.GenericErrorMsg;
-                return Redirect(formModel.ReturnUrl);
+                return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
             }
             catch(Exception ex)
             {
                 _logger.LogWarning($"Error occurred while attempting to save repair. {ex.Message}");
                 ViewData["ErrorMessage"] = AppStrings.GenericErrorMsg;
-                return Redirect(formModel.ReturnUrl);
+                return RedirectToAction("Index", "Vehicle");
             }
         }
 

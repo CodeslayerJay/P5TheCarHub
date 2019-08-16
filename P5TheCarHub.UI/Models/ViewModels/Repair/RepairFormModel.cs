@@ -17,6 +17,6 @@ namespace P5TheCarHub.UI.Models.ViewModels
         public DateTime? RepairDate { get; set; }
 
         public bool AddAnotherRepair { get; set; }
-        public string ReturnUrl { get; set; } = "/manage/vehicles";
+        
     }
 }
