@@ -137,5 +137,10 @@ namespace P5TheCarHub.UnitTests.Mocks
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Vehicle> GetAll(int? amount = null, string orderBy = null)
+        {
+            return GetAll(amount);
+        }
     }
 }

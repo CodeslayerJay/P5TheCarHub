@@ -85,12 +85,9 @@ namespace P5TheCarHub.Core.Services
             return _unitOfWork.Vehicles.GetByVin(vin, withIncludes);
         }
 
-        public IEnumerable<Vehicle> GetAll(int? amount = null)
+        public IEnumerable<Vehicle> GetAll(int? amount = null, string orderBy = null)
         {
-            if (amount.HasValue)
-                return _unitOfWork.Vehicles.GetAll(amount);
-
-            return _unitOfWork.Vehicles.GetAll();
+            return _unitOfWork.Vehicles.GetAll(amount, orderBy);
         }
 
         public void DeleteVehicle(int id)

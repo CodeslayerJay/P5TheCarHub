@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using P5TheCarHub.Core.Interfaces.Services;
@@ -16,16 +17,25 @@ namespace P5TheCarHub.UI.Controllers
     {
         private readonly IVehicleService _vehicleService;
         private readonly ILogger<HomeController> _logger;
+        private readonly IMapper _mapper;
 
-        public HomeController(IVehicleService vehicleService, ILogger<HomeController> logger)
+        public HomeController(IVehicleService vehicleService, ILogger<HomeController> logger, IMapper mapper)
         {
             _vehicleService = vehicleService;
             _logger = logger;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var vehicles = _vehicleService.GetAll(amount: 3, orderBy: "LotDate").Select(x => _mapper.Map<VehicleViewModel>(x));
+
+            var viewModel = new HomeViewModel
+            {
+                Vehicles = vehicles,
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Contact(int? vehicleId = null)

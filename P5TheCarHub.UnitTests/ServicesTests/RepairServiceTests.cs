@@ -63,7 +63,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         [Fact]
         public void GetById_WhenFound_ReturnsRepair()
         {
-            var result = _repairService.GetById(id: 1);
+            var result = _repairService.GetRepair(id: 1);
 
             Assert.NotNull(result);
         }
@@ -75,7 +75,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             var vehicle = _vehicleService.GetVehicle(id: 1);
             var currentSalePrice = vehicle.SalePrice;
 
-            var repair = _repairService.GetById(id: 1);
+            var repair = _repairService.GetRepair(id: 1);
             repair.Cost = 10;
 
             var result = _repairService.SaveRepair(repair);

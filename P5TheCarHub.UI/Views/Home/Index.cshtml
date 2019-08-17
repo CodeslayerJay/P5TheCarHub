@@ -18,41 +18,45 @@
 
 <div class="section-area">
     <h3>Latest Additions</h3>
-    @*<div class="row pt-5">
-        @if (Model.Cars.Any())
+    <div class="row pt-5">
+        @if (Model.Vehicles.Any())
         {
-            @foreach(var car in Model.Cars)
+            @foreach(var vehicle in Model.Vehicles)
             {
                 <div class="card text-white bg-primary mb-3 col-4">
-                    <div class="card-header">@car.FullCarName</div>
+                    <div class="card-header">@vehicle.FullVehicleName</div>
                     <div class="card-body">
-                        @if (car.IsSold)
+                        @if (vehicle.IsSold)
                         {
                             <h4 class="card-title">SOLD!</h4>
                         }
                         else
                         {
-                            <h4 class="card-title">@car.SalePrice.ToString("c")</h4>
+                            <h4 class="card-title">@vehicle.SalePrice.ToString("c")</h4>
                         }
 
-                        @if (car.MainPhoto != null)
+                        @if (vehicle.MainPhoto != null)
                         {
-                            <img src="@car.MainPhoto.ImageUrl" height="200" width="300"/>
+                            <img src="@vehicle.MainPhoto.ImageUrl" height="200" width="300"/>
                         }
                         else
                         {
-                            <img src="~/img/car-suv-blank.png" height="200" width="400"/>
+                            <img src="~/img/car-suv-blank.png" height="200" width="300"/>
                         }
 
-                        <p class="card-text pt-3">
-                            @car.Mileage.ToString("N0") mile(s)
-                        </p>
+                        @if(!String.IsNullOrEmpty(vehicle.Mileage))
+                        {
+                            <p class="card-text pt-3">
+                                @vehicle.Mileage mile(s)
+                            </p>
+                        }
+                        
                     </div>
                 </div>
             }
             
         }
-    </div>*@
+    </div>
 </div>
 
 @*<div class="section-area">
@@ -77,7 +81,7 @@
             }
         </ul>
     </div>
-
+    *@
     <h3 class="mt-5">Browse By Price Range</h3>
     <hr />
     <div class="row pt-5 p-3">
@@ -112,6 +116,6 @@
             </li>
         </ul>
     </div>
-</div>*@
+
 
 

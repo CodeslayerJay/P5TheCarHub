@@ -10,5 +10,6 @@ namespace P5TheCarHub.Core.Interfaces.Repositories
     {
         Vehicle GetByVin(string vin, bool withIncludes);
         Vehicle GetById(int id, bool withIncludes);
+        IEnumerable<Vehicle> GetAll(int? amount, string orderBy);
     }
 }
