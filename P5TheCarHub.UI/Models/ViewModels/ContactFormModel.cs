@@ -37,16 +37,6 @@ namespace P5TheCarHub.UI.Models.ViewModels
         public string ContactMethod { get; set; }
 
 
-        public ContactFormCarDetails Car { get; set; }
-    }
-
-    public class ContactFormCarDetails
-    {
-        public int Id { get; set; }
-        public string VIN { get; set; }
-        public string FullCarName { get; set; }
-        public string Photo { get; set; }
-        public string Mileage { get; set; }
-        public string SalePrice { get; set; }
+        public ContactFormVehicleDetails Vehicle { get; set; }
     }
 }

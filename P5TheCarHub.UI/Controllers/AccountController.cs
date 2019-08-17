@@ -51,7 +51,7 @@ namespace P5TheCarHub.UI.Controllers
 
                         if (result.Succeeded)
                         {
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "Vehicle");
                         }
                         else
                         {

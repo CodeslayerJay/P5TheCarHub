@@ -24,18 +24,18 @@
             Phone: 555-555-555
         </address>
         <hr />
-        @if (Model.Car != null)
+        @if (Model.Vehicle != null)
         {
             <div class="card p-3 mb-3">
                 <div class="media">
-                    @if (Model.Car.Photo != null)
+                    @if (Model.Vehicle.Photo != null)
                     {
-                        <img src="@Model.Car.Photo" class="mr-3" alt="...">
+                        <img src="@Model.Vehicle.Photo" class="mr-3" alt="...">
                     }
 
                     <div class="media-body">
-                        <h5 class="mt-0">@Model.Car.FullCarName</h5>
-                        @Model.Car.SalePrice | @Model.Car.Mileage mile(s) | VIN: @Model.Car.VIN
+                        <h5 class="mt-0">@Model.Vehicle.FullVehicleName</h5>
+                        @Model.Vehicle.SalePrice | @Model.Vehicle.Mileage mile(s) | VIN: @Model.Vehicle.VIN
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
             </div>
 
 
-            @if (Model.Car == null)
+            @if (Model.Vehicle == null)
             {
                 <div class="form-group">
                     <label asp-for="CarInfo" class="label-col">Name or type of vehicle your are looking for:</label>
@@ -75,7 +75,7 @@
             }
             else
             {
-                <input asp-for="CarInfo" type="hidden" value="carId: @Model.Car.Id name:@Model.Car.FullCarName vin:@Model.Car.VIN " />
+                <input asp-for="CarInfo" type="hidden" value="carId: @Model.Vehicle.Id name:@Model.Vehicle.FullVehicleName vin:@Model.Vehicle.VIN " />
             }
 
             <div class="form-row">
