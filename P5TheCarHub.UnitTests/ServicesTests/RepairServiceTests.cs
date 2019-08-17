@@ -68,14 +68,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             Assert.NotNull(result);
         }
 
-        [Fact]
-        public void GetById_WhenNotFound_ThrowsRepairNotFoundException()
-        {
-            
-            Assert.Throws<RepairNotFoundException>(() => _repairService.GetById(id: 9999));
-        }
-
-
+        
         [Fact]
         public void SaveRepair_WhenRepairIsFound_AndRepairIdIsNotZero_UpdatesVehicleSalePriceAndReturnsUpdatedRepair()
         {

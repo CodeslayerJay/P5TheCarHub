@@ -58,7 +58,7 @@ namespace P5TheCarHub.UI.Controllers
 
                 if (id.HasValue)
                 {
-                    var repair = _repairService.GetById(id.Value);
+                    var repair = _repairService.GetRepair(id.Value);
 
                     if (repair == null)
                     {
@@ -105,7 +105,7 @@ namespace P5TheCarHub.UI.Controllers
 
                 var repair = (formModel.RepairId == AppStrings.NotSet) ?
                         _mapper.Map<Repair>(formModel) :
-                        _mapper.Map<RepairFormModel, Repair>(formModel, _repairService.GetById(formModel.RepairId));
+                        _mapper.Map<RepairFormModel, Repair>(formModel, _repairService.GetRepair(formModel.RepairId));
 
                 _repairService.SaveRepair(repair);
 
@@ -135,7 +135,7 @@ namespace P5TheCarHub.UI.Controllers
         {
             try
             {
-                var repair = _mapper.Map<RepairViewModel>(_repairService.GetById(id));
+                var repair = _mapper.Map<RepairViewModel>(_repairService.GetRepair(id));
 
                 if (repair == null)
                 {

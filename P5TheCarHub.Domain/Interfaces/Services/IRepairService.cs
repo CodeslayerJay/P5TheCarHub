@@ -8,7 +8,7 @@ namespace P5TheCarHub.Core.Interfaces.Services
         Repair SaveRepair(Repair repair);
         void DeleteRepair(int id);
         IEnumerable<Repair> GetAllByVehicleId(int vehicleId);
-        Repair GetById(int id);
+        Repair GetRepair(int id);
         
     }
 }

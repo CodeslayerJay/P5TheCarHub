@@ -61,14 +61,9 @@ namespace P5TheCarHub.Core.Services
             return _unitOfWork.Repairs.GetAllByVehicleId(vehicleId);
         }
 
-        public Repair GetById(int id)
+        public Repair GetRepair(int id)
         {
-            var repair = _unitOfWork.Repairs.GetById(id);
-
-            if (repair == null)
-                throw new RepairNotFoundException(id);
-
-            return repair;
+            return _unitOfWork.Repairs.GetById(id);
         }
 
         

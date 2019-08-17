@@ -97,12 +97,6 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         }
 
         [Fact]
-        public void GetPhoto_WhenNotFound_ThrowsPhotoNotFoundException()
-        {
-            Assert.Throws<PhotoNotFoundException>(() => _photoService.GetPhoto(999));
-        }
-
-        [Fact]
         public void UpdateVehicleMainPhoto_WhenFound_UpdatesMainPhoto()
         {
             var vehicleId = 1;
