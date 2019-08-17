@@ -47,6 +47,9 @@ namespace P5TheCarHub.UI.Models
             // Photo
             CreateMap<PhotoFormModel, Photo>();
             CreateMap<Photo, PhotoFormModel>();
+
+            CreateMap<Photo, PhotoViewModel>()
+               .ForMember(vm => vm.PhotoId, opt => opt.MapFrom(i => i.Id));
         }
 
     }

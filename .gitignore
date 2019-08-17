@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /P5TheCarHub.ConsoleUI
+/P5TheCarHub.UI/wwwroot/img_uploads/ID_1020

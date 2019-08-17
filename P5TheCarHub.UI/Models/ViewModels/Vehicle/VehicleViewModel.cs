@@ -1,4 +1,5 @@
 ﻿
+
 using P5TheCarHub.Core.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace P5TheCarHub.UI.Models.ViewModels
         public VehicleViewModel()
         {
             Repairs = new List<RepairViewModel>();
+            Photos = new List<PhotoViewModel>();
         }
 
         public int VehicleId { get; set; }
@@ -32,10 +34,10 @@ namespace P5TheCarHub.UI.Models.ViewModels
 
         public decimal SalePrice { get; set; }
 
-        public Photo MainPhoto { get; set; }
+        public PhotoViewModel MainPhoto => GetMainPhoto();
 
         public IEnumerable<RepairViewModel> Repairs { get; set; }
-        //public IEnumerable<PhotoViewModel> Photos { get; set; }
+        public IEnumerable<PhotoViewModel> Photos { get; set; }
 
         public InvoiceViewModel Invoice { get; set; }
 
@@ -45,6 +47,11 @@ namespace P5TheCarHub.UI.Models.ViewModels
         {
             var costs = Repairs.Any() ? Repairs.Sum(x => x.Cost) : 0.0M;
             return costs;
+        }
+
+        private PhotoViewModel GetMainPhoto()
+        {
+            return Photos.FirstOrDefault(x => x.IsMain == true);
         }
 
     }
