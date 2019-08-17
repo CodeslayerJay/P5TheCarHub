@@ -15,7 +15,7 @@ using P5TheCarHub.UI.Utilities;
 
 namespace P5TheCarHub.UI.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [Route("manage/vehicles")]
     public class VehicleController : Controller
     {

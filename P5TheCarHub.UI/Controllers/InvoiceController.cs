@@ -11,10 +11,11 @@ using P5TheCarHub.UI.Models.ViewModels;
 using P5TheCarHub.UI.Models.Validators;
 using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace P5TheCarHub.UI.Controllers
 {
-    // [Authroize]
+    [Authorize]
     [Route("manage/vehicle/{vehicleId}/invoice")]
     public class InvoiceController : Controller
     {

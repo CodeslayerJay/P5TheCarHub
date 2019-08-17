@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@ using P5TheCarHub.UI.Utilities;
 
 namespace P5TheCarHub.UI.Controllers
 {
-    // [Authorize]
+    [Authorize]
     [Route("manage/vehicles/{vehicleId}/photos")]
     public class PhotoController : Controller
     {
