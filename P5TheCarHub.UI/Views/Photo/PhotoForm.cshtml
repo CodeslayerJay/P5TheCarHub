@@ -1,0 +1,97 @@
+﻿@model PhotoFormModel
+@{
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+<div class="pt-5">
+    <h4 class="text-center">Upload Photo</h4>
+
+    <div class="row pt-3">
+        <div class="col-8 m-auto card pt-3">
+            <form method="post" asp-action="Save" asp-controller="Photo" asp-route-vehicleId="@Model.VehicleId" enctype="multipart/form-data">
+                <input asp-for="VehicleId" type="hidden" />
+
+                <div class="form-row">
+                    <div class="col-5">
+                        <h4>Preview</h4>
+                        <div class="img-thumbnail">
+                            <img id="imgThumbnail" height="200" width="200" />
+                        </div>
+                    </div>
+
+                    <div class="col-6 ml-2">
+                        <div class="form-group pt-1">
+                            <h5 class="text-muted pt-1 pb-3">@Model.FullVehicleName</h5>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <div class="custom-file" style="cursor: pointer;">
+                                    <input type="file" class="custom-file-input" id="vehicleImage" name="Photo" accept="image/png,image/jpeg">
+                                    <label class="custom-file-label" for="vehicleImage">Choose Image</label>
+                                </div>
+                                <p class="text-muted pt-1">
+                                    *Image format: .jpg, .jpeg, .png
+                                    <span asp-validation-for="Photo" class="text-danger ml-3"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="col-form-label"></label>
+                            <input asp-for="Description" class="form-control form-control-sm" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        @if (!@Model.IsMain)
+                        {
+                        <div class="form-group">
+                            <div class="form-group col-12">
+                                <label asp-for="IsMain" class="col-form-label">
+                                    <input asp-for="IsMain" class="form-check-inline" /> Main Photo
+                                </label>
+                            </div>
+
+                        </div>
+                        } 
+                        else
+                        {
+                         <input type="hidden" asp-for="IsMain" value="true" />
+                        }
+                    </div>
+
+                </div>
+               
+
+                <hr />
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Add Photo</button>
+                    <a asp-controller="Vehicle" asp-action="Details" asp-route-id="@Model.VehicleId" class="btn">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        function readURL(input) {
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+    
+              reader.onload = function (e) {
+                
+                  $('#imgThumbnail').attr('src', e.target.result).parent("div").show();
+            }
+    
+            reader.readAsDataURL(input.files[0]);
+          }
+        }
+
+        $("#vehicleImage").change(function() {
+          readURL(this);
+        });
+
+    </script>
+}

@@ -24,25 +24,32 @@ namespace P5TheCarHub.UI.Models
 
             // Repair
             CreateMap<RepairFormModel, Repair>()
-                .ForMember(r => r.Id, opts => opts.MapFrom(vm => vm.RepairId))
-                .ForMember(r => r.VehicleId, opts => opts.MapFrom(vm => vm.VehicleId));
+                .ForMember(r => r.Id, opts => opts.MapFrom(vm => vm.RepairId));
+                
             CreateMap<Repair, RepairFormModel>()
-                .ForMember(vm => vm.RepairId, opts => opts.MapFrom(r => r.Id))
-                .ForMember(vm => vm.VehicleId, opts => opts.MapFrom(r => r.VehicleId));
+                .ForMember(vm => vm.RepairId, opts => opts.MapFrom(r => r.Id));
+                
             CreateMap<Repair, RepairViewModel>()
-                .ForMember(vm => vm.RepairId, opts => opts.MapFrom(r => r.Id))
-                .ForMember(vm => vm.VehicleId, opts => opts.MapFrom(r => r.VehicleId));
+                .ForMember(vm => vm.RepairId, opts => opts.MapFrom(r => r.Id));
+                
 
             // Invoice
             CreateMap<InvoiceFormModel, Invoice>()
-                .ForMember(i => i.Id, opt => opt.MapFrom(vm => vm.InvoiceId))
-                .ForMember(i => i.VehicleId, opt => opt.MapFrom(vm => vm.VehicleId));
+                .ForMember(i => i.Id, opt => opt.MapFrom(vm => vm.InvoiceId));
+
             CreateMap<Invoice, InvoiceFormModel>()
-                .ForMember(vm => vm.InvoiceId, opt => opt.MapFrom(i => i.Id))
-                .ForMember(vm => vm.VehicleId, opt => opt.MapFrom(i => i.VehicleId));
+                .ForMember(vm => vm.InvoiceId, opt => opt.MapFrom(i => i.Id));
+
             CreateMap<Invoice, InvoiceViewModel>()
-                .ForMember(vm => vm.InvoiceId, opt => opt.MapFrom(i => i.Id))
-                .ForMember(vm => vm.VehicleId, opt => opt.MapFrom(i => i.VehicleId));
+                .ForMember(vm => vm.InvoiceId, opt => opt.MapFrom(i => i.Id));
+                
+
+            // Photo
+            CreateMap<PhotoFormModel, Photo>()
+                .ForMember(p => p.Id, opt => opt.MapFrom(vm => vm.PhotoId));
+            CreateMap<Photo, PhotoFormModel>()
+                .ForMember(vm => vm.PhotoId, opt => opt.MapFrom(p => p.Id));
         }
+
     }
 }
