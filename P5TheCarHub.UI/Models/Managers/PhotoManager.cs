@@ -69,8 +69,8 @@ namespace P5TheCarHub.UI.Models.Managers
             if (ValidateImage(image))
             {
                 GenerateImagePath(image, identifier);
-
                 StoreImageToDisk(image);
+                SetImagePathAndUrl();
             }
 
             Result.Success = true;
@@ -80,10 +80,11 @@ namespace P5TheCarHub.UI.Models.Managers
         private void GenerateImagePath(IFormFile image, int? identifier)
         {
             var folderPath = FolderPath;
-            UploadPath = Path.Combine(_host.WebRootPath, folderPath);
 
             if (identifier.HasValue)
-                UploadPath = Path.Combine(UploadPath, $"_ID_{identifier.Value}");
+                folderPath = FolderPath + $"ID_{identifier.Value}\\";
+
+            UploadPath = Path.Combine(_host.WebRootPath, folderPath);
 
             _imageFileName = Guid.NewGuid().ToString().Replace("-", "") +
                     Path.GetExtension(image.FileName);
@@ -97,12 +98,14 @@ namespace P5TheCarHub.UI.Models.Managers
 
             try
             {
+                Directory.CreateDirectory(UploadPath);
+
                 using (var fileStream = new FileStream(Path.Combine(UploadPath, _imageFileName), FileMode.Create))
                 {
                     image.CopyTo(fileStream);
                 }
 
-                SetImagePath();
+                
             }
             catch (Exception ex)
             {
@@ -110,9 +113,10 @@ namespace P5TheCarHub.UI.Models.Managers
             }
         }
 
-        private void SetImagePath()
+        private void SetImagePathAndUrl()
         {
-            Result.ImagePath = "\\" + UploadPath + "\\" + _imageFileName;
+            Result.ImageFullPath = $"\\{UploadPath}{_imageFileName}";
+            Result.ImageUrl = $"\\{FolderPath}{_imageFileName}";
         }
 
         public void DeleteImageFromDisk(string imageUrl)

@@ -42,13 +42,11 @@ namespace P5TheCarHub.UI.Models
 
             CreateMap<Invoice, InvoiceViewModel>()
                 .ForMember(vm => vm.InvoiceId, opt => opt.MapFrom(i => i.Id));
-                
+
 
             // Photo
-            CreateMap<PhotoFormModel, Photo>()
-                .ForMember(p => p.Id, opt => opt.MapFrom(vm => vm.PhotoId));
-            CreateMap<Photo, PhotoFormModel>()
-                .ForMember(vm => vm.PhotoId, opt => opt.MapFrom(p => p.Id));
+            CreateMap<PhotoFormModel, Photo>();
+            CreateMap<Photo, PhotoFormModel>();
         }
 
     }

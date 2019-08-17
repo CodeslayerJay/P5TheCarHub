@@ -10,6 +10,7 @@
         <div class="col-8 m-auto card pt-3">
             <form method="post" asp-action="Save" asp-controller="Photo" asp-route-vehicleId="@Model.VehicleId" enctype="multipart/form-data">
                 <input asp-for="VehicleId" type="hidden" />
+                <input asp-for="FullVehicleName" type="hidden" />
 
                 <div class="form-row">
                     <div class="col-5">

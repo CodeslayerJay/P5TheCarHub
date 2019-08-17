@@ -8,7 +8,8 @@ namespace P5TheCarHub.UI.Models.Managers
     public class PhotoManagerResult : IPhotoManagerResult
     {
         public bool IsValidImage { get; set; }
-        public string ImagePath { get; set; }
+        public string ImageFullPath { get; set; }
+        public string ImageUrl { get; set; }
         public bool Success { get; set; }
     }
 }

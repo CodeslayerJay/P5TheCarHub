@@ -67,20 +67,19 @@ namespace P5TheCarHub.UI.Controllers
         {
             try
             {
-                var image = HttpContext.Request.Form.Files[0];
-
-                if (!_photoManager.ValidateImage(image))
+                if (!_photoManager.ValidateImage(formModel.Photo))
                     ModelState.AddModelError("Photo", "Please select a valid image.");
 
                 if (ModelState.IsValid)
                 {
-                    var result = _photoManager.UploadImage(image, vehicleId);
+                    var result = _photoManager.UploadImage(formModel.Photo, vehicleId);
 
                     if (!result.Success)
                         TempData["ErrorMsg"] = AppStrings.ErrorUploadingImgMsg;
 
                     var photo = _mapper.Map<Photo>(formModel);
-                    photo.ImageUrl = result.ImagePath;
+                    
+                    photo.ImageUrl = result.ImageUrl;
 
                     _photoService.SavePhoto(photo);
 
