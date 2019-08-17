@@ -9,6 +9,6 @@ namespace P5TheCarHub.UI.Models.Managers
     {
         public bool IsValidImage { get; set; }
         public string ImagePath { get; set; }
-
+        public bool Success { get; set; }
     }
 }

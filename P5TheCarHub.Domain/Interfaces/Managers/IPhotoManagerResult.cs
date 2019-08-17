@@ -8,5 +8,6 @@ namespace P5TheCarHub.Core.Interfaces.Managers
     {
         bool IsValidImage { get; set; }
         string ImagePath { get; set; }
+        bool Success { get; set; }
     }
 }

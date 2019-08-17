@@ -9,16 +9,17 @@ using System.Threading.Tasks;
 
 namespace P5TheCarHub.UI.Models.Managers
 {
-    public class PhotoManager
+    public class PhotoManager : IPhotoManager<IFormFile>
     {
         
         public IPhotoManagerResult Result { get; }
-        private const string IMAGE_FOLDER_PATH = @"img_uploads\";
 
         private readonly IHostingEnvironment _host;
         private readonly PhotoManagerResult _photoResult;
 
-        private string _uploadPath;
+        public string FolderPath { get; private set; } = @"img_uploads\";
+        public string UploadPath { get; private set; }
+
         private string _imageFileName;
 
         public PhotoManager(IHostingEnvironment hostingEnvironment)
@@ -26,8 +27,28 @@ namespace P5TheCarHub.UI.Models.Managers
             Result = new PhotoManagerResult();
             _host = hostingEnvironment;
         }
+
+        public PhotoManager(IHostingEnvironment hostingEnvironment, string folderPath, string uploadPath)
+        {
+            Result = new PhotoManagerResult();
+            _host = hostingEnvironment;
+            UploadPath = uploadPath;
+            FolderPath = folderPath;
+        }
+
+        public void SetUploadPath(string uploadPath)
+        {
+            if (!String.IsNullOrEmpty(uploadPath))
+                UploadPath = uploadPath;
+        }
+
+        public void SetFolderPath(string folderPath)
+        {
+            if (!String.IsNullOrEmpty(folderPath))
+                FolderPath = folderPath;
+        }
                 
-        public IPhotoManagerResult ValidateImage(IFormFile formFile)
+        public bool ValidateImage(IFormFile formFile)
         {
 
             if (formFile != null && formFile.Length > 0)
@@ -36,35 +57,33 @@ namespace P5TheCarHub.UI.Models.Managers
                 if (formFile.ContentType.Contains("image"))
                 {
                     Result.IsValidImage = true;
-                    return Result;
                 }
                     
             }
 
-            return Result;
+            return Result.IsValidImage;
         }
 
         public IPhotoManagerResult UploadImage(IFormFile image, int? identifier)
         {
-
-            var result = ValidateImage(image);
-            if (result.IsValidImage)
+            if (ValidateImage(image))
             {
                 GenerateImagePath(image, identifier);
 
                 StoreImageToDisk(image);
             }
 
+            Result.Success = true;
             return Result;
         }
 
         private void GenerateImagePath(IFormFile image, int? identifier)
         {
-            var folderPath = IMAGE_FOLDER_PATH;
-            _uploadPath = Path.Combine(_host.WebRootPath, folderPath);
+            var folderPath = FolderPath;
+            UploadPath = Path.Combine(_host.WebRootPath, folderPath);
 
             if (identifier.HasValue)
-                _uploadPath = Path.Combine(_uploadPath, $"_ID_{identifier.Value}");
+                UploadPath = Path.Combine(UploadPath, $"_ID_{identifier.Value}");
 
             _imageFileName = Guid.NewGuid().ToString().Replace("-", "") +
                     Path.GetExtension(image.FileName);
@@ -73,12 +92,12 @@ namespace P5TheCarHub.UI.Models.Managers
 
         private void StoreImageToDisk(IFormFile image)
         {
-            if (String.IsNullOrEmpty(_uploadPath) || String.IsNullOrEmpty(_imageFileName))
+            if (String.IsNullOrEmpty(UploadPath) || String.IsNullOrEmpty(_imageFileName))
                 GenerateImagePath(image, identifier: null);
 
             try
             {
-                using (var fileStream = new FileStream(Path.Combine(_uploadPath, _imageFileName), FileMode.Create))
+                using (var fileStream = new FileStream(Path.Combine(UploadPath, _imageFileName), FileMode.Create))
                 {
                     image.CopyTo(fileStream);
                 }
@@ -93,7 +112,7 @@ namespace P5TheCarHub.UI.Models.Managers
 
         private void SetImagePath()
         {
-            Result.ImagePath = "\\" + _uploadPath + "\\" + _imageFileName;
+            Result.ImagePath = "\\" + UploadPath + "\\" + _imageFileName;
         }
 
         public void DeleteImageFromDisk(string imageUrl)
