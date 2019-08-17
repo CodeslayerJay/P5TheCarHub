@@ -76,7 +76,7 @@ namespace P5TheCarHub.UI.Controllers
                     var result = _photoManager.UploadImage(formModel.Photo, vehicleId);
 
                     if (!result.Success)
-                        TempData["ErrorMsg"] = AppStrings.ErrorUploadingImgMsg;
+                        TempData["ErrorMsg"] = AppStrings.PhotoUploadErrorMsg;
 
                     var photo = _mapper.Map<Photo>(formModel);
                     
@@ -84,7 +84,7 @@ namespace P5TheCarHub.UI.Controllers
 
                     _photoService.SavePhoto(photo);
 
-                    TempData["SuccessMessage"] = "Photo uploaded successfully.";
+                    TempData["SuccessMessage"] = AppStrings.PhotoSavedSuccessMsg;
                     return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
                 }
 
@@ -94,9 +94,40 @@ namespace P5TheCarHub.UI.Controllers
             {
                 _logger.LogError(ex.Message);
                 TempData["ErrorMessage"] = AppStrings.GenericErrorMsg;
-                return RedirectToAction(nameof(AddPhoto), new { vehicleId });
+                return RedirectToAction(nameof(AddPhoto), new { id = vehicleId });
             }
 
+        }
+
+        [HttpGet("delete/{id}")]
+        public IActionResult Delete(int vehicleId, int id)
+        {
+            try
+            {
+                var photo = _photoService.GetPhoto(id);
+
+                if (photo == null)
+                {
+                    TempData["InfoMessage"] = AppStrings.PhotoNotFoundMsg;
+                    return RedirectToAction("Details", "Vehicle", new { vehicleId });
+                }
+
+                var result = _photoManager.DeleteImageFromDisk(photo.ImageUrl);
+
+                if (result.Success)
+                    _photoService.DeletePhoto(id);
+
+                TempData["SuccessMessage"] = AppStrings.PhotoDeleteSuccessMsg;
+                
+            }
+            catch(Exception ex)
+            {
+                _logger.LogWarning(ex.Message);
+                TempData["ErrorMessage"] = AppStrings.PhotoDeleteErrorMsg;
+                
+            }
+
+            return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
         }
     }
 }

@@ -21,6 +21,10 @@ namespace P5TheCarHub.UI.Utilities
         public const string InvoiceSavedSuccessMsg = "Invoice saved successfully.";
         public const string InvoiceDeleteSuccessMsg = "Invoice deleted successfully.";
 
-        public const string ErrorUploadingImgMsg = "Uploading image failed. Please try again.";
+        public const string PhotoUploadErrorMsg = "Uploading image failed. Please try again.";
+        public const string PhotoDeleteErrorMsg = "Deleting image failed. Please try again.";
+        public const string PhotoDeleteSuccessMsg = "Photo deleted successfully.";
+        public const string PhotoSavedSuccessMsg = "Photo saved successfully.";
+        public const string PhotoNotFoundMsg = "Photo not found.";
     }
 }

@@ -8,7 +8,7 @@ namespace P5TheCarHub.Core.Interfaces.Managers
         string FolderPath { get; }
         string UploadPath { get; }
 
-        void DeleteImageFromDisk(string imageUrl);
+        IPhotoManagerResult DeleteImageFromDisk(string imageUrl);
         IPhotoManagerResult UploadImage(T image, int? identifier);
         bool ValidateImage(T formFile);
         void SetUploadPath(string uploadPath);

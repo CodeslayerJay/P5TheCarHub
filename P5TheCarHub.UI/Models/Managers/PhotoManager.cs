@@ -117,19 +117,22 @@ namespace P5TheCarHub.UI.Models.Managers
             Result.ImageUrl = $"\\{FolderPath}{_imageFileName}";
         }
 
-        public void DeleteImageFromDisk(string imageUrl)
+        public IPhotoManagerResult DeleteImageFromDisk(string imageUrl)
         {
             var webRoot = _host.WebRootPath;
             var filePath = webRoot + imageUrl;
             try
             {
                 File.Delete(filePath);
+                Result.Success = true;
+
             }
             catch(Exception ex)
             {
                 throw new Exception($"Error occurred attempting to remove image from disk. {ex.Message}");
             }
-            
+
+            return Result;
         }
     }
 }
