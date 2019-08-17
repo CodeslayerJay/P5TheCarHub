@@ -66,28 +66,28 @@ namespace P5TheCarHub.UI.Controllers
 
         }
 
-        //[HttpGet("details/{id}")]
-        //public IActionResult Details(int id)
-        //{
-        //    try
-        //    {
-        //        var car = _vehicleService.GetById(id);
+        [HttpGet("details/{id}")]
+        public IActionResult Details(int id)
+        {
+            try
+            {
+                var vehicle = _vehicleService.GetVehicle(id, withIncludes: true);
 
-        //        if (car == null)
-        //            return RedirectToAction(nameof(Index));
+                if (vehicle == null)
+                    return RedirectToAction(nameof(Index));
 
-        //        var viewModel = new InventoryDetailViewModel
-        //        {
-        //            Car = CarMapper.MapToCarViewModel(car)
-        //        };
+                var viewModel = new InventoryDetailViewModel
+                {
+                    Vehicle = _mapper.Map<VehicleViewModel>(vehicle)
+                };
 
-        //        return View(viewModel);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.Message);
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //}
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return RedirectToAction(nameof(Index));
+            }
+        }
     }
 }
