@@ -48,10 +48,7 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
 
         public IEnumerable<Vehicle> GetAll(int? amount = null)
         {
-            if (amount.HasValue)
-                return _context.Vehicles.Where(x => x.Id > 0).Take(amount.Value).ToList();
-
-            return _context.Vehicles.Where(x => x.Id > 0).ToList();
+            return GetAll(amount, orderBy: null);
         }
 
         public IEnumerable<Vehicle> GetAll(int? amount = null, string orderBy = null)
@@ -62,9 +59,9 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
                 vehicles.OrderBy(x => orderBy);
 
             if (amount.HasValue)
-                return vehicles.Where(x => x.Id > 0).Take(amount.Value).ToList();
+                return vehicles.Include(x => x.Photos).Where(x => x.Id > 0).Take(amount.Value).ToList();
 
-            return vehicles.Where(x => x.Id > 0).ToList();
+            return vehicles.Include(x => x.Photos).Where(x => x.Id > 0).ToList();
         }
 
 

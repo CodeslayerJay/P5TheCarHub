@@ -1,0 +1,129 @@
+﻿@model InventoryViewModel
+@{
+    ViewData["Title"] = "Cars For Sale";
+}
+
+<h3 class="display-4 pl-3">Inventory</h3>
+
+<div class="row">
+    <div class="col-lg-6">
+        <form asp-action="Index" method="get">
+            <div class="form-group col-md-10">
+
+                
+                <select name="minPrice" class="form-control-sm p-1">
+                    <option value="500" selected="selected">Minimum Price</option>
+                    <option value="2000">$2,000</option>
+                    <option value="5000">$5,000</option>
+                    <option value="10000">$10,000</option>
+                </select>
+                <button type="submit" class="btn btn-sm btn-primary">Filter Vehicle</button>
+                @if (Model.IsFilterApplied)
+                {
+                    <a asp-action="Index" asp-controller="Inventory" class="ml-3">View All</a>
+                }
+            </div>
+
+        </form>
+    </div>
+    <div class="col-12 m-auto row">
+        @if (Model.Vehicles.Any())
+        {
+            @foreach (var vehicle in Model.Vehicles)
+            {
+                <div class="col-lg-4">
+                    <div class="card mb-3">
+                        <div class="m-auto">
+                            <a asp-action="Details" asp-controller="Inventory" asp-route-id="@vehicle.VehicleId">
+                                @if (vehicle.MainPhoto != null)
+                                {
+
+                                    <img style="height: 200px; width: 300px; display: block;" src="@vehicle.MainPhoto.ImageUrl" alt="Vehicle image">
+
+                                }
+                                else
+                                {
+
+                                    <img style="height: 200px; width: 300px; display: block;" src="~/img/car-suv-blank.png" alt="Vehicle image">
+
+                                }
+                            </a>
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">@vehicle.FullVehicleName</h5>
+                            <h6 class="card-subtitle text-muted">@vehicle.Mileage?.ToString() mile(s)</h6>
+                        </div>
+
+                        <div class="card-body">
+                            @if (!vehicle.IsSold)
+                            {
+                                <h2>@vehicle.SalePrice.ToString("c")</h2>
+                            }
+                            else
+                            {
+                                <h2>SOLD</h2>
+                            }
+
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            @if (!String.IsNullOrWhiteSpace(vehicle.Color))
+                            {
+                                <li class="list-group-item">@vehicle.Color</li>
+                            }
+
+                            @if(!String.IsNullOrEmpty(vehicle.VIN))
+                            {
+                                <li class="list-group-item">VIN: @vehicle.VIN</li>
+                            }
+                            
+                            
+                        </ul>
+                        @if (!vehicle.IsSold)
+                        {
+                            <div class="card-body">
+                                <a asp-action="Details" asp-controller="Inventory" asp-route-id="@vehicle.VehicleId" class="card-link">
+                                    <i class="fa fa-list"></i> Details
+                                </a>
+                                <a asp-action="Contact" asp-controller="Home" asp-route-vehicleId="@vehicle.VehicleId" class="card-link">
+                                    <i class="fa fa-envelope"></i> Contact
+                                </a>
+                            </div>
+                        }
+
+                        <div class="card-footer text-muted">
+                            @vehicle.LotDate.ToShortDateString()
+                        </div>
+                    </div>
+
+                </div>
+
+            }
+        }
+    </div>
+    @if (Model.Pagination.TotalPages > 1)
+    {
+        <div class="row">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" asp-ation="Index" asp-route-page="1">First Page</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" asp-ation="Index" asp-route-page="@Model.Pagination.PrevPage">Prev</a>
+                    </li>
+
+
+
+                    <li class="page-item">
+                        <a class="page-link" asp-ation="Index" asp-route-page="@Model.Pagination.NextPage">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" asp-ation="Index" asp-route-page="@Model.Pagination.LastPage">Last Page</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    }
+
+</div>
