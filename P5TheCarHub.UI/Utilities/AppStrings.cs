@@ -26,5 +26,6 @@ namespace P5TheCarHub.UI.Utilities
         public const string PhotoDeleteSuccessMsg = "Photo deleted successfully.";
         public const string PhotoSavedSuccessMsg = "Photo saved successfully.";
         public const string PhotoNotFoundMsg = "Photo not found.";
+        public const string PhotoUpdateMainSuccessMsg = "Updated main photo successfully.";
     }
 }

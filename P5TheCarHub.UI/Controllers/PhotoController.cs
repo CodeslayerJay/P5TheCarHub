@@ -129,5 +129,35 @@ namespace P5TheCarHub.UI.Controllers
 
             return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
         }
+
+        [HttpPost("update-mainphoto")]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateMainPhoto(int vehicleId, int photoId)
+        {
+            try
+            {
+                var photo = _photoService.GetPhoto(photoId);
+
+                if (photo == null)
+                {
+                    TempData["InfoMessage"] = AppStrings.PhotoNotFoundMsg;
+                    return RedirectToAction("Details", "Vehicle", new { vehicleId });
+                }
+
+                var oldMain = _photoService.GetVehicleMainPhoto(vehicleId);
+                _photoService.UpdateVehicleMainPhoto(oldMain.Id, photo.Id);
+
+                TempData["SuccessMessage"] = AppStrings.PhotoUpdateMainSuccessMsg;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.Message);
+                TempData["ErrorMessage"] = AppStrings.GenericErrorMsg;
+
+            }
+
+            return RedirectToAction("Details", "Vehicle", new { id = vehicleId });
+        }
     }
 }

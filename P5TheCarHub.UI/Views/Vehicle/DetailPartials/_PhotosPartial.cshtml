@@ -21,8 +21,8 @@
             }
             else
             {
-                <form asp-action="ChangeMainPhoto" asp-controller="Photos" method="post">
-                    <input type="hidden" name="id" value="@img.PhotoId" />
+                <form asp-action="UpdateMainPhoto" asp-controller="Photo" method="post" asp-route-vehicleId="@Model.VehicleId">
+                    <input type="hidden" name="photoId" value="@img.PhotoId" />
                     <button type="submit" class="btn btn-link">Make Main</button>
                 </form>
                 

@@ -84,12 +84,7 @@ namespace P5TheCarHub.Core.Services
 
         public Photo GetPhoto(int id)
         {
-            var photo = _unitOfWork.Photos.GetById(id);
-
-            if (photo == null)
-                throw new PhotoNotFoundException(id);
-
-            return photo;
+            return _unitOfWork.Photos.GetById(id);
         }
 
         public void UpdateVehicleMainPhoto(int oldMainPhotoId, int newMainPhotoId)
