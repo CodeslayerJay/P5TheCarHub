@@ -79,12 +79,10 @@ namespace P5TheCarHub.UI.Models.Managers
 
         private void GenerateImagePath(IFormFile image, int? identifier)
         {
-            var folderPath = FolderPath;
-
             if (identifier.HasValue)
-                folderPath = FolderPath + $"ID_{identifier.Value}\\";
+                FolderPath = FolderPath + $"ID_{identifier.Value}\\";
 
-            UploadPath = Path.Combine(_host.WebRootPath, folderPath);
+            UploadPath = Path.Combine(_host.WebRootPath, FolderPath);
 
             _imageFileName = Guid.NewGuid().ToString().Replace("-", "") +
                     Path.GetExtension(image.FileName);
