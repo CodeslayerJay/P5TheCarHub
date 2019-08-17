@@ -15,8 +15,7 @@ namespace P5TheCarHub.UI.Models.Managers
         public IPhotoManagerResult Result { get; }
 
         private readonly IHostingEnvironment _host;
-        private readonly PhotoManagerResult _photoResult;
-
+        
         public string FolderPath { get; private set; } = @"img_uploads\";
         public string UploadPath { get; private set; }
 
