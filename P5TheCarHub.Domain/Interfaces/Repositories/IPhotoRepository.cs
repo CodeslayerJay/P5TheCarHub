@@ -9,5 +9,7 @@ namespace P5TheCarHub.Core.Interfaces.Repositories
     {
         IEnumerable<Photo> GetAllByVehicleId(int vehicleId);
         Photo GetVehicleMainPhoto(int vehicleId);
+        Photo GetFirstPhotoNotSetAsMain(int vehicleId);
+        
     }
 }

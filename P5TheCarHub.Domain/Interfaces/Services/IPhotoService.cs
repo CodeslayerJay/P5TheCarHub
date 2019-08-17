@@ -8,6 +8,6 @@ namespace P5TheCarHub.Core.Interfaces.Services
         void DeletePhoto(int id);
         Photo GetPhoto(int id);
         Photo GetVehicleMainPhoto(int vehicleId);
-        void UpdateVehicleMainPhoto(int vehicleId, int newMainPhotoId);
+        void UpdateVehicleMainPhoto(int oldPhotoId, int newPhotoId);
     }
 }

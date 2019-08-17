@@ -11,6 +11,6 @@ namespace P5TheCarHub.Core.Interfaces.Repositories
         void Delete(int id);
         TEntity GetById(int id);
         IEnumerable<TEntity> GetAll(int? amount = null);
-        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);        
     }
 }

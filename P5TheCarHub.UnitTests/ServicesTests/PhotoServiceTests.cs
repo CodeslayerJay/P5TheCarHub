@@ -109,7 +109,7 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             var photoId = 2;
             var currentMainPhoto = _unitOfWork.Photos.GetVehicleMainPhoto(vehicleId);
 
-            _photoService.UpdateVehicleMainPhoto(vehicleId, photoId);
+            _photoService.UpdateVehicleMainPhoto(currentMainPhoto.Id, photoId);
             var newMainPhoto = _unitOfWork.Photos.GetVehicleMainPhoto(vehicleId);
 
             Assert.NotEqual(currentMainPhoto, newMainPhoto);

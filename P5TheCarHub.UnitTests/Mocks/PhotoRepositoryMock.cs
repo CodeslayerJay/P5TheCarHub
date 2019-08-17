@@ -79,5 +79,10 @@ namespace P5TheCarHub.UnitTests.Mocks
         {
             throw new NotImplementedException();
         }
+
+        public Photo GetFirstPhotoNotSetAsMain(int vehicleId)
+        {
+            return _context.Where(x => x.VehicleId == vehicleId).FirstOrDefault(x => x.IsMain == false);
+        }
     }
 }

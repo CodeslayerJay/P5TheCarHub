@@ -57,5 +57,10 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
         {
             return _context.Photos.Where(predicate);
         }
+
+        public Photo GetFirstPhotoNotSetAsMain(int vehicleId)
+        {
+            return _context.Photos.Where(x => x.VehicleId == vehicleId).FirstOrDefault(x => x.IsMain == false);
+        }
     }
 }

@@ -29,8 +29,13 @@ namespace P5TheCarHub.Core.Services
             
 
             if(photo.IsMain || isMain)
-                SetNewMainPhoto(photo.VehicleId);
+            {
+                var mainPhoto = _unitOfWork.Photos.GetVehicleMainPhoto(photo.VehicleId);
 
+                if (mainPhoto != null)
+                    mainPhoto.IsMain = false;
+            }
+                
             
             if (!CheckCurrentMainPhotoExists(photo.VehicleId))
                 photo.IsMain = true;
@@ -51,13 +56,6 @@ namespace P5TheCarHub.Core.Services
             return (photo != null) ? true : false;
         }
 
-        private void SetNewMainPhoto(int vehicleId)
-        {
-            var currentMainPhoto = GetVehicleMainPhoto(vehicleId);
-
-            if (currentMainPhoto != null)
-                currentMainPhoto.IsMain = false;
-        }
 
         public Photo GetVehicleMainPhoto(int vehicleId)
         {
@@ -70,9 +68,18 @@ namespace P5TheCarHub.Core.Services
 
             if (photo == null)
                 throw new PhotoNotFoundException(id);
+        
+            if (photo.IsMain)
+            {
+                var newMainPhoto = _unitOfWork.Photos.GetFirstPhotoNotSetAsMain(photo.VehicleId);
+
+                if (newMainPhoto != null)
+                    newMainPhoto.IsMain = true;
+            }
 
             _unitOfWork.Photos.Delete(id);
             _unitOfWork.SaveChanges();
+
         }
 
         public Photo GetPhoto(int id)
@@ -85,21 +92,20 @@ namespace P5TheCarHub.Core.Services
             return photo;
         }
 
-        public void UpdateVehicleMainPhoto(int vehicleId, int newMainPhotoId)
+        public void UpdateVehicleMainPhoto(int oldMainPhotoId, int newMainPhotoId)
         {
-            var currentMainPhoto = GetVehicleMainPhoto(vehicleId);
+            var currentMainPhoto = _unitOfWork.Photos.GetById(oldMainPhotoId);
+            
+            if (currentMainPhoto == null)
+                throw new PhotoNotFoundException(oldMainPhotoId);
 
-            var photo = GetPhoto(newMainPhotoId);
+            currentMainPhoto.IsMain = false;
 
-            if (photo == null)
+            var newMainPhoto = _unitOfWork.Photos.GetById(newMainPhotoId);
+            if (newMainPhoto == null)
                 throw new PhotoNotFoundException(newMainPhotoId);
 
-            if(currentMainPhoto != null)
-            {
-                SetNewMainPhoto(currentMainPhoto.VehicleId);
-            }
-
-            photo.IsMain = true;
+            newMainPhoto.IsMain = true;
             _unitOfWork.SaveChanges();
         }
     }
