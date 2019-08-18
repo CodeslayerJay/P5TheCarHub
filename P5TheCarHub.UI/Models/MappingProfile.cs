@@ -16,10 +16,13 @@ namespace P5TheCarHub.UI.Models
             CreateMap<Vehicle, VehicleViewModel>()
             .ForMember(vm => vm.VehicleId, opts => opts.MapFrom(v => v.Id))
             .ForMember(vm => vm.FullVehicleName,
-                opts => opts.MapFrom(v => $"{v.Year} {v.Make} {v.Model} {v.Trim}"));
+                opts => opts.MapFrom(v => $"{v.Year} {v.Make} {v.Model} {v.Trim}"))
+                .ForMember(v => v.VehicleStatus, opts => opts.MapFrom(v => v.AvailableStatus));
             CreateMap<VehicleFormModel, Vehicle>()
-                .ForMember(v => v.Id, opts => opts.MapFrom(vm => vm.VehicleId));
+                .ForMember(v => v.Id, opts => opts.MapFrom(vm => vm.VehicleId))
+                .ForMember(v => v.AvailableStatus, opts => opts.MapFrom(vm => vm.VehicleStatus));
             CreateMap<Vehicle, VehicleFormModel>()
+                .ForMember(v => v.VehicleStatus, opts => opts.MapFrom(v => v.AvailableStatus))
                 .ForMember(v => v.VehicleId, opts => opts.MapFrom(vm => vm.Id));
 
             // Repair

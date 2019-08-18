@@ -1,10 +1,11 @@
 ﻿@model VehicleViewModel
 <div class="form-row">
-    <div class="col-10">
+    <div class="col-8">
         <h5 class="text-muted pt-1 pb-3">Vehicle Information</h5>
     </div>
+
     <div class="col-2">
-        @if(Model.Invoice == null)
+        @if (Model.Invoice == null)
         {
             <p>Sale Price: @Model.SalePrice.ToString("c")</p>
         }
@@ -14,7 +15,9 @@
         }
 
     </div>
-
+    <div class="col-2">
+        <p class="font-weight-bold">Status: @Model.VehicleStatus</p>
+    </div>
 </div>
 <div class="form-row">
     <div class="form-group col-md-2">

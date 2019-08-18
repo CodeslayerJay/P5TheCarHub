@@ -1,4 +1,5 @@
-﻿using System;
+﻿using P5TheCarHub.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace P5TheCarHub.UI.Models.ViewModels
         public decimal SalePrice { get; set; }
 
         public DateTime? SaleDate { get; set; }
+        public VehicleAvailabilityStatus VehicleStatus { get; set; }
 
         public bool AddRepairOption { get; set; }
     }

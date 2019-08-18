@@ -1,6 +1,7 @@
 ﻿
 
 using P5TheCarHub.Core.Entities;
+using P5TheCarHub.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,7 @@ namespace P5TheCarHub.UI.Models.ViewModels
         public DateTime LotDate { get; set; }
 
         public decimal SalePrice { get; set; }
+        public VehicleAvailabilityStatus VehicleStatus { get; set; }
 
         public PhotoViewModel MainPhoto => GetMainPhoto();
 
