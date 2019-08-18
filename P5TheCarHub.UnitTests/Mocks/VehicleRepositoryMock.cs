@@ -1,4 +1,5 @@
 ﻿using P5TheCarHub.Core.Entities;
+using P5TheCarHub.Core.Enums;
 using P5TheCarHub.Core.Interfaces;
 using P5TheCarHub.Core.Interfaces.Repositories;
 using System;
@@ -50,7 +51,7 @@ namespace P5TheCarHub.UnitTests.Mocks
                     PurchaseDate = DateTime.Today,
                     PurchasePrice = 3000M,
                     SalePrice = 500,
-                    IsSold = true
+                    AvailableStatus = VehicleAvailabilityStatus.Sold
                 },
                  new Vehicle
                 {
@@ -65,7 +66,7 @@ namespace P5TheCarHub.UnitTests.Mocks
                     PurchaseDate = DateTime.Today,
                     PurchasePrice = 3000M,
                     SalePrice = 500,
-                    IsSold = true
+                    AvailableStatus = VehicleAvailabilityStatus.Sold
                 },
                  new Vehicle
                 {
@@ -80,7 +81,7 @@ namespace P5TheCarHub.UnitTests.Mocks
                     PurchaseDate = DateTime.Today,
                     PurchasePrice = 3000M,
                     SalePrice = 500,
-                    IsSold = true
+                    AvailableStatus = VehicleAvailabilityStatus.Sold
                 }
             };
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using P5TheCarHub.Core.Entities;
+using P5TheCarHub.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,7 +36,7 @@ namespace P5TheCarHub.Infrastructure.Data
                     PurchasePrice = 1800.00M,
                     LotDate = new DateTime(2019, 04, 07),
                     SalePrice = 9900.00M,
-                    IsSold = true,
+                    AvailableStatus = VehicleAvailabilityStatus.Sold,
                     SaleDate = new DateTime(2019, 04, 08)
                 },
                 new Vehicle
@@ -49,7 +50,7 @@ namespace P5TheCarHub.Infrastructure.Data
                     PurchasePrice = 4500.00M,
                     LotDate = new DateTime(2019, 04, 07),
                     SalePrice = 5350.00M,
-                    IsSold = true,
+                    AvailableStatus = VehicleAvailabilityStatus.Sold,
                     SaleDate = new DateTime(2019, 04, 09)
                 },
                 new Vehicle
@@ -63,7 +64,7 @@ namespace P5TheCarHub.Infrastructure.Data
                     PurchasePrice = 1800.00M,
                     LotDate = new DateTime(2019, 04, 08),
                     SalePrice = 2990.00M,
-                    IsSold = false
+                    AvailableStatus = VehicleAvailabilityStatus.Available,
                 },
                 new Vehicle
                 {
@@ -76,7 +77,7 @@ namespace P5TheCarHub.Infrastructure.Data
                     PurchasePrice = 24350.00M,
                     LotDate = new DateTime(2019, 04, 09),
                     SalePrice = 25950.00M,
-                    IsSold = false
+                    AvailableStatus = VehicleAvailabilityStatus.Available,
                 },
                 new Vehicle
                 {
@@ -89,7 +90,7 @@ namespace P5TheCarHub.Infrastructure.Data
                     PurchasePrice = 4000.00M,
                     LotDate = new DateTime(2019, 04, 09),
                     SalePrice = 4975.00M,
-                    IsSold = true,
+                    AvailableStatus = VehicleAvailabilityStatus.Sold,
                     SaleDate = new DateTime(2019, 04, 09)
                 },
                 new Vehicle
@@ -103,7 +104,7 @@ namespace P5TheCarHub.Infrastructure.Data
                     PurchasePrice = 15250.00M,
                     LotDate = new DateTime(2019, 04, 10),
                     SalePrice = 16190.00M,
-                    IsSold = true,
+                    AvailableStatus = VehicleAvailabilityStatus.Sold,
                     SaleDate = new DateTime(2019, 04, 12)
                 },
                 new Vehicle
@@ -117,7 +118,7 @@ namespace P5TheCarHub.Infrastructure.Data
                     PurchasePrice = 10990.00M,
                     LotDate = new DateTime(2019, 04, 11),
                     SalePrice = 12440.00M,
-                    IsSold = true,
+                    AvailableStatus = VehicleAvailabilityStatus.Sold,
                     SaleDate = new DateTime(2019, 04, 12)
                 }
             );
