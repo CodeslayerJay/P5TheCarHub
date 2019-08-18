@@ -33,15 +33,32 @@ namespace P5TheCarHub.UI.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? type, int size = 10, int page = 1)
         {
-            var vm = new VehicleIndexViewModel
+            try
             {
-                Vehicles = _vehicleService.GetAll().Select(v =>
-                _mapper.Map<VehicleViewModel>(v))
-            };
+                var vehicleList = _vehicleService.GetAll().Select(x => _mapper.Map<VehicleViewModel>(x));
+                var filterApplied = false;
 
-            return View(vm);
+                
+                vehicleList = vehicleList.OrderBy(x => x.LotDate).OrderBy(x => x.IsSold);
+                
+
+                var viewModel = new VehicleIndexViewModel
+                {
+                    Vehicles = vehicleList.Skip((page - 1) * size).Take(size),
+                    IsFilterApplied = filterApplied,
+                    Pagination = new Pagination(vehicleList.Count(), size, page)
+                };
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return RedirectToAction("Index", "Home");
+            }
+
         }
 
         [HttpGet("Edit/{id?}")]

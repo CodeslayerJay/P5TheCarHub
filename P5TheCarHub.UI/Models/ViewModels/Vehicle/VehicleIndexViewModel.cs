@@ -14,5 +14,6 @@ namespace P5TheCarHub.UI.Models.ViewModels
 
         public IEnumerable<VehicleViewModel> Vehicles { get; set; }
         public bool IsFilterApplied { get; set; }
+        public Pagination Pagination { get; set; }
     }
 }
