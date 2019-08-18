@@ -1,4 +1,5 @@
-﻿using System;
+﻿using P5TheCarHub.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -29,8 +30,7 @@ namespace P5TheCarHub.Core.Entities
 
         public DateTime? SaleDate { get; set; }
 
-        public bool IsSold { get; set; }
-
+        public VehicleAvailabilityStatus AvailableStatus { get; set; }
         public DateTime LastUpdated { get; set; } = DateTime.Now;
 
         public Invoice Invoice { get; set; }
