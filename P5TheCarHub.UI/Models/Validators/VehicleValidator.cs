@@ -38,12 +38,12 @@ namespace P5CarSalesAppBasic.Models.Validators
                     .When(vm => vm.Mileage != null)
                     .WithMessage("Mileage must 0 or greater.");
 
-            RuleFor(x => x.Year).Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage("Year is required.")
-                .Must(Year => int.TryParse(Year, out int result))
-                    .WithMessage("Year must contain only numbers. ")
-                .GreaterThan("1990").WithMessage("Must be greater than 1990.")
-                .LessThanOrEqualTo(DateTime.Now.Year.ToString()).WithMessage("Must be current year or earlier.");
+            //RuleFor(x => x.Year).Cascade(CascadeMode.StopOnFirstFailure)
+            //    .NotEmpty().WithMessage("Year is required.")
+            //    .Must(Year => int.TryParse(Year, out int result))
+            //        .WithMessage("Year must contain only numbers. ")
+            //    .GreaterThan("1990").WithMessage("Must be greater than 1990.")
+            //    .LessThanOrEqualTo(DateTime.Now.Year.ToString()).WithMessage("Must be current year or earlier.");
 
             
             RuleFor(x => x.PurchasePrice).Cascade(CascadeMode.StopOnFirstFailure)
