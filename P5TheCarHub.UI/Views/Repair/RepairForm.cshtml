@@ -11,6 +11,7 @@
             <form method="post" asp-action="Save" asp-controller="Repair" asp-route-vehicleId="@Model.VehicleId">
                 <input asp-for="VehicleId" type="hidden" />
                 <input asp-for="RepairId" type="hidden"/>
+                <input asp-for="VehicleFullName" type="hidden"/>
                 
                 <div class="form-row pt-1">
                     <div class="col-8">
