@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using P5CarSalesAppBasic.Models.Validators;
 using P5TheCarHub.Core.Entities;
+using P5TheCarHub.Core.Enums;
 using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Interfaces.Services;
 using P5TheCarHub.UI.Models.ViewModels;
@@ -33,14 +34,20 @@ namespace P5TheCarHub.UI.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index(int? type, int size = 10, int page = 1)
+        public IActionResult Index(int? VehicleStatus = null, int size = 10, int page = 1)
         {
             try
             {
+
                 var vehicleList = _vehicleService.GetAll().Select(x => _mapper.Map<VehicleViewModel>(x));
                 var filterApplied = false;
 
-                
+                if (VehicleStatus.HasValue)
+                {
+                    vehicleList = vehicleList.Where(x => (int)x.VehicleStatus == VehicleStatus.Value);
+                    filterApplied = true;
+                }
+                    
                 vehicleList = vehicleList.OrderBy(x => x.LotDate).OrderBy(x => x.IsSold);
                 
 

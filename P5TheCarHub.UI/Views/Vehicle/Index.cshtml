@@ -1,4 +1,5 @@
-﻿@model VehicleIndexViewModel
+﻿@using P5TheCarHub.Core.Enums
+@model VehicleIndexViewModel
 @{
 
     Layout = "~/Views/Shared/_ManageLayout.cshtml";
@@ -7,7 +8,7 @@
 <div class="col-12 m-auto pt-3">
 
     <div class="row">
-        <div class="col-8 my-2">
+        <div class="col-9 my-2">
             <h4>Vehicle Inventory 
                 @if (Model.IsFilterApplied)
                 {
@@ -17,27 +18,28 @@
                 }
             </h4>
         </div>
-        @*<div class="col-2">
-            <form class="form-inline my-2" asp-action="Index" asp-controller="Cars" method="get">
+        <div class="col-2">
+            <form class="form-inline my-2" asp-action="Index" asp-controller="Vehicle" method="get">
                 <div class="form-group">
-                    <input type="text" class="form-control mr-sm-2" placeholder="Search Inventory" name="search" />
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <select asp-for="VehicleStatus" asp-items="Html.GetEnumSelectList<VehicleAvailabilityStatus>()" class="custom-select">
+                        
+                    </select>
+                    <button class="btn btn-outline-success my-2 my-sm-0 ml-3" type="submit">Filter</button>
                 </div>
             </form>
-        </div>*@
+        </div>
         <table class="table table-striped mt-3 table-bordered">
             <thead class="thead-light" style="font-size: 14px; font-weight: 300;">
                 <tr>
                     <th></th>
                     <th>VIN</th>
-                    <th>Year</th>
-                    <th>Make</th>
-                    <th>Model</th>
+                    <th>Vehicle</th>
                     <th>Mileage</th>
                     <th>Purchase Price</th>
                     <th>Purchase Date</th>
                     <th>Lot Date</th>
                     <th>Sale Price</th>
+                    <th>Status</th>
                     <th><a asp-action="Edit" asp-controller="Vehicle" class="btn-outline-info btn float-right">Add Vehicle</a></th>
                 </tr>
             </thead>
@@ -56,15 +58,13 @@
                             <td>No Photo</td>
                         }
                         <td>@vehicle.VIN</td>
-                        <td>@vehicle.Year</td>
-                        <td>@vehicle.Make</td>
-                        <td>@vehicle.Model</td>
-
+                        <td>@vehicle.FullVehicleName</td>
                         <td>@vehicle.Mileage</td>
                         <td>@vehicle.PurchasePrice.ToString("c")</td>
                         <td>@vehicle.PurchaseDate.ToShortDateString()</td>
                         <td>@vehicle.LotDate.ToShortDateString()</td>
                         <td>@vehicle.SalePrice.ToString("c")</td>
+                        <td>@vehicle.VehicleStatus</td>
                         <td>
                             <a asp-action="Details" asp-controller="vehicle" asp-route-id="@vehicle.VehicleId">View</a> |
                             <a asp-action="Edit" asp-controller="vehicle" asp-route-id="@vehicle.VehicleId">Edit</a> |
