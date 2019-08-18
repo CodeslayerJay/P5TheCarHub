@@ -1,4 +1,5 @@
 ﻿using P5TheCarHub.Core.Entities;
+using P5TheCarHub.Core.Enums;
 using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Interfaces;
 using P5TheCarHub.Core.Interfaces.Repositories;
@@ -104,7 +105,7 @@ namespace P5TheCarHub.Core.Services
 
         public IEnumerable<Vehicle> GetVehiclesBySoldStatus(bool isSold)
         {
-            return GetAll().Where(x => x.IsSold == isSold).ToList();
+            return GetAll().Where(x => x.AvailableStatus == VehicleAvailabilityStatus.Sold).ToList();
         }
     }
 }

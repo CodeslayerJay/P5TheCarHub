@@ -163,24 +163,6 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             Assert.Throws<VehicleNotFoundException>(() => _vehicleService.DeleteVehicle(99999));
         }
 
-        [Fact]
-        public void GetVehiclesBySoldStatus_IsSoldTrue_ReturnsListOfVehiclesSold()
-        {
-            var result = _vehicleService.GetVehiclesBySoldStatus(isSold: true);
-
-            Assert.NotEmpty(result);
-            Assert.True(result.First().IsSold);
-        }
-
-        [Fact]
-        public void GetVehiclesBySoldStatus_IsSoldFalse_ReturnsListOfVehiclesNotSold()
-        {
-            var result = _vehicleService.GetVehiclesBySoldStatus(isSold: false);
-
-            Assert.NotEmpty(result);
-            Assert.False(result.First().IsSold);
-        }
-
-        
+                
     }
 }

@@ -1,4 +1,5 @@
 ﻿using P5TheCarHub.Core.Entities;
+using P5TheCarHub.Core.Enums;
 using P5TheCarHub.Core.Exceptions;
 using P5TheCarHub.Core.Interfaces;
 using P5TheCarHub.Core.Interfaces.Repositories;
@@ -80,7 +81,7 @@ namespace P5TheCarHub.Core.Services
 
         private void SetVehicleToSoldStatus(Vehicle vehicle)
         {
-            vehicle.IsSold = true;
+            vehicle.AvailableStatus = VehicleAvailabilityStatus.Sold;
         }
 
         private string GenerateInvoiceNumber(int vehicleId)
