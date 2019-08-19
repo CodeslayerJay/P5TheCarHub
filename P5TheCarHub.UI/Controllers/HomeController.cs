@@ -18,9 +18,9 @@ namespace P5TheCarHub.UI.Controllers
     {
         
         private readonly ILogger<HomeController> _logger;
-        private readonly HomeControllerWorker _worker;
+        private readonly IHomeControllerWorker _worker;
 
-        public HomeController(ILogger<HomeController> logger, HomeControllerWorker worker)
+        public HomeController(ILogger<HomeController> logger, IHomeControllerWorker worker)
         {
             
             _logger = logger;
