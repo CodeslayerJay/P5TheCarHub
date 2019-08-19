@@ -10,62 +10,35 @@ using P5TheCarHub.Core.Interfaces.Services;
 
 using P5TheCarHub.UI.Models;
 using P5TheCarHub.UI.Models.ViewModels;
+using P5TheCarHub.UI.ServiceWorkers;
 
 namespace P5TheCarHub.UI.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IVehicleService _vehicleService;
+        
         private readonly ILogger<HomeController> _logger;
-        private readonly IMapper _mapper;
+        private readonly HomeControllerWorker _worker;
 
-        public HomeController(IVehicleService vehicleService, ILogger<HomeController> logger, IMapper mapper)
+        public HomeController(ILogger<HomeController> logger, HomeControllerWorker worker)
         {
-            _vehicleService = vehicleService;
+            
             _logger = logger;
-            _mapper = mapper;
+
+            _worker = worker;
+            
         }
 
         public IActionResult Index()
         {
-            var vehicles = _vehicleService.GetAll(amount: 3, orderBy: "LotDate").Select(x => _mapper.Map<VehicleViewModel>(x));
-
-            var viewModel = new HomeViewModel
-            {
-                Vehicles = vehicles,
-            };
-
-            return View(viewModel);
+            return View(_worker.ExecuteIndex());
         }
 
         public IActionResult Contact(int? vehicleId = null)
         {
             try
             {
-                if (!vehicleId.HasValue)
-                    return View(new ContactFormModel());
-
-                var vehicle = _vehicleService.GetVehicle(vehicleId.Value, withIncludes: true);
-
-                if (vehicle == null)
-                    return View(new ContactFormModel());
-
-                var vehicleDetailsVm = new ContactFormVehicleDetails
-                {
-                    Id = vehicle.Id,
-                    FullVehicleName = _vehicleService.GetFullVehicleName(vehicle),
-                    Photo = (vehicle.Photos.Any()) ? vehicle.Photos.FirstOrDefault(x => x.IsMain).ImageUrl : null,
-                    Mileage = vehicle.Mileage?.ToString(),
-                    VIN = vehicle.VIN,
-                    SalePrice = vehicle.SalePrice.ToString("c")
-                };
-
-                var vm = new ContactFormModel
-                {
-                    Vehicle = vehicleDetailsVm
-                };
-
-                return View(vm);
+                return View(_worker.ExecuteContact(vehicleId));
             }
             catch (Exception ex)
             {
