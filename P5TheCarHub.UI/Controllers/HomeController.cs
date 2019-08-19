@@ -10,7 +10,6 @@ using P5TheCarHub.Core.Interfaces.Services;
 
 using P5TheCarHub.UI.Models;
 using P5TheCarHub.UI.Models.ViewModels;
-using P5TheCarHub.UI.ServiceWorkers;
 
 namespace P5TheCarHub.UI.Controllers
 {
@@ -18,27 +17,52 @@ namespace P5TheCarHub.UI.Controllers
     {
         
         private readonly ILogger<HomeController> _logger;
-        private readonly IHomeControllerWorker _worker;
-
-        public HomeController(ILogger<HomeController> logger, IHomeControllerWorker worker)
+        private readonly IVehicleService _vehicleService;
+        private readonly IMapper _mapper;
+        
+        public HomeController(ILogger<HomeController> logger, IVehicleService vehicleService, IMapper mapper)
         {
             
             _logger = logger;
-
-            _worker = worker;
-            
+            _vehicleService = vehicleService;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
         {
-            return View(_worker.ExecuteIndex());
+            var viewModel = new HomeViewModel
+            {
+                Vehicles = _vehicleService.GetAll(amount: 3, orderBy: "LotDate").Select(x => _mapper.Map<VehicleViewModel>(x))
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Contact(int? vehicleId = null)
         {
             try
             {
-                return View(_worker.ExecuteContact(vehicleId));
+                var contactFormModel = new ContactFormModel();
+
+                if (vehicleId.HasValue)
+                {
+                    var vehicle = _vehicleService.GetVehicle(vehicleId.Value, withIncludes: true);
+
+                    if (vehicle != null)
+                    {
+                        contactFormModel.Vehicle = new ContactFormVehicleDetails
+                        {
+                            Id = vehicle.Id,
+                            FullVehicleName = _vehicleService.GetFullVehicleName(vehicle),
+                            Photo = (vehicle.Photos.Any()) ? vehicle.Photos.FirstOrDefault(x => x.IsMain).ImageUrl : null,
+                            Mileage = vehicle.Mileage?.ToString(),
+                            VIN = vehicle.VIN,
+                            SalePrice = vehicle.SalePrice.ToString("c")
+                        };
+                    }
+                }
+
+                return View(contactFormModel);
             }
             catch (Exception ex)
             {

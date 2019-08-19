@@ -57,7 +57,7 @@ namespace P5TheCarHub.UI
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddTransient<IPhotoManager<IFormFile>, PhotoManager>();
-            services.AddScoped<IHomeControllerWorker, HomeControllerWorker>();
+            
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("P5Referential")));

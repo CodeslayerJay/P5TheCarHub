@@ -25,6 +25,8 @@ namespace P5TheCarHub.UI.Models
                 .ForMember(v => v.VehicleStatus, opts => opts.MapFrom(v => v.AvailableStatus))
                 .ForMember(v => v.VehicleId, opts => opts.MapFrom(vm => vm.Id));
 
+
+
             // Repair
             CreateMap<RepairFormModel, Repair>()
                 .ForMember(r => r.Id, opts => opts.MapFrom(vm => vm.RepairId));
