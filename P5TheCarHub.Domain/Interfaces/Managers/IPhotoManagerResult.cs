@@ -10,5 +10,6 @@ namespace P5TheCarHub.Core.Interfaces.Managers
         string ImageFullPath { get; set; }
         string ImageUrl { get; set; }
         bool Success { get; set; }
+        Exception Error { get; set; }
     }
 }

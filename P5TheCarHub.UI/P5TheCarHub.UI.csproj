@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <UserSecretsId>9028d766-827a-436f-83c3-943a4daf2572</UserSecretsId>
+    <StartupObject>P5TheCarHub.UI.Program</StartupObject>
   </PropertyGroup>
 
 

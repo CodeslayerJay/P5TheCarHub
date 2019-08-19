@@ -106,7 +106,7 @@ namespace P5TheCarHub.UI.Models.Managers
             }
             catch (Exception ex)
             {
-                throw new Exception($"Something happened while attempting to upload image to disk. { ex.Message }");
+                Result.Error = ex;
             }
         }
 
@@ -128,7 +128,8 @@ namespace P5TheCarHub.UI.Models.Managers
             }
             catch(Exception ex)
             {
-                throw new Exception($"Error occurred attempting to remove image from disk. {ex.Message}");
+                Result.Error = ex;
+                
             }
 
             return Result;

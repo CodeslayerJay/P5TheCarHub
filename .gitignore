@@ -261,3 +261,6 @@ __pycache__/
 *.pyc
 /P5TheCarHub.ConsoleUI
 /P5TheCarHub.UI/wwwroot/img_uploads/ID_1020
+/P5TheCarHub.Data/Properties/PublishProfiles
+/P5TheCarHub.Domain/Properties/PublishProfiles
+/P5TheCarHub.UI/Properties/PublishProfiles

@@ -11,5 +11,6 @@ namespace P5TheCarHub.UI.Models.Managers
         public string ImageFullPath { get; set; }
         public string ImageUrl { get; set; }
         public bool Success { get; set; }
+        public Exception Error { get; set; }
     }
 }
