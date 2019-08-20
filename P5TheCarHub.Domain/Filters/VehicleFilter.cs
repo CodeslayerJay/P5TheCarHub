@@ -11,5 +11,6 @@ namespace P5TheCarHub.Core.Filters
         public int? Size { get; set; }
         public int? Skip { get; set; }
         public int? VehicleStatus { get; set; }
+        public bool OrderByDescending { get; set; }
     }
 }

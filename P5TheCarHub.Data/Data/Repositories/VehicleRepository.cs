@@ -74,7 +74,9 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
             if (filter.Size.HasValue)
                 query = query.Take(filter.Size.Value);
 
-            query = query.OrderBy(x => x.SalePrice).OrderBy(x => x.LotDate);
+            query = query.OrderBy(x => x.SalePrice);
+
+            query = (filter.OrderByDescending) ? query.OrderByDescending(x => x.LotDate) : query.OrderBy(x => x.LotDate);
 
             return query.ToList();
         }
