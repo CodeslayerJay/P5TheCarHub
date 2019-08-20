@@ -17,71 +17,66 @@
 </div>
 
 <div class="section-area">
+    <div class="row">
+        <div class="col-6">
+            <h2>Why choose us?</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit erat eros, eu pharetra urna sollicitudin sed. Pellentesque sem ex, ullamcorper a eleifend non, accumsan nec diam. Aliquam erat volutpat. Sed luctus ut ante sed elementum. Donec scelerisque tortor ut ultrices vehicula. Vestibulum egestas augue ac rhoncus convallis. Ut et justo sit amet felis suscipit porttitor.
+            </p>
+        </div>
+        <div class="col-6 text-center">
+            <img src="~/img/dealer-new-cars-stock_1426-1190.jpg" style="border: 1px solid #000; height: 300px; border-radius: 5px;" />
+        </div>
+    </div>
+</div>
+
+<div class="section-area">
     <h3>Latest Additions</h3>
     <div class="row pt-5">
-        @if (Model.Vehicles.Any())
+        @if (Model.VehiclesForSale.Any())
         {
-            @foreach(var vehicle in Model.Vehicles)
+            @foreach (var vehicle in Model.VehiclesForSale)
             {
                 <div class="card text-white bg-primary mb-3 col-4">
                     <div class="card-header">@vehicle.FullVehicleName</div>
                     <div class="card-body">
-                        @if (vehicle.IsSold)
-                        {
-                            <h4 class="card-title">SOLD!</h4>
-                        }
-                        else
-                        {
-                            <h4 class="card-title">@vehicle.SalePrice.ToString("c")</h4>
-                        }
+                        <h4 class="card-title">@vehicle.SalePrice.ToString("c")</h4>
+                        
+                        <a asp-action="Details" asp-controller="Inventory" asp-route-id="@vehicle.VehicleId">
 
-                        @if (vehicle.MainPhoto != null)
-                        {
-                            <img src="@vehicle.MainPhoto.ImageUrl" height="200" width="300"/>
-                        }
-                        else
-                        {
-                            <img src="~/img/car-suv-blank.png" height="200" width="300"/>
-                        }
-
-                        @if(!String.IsNullOrEmpty(vehicle.Mileage))
+                            @if (vehicle.MainPhoto != null)
+                            {
+                                <img src="@vehicle.MainPhoto.ImageUrl" height="200" width="300" />
+                            }
+                            else
+                            {
+                                <img src="~/img/car-suv-blank.png" height="200" width="300" />
+                            }
+                        </a>
+                        @if (!String.IsNullOrEmpty(vehicle.Mileage))
                         {
                             <p class="card-text pt-3">
                                 @vehicle.Mileage mile(s)
                             </p>
                         }
-                        
+
+
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text pt-3">
+                            <a asp-action="Details" asp-controller="Inventory" asp-route-id="@vehicle.VehicleId" class="card-link text-white">Details</a>
+                            <a asp-action="Contact" asp-controller="Home" asp-route-vehicleId="@vehicle.VehicleId" class="card-link text-white">Contact Us</a>
+                        </p>
                     </div>
                 </div>
             }
-            
+
         }
     </div>
+    
 </div>
 
-@*<div class="section-area">
-    <h3>Browse Vehicle Types</h3>
-    <hr />
-    <div class="row pt-5 p-3">
-        <ul class="list-inline">
-            @foreach (var carType in Model.CarTypesAndQuantity)
-            {
-                @if (carType.Value > 0)
-                {
-                    var type = (int)carType.Key;
-                    <li class="list-inline-item">
-                        <h5>
-                            <a asp-controller="Inventory" asp-action="Index" asp-route-type="@type">
-                                @carType.Key (@carType.Value.ToString())
-                            </a> /
-                        </h5>
-                    </li>
-                }
 
-            }
-        </ul>
-    </div>
-    *@
     <h3 class="mt-5">Browse By Price Range</h3>
     <hr />
     <div class="row pt-5 p-3">
@@ -95,7 +90,7 @@
             </li>
             <li class="list-inline-item">
                 <h5>
-                    <a asp-controller="Inventory" asp-action="Index" asp-route-minPrice="2000" asp-route-maxPrice="5000"> 
+                    <a asp-controller="Inventory" asp-action="Index" asp-route-minPrice="2000" asp-route-maxPrice="5000">
                         $2,000-$5,000
                     </a> /
                 </h5>
@@ -116,6 +111,4 @@
             </li>
         </ul>
     </div>
-
-
 

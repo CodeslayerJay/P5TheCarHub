@@ -140,6 +140,11 @@ namespace P5TheCarHub.UnitTests.Mocks
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Vehicle> Find(Expression<Func<Vehicle, bool>> predicate, VehicleFilter filter)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Vehicle> GetAll(VehicleFilter filter)
         {
             filter.Size = 10;

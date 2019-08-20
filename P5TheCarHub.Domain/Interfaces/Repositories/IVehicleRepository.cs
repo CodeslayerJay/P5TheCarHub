@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using P5TheCarHub.Core.Filters;
+using System.Linq.Expressions;
 
 namespace P5TheCarHub.Core.Interfaces.Repositories
 {
@@ -11,7 +12,7 @@ namespace P5TheCarHub.Core.Interfaces.Repositories
     {
         Vehicle GetByVin(string vin, bool withIncludes);
         Vehicle GetById(int id, bool withIncludes);
-        IEnumerable<Vehicle> GetAll(int? amount);
         IEnumerable<Vehicle> GetAll(VehicleFilter filter);
+        IEnumerable<Vehicle> Find(Expression<Func<Vehicle, bool>> predicate, VehicleFilter filter);
     }
 }

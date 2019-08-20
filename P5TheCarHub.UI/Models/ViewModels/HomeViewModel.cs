@@ -10,8 +10,12 @@ namespace P5TheCarHub.UI.Models.ViewModels
     {
         public HomeViewModel()
         {
-            Vehicles = new HashSet<VehicleViewModel>();
+            VehiclesForSale = new HashSet<VehicleViewModel>();
+            VehiclesSold = new HashSet<VehicleViewModel>();
+
         }
-        public IEnumerable<VehicleViewModel> Vehicles { get; set; }
+        public IEnumerable<VehicleViewModel> VehiclesForSale { get; set; }
+        public IEnumerable<VehicleViewModel> VehiclesSold { get; set; }
+        
     }
 }

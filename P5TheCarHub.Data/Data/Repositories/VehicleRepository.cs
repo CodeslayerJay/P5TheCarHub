@@ -131,7 +131,16 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
 
         public IEnumerable<Vehicle> Find(Expression<Func<Vehicle, bool>> predicate)
         {
-            return _context.Vehicles.Where(predicate);
+            var query = GetAll().AsQueryable();
+            query = query.Where(predicate);
+            return query.ToList();
+        }
+
+        public IEnumerable<Vehicle> Find(Expression<Func<Vehicle, bool>> predicate, VehicleFilter filter)
+        {
+            var query = GetAll(filter).AsQueryable();
+            query = query.Where(predicate);
+            return query.ToList();
         }
 
     }
