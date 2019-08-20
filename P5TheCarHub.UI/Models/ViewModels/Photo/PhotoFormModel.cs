@@ -13,6 +13,7 @@ namespace P5TheCarHub.UI.Models.ViewModels
         public string Description { get; set; }
         public bool IsMain { get; set; } = false;
         public int VehicleId { get; set; }
-        public string FullVehicleName { get; set; }
+        
+        public VehicleViewModel Vehicle { get; set; }
     }
 }

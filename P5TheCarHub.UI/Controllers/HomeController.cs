@@ -46,20 +46,8 @@ namespace P5TheCarHub.UI.Controllers
 
                 if (vehicleId.HasValue)
                 {
-                    var vehicle = _vehicleService.GetVehicle(vehicleId.Value, withIncludes: true);
+                    contactFormModel.Vehicle = _mapper.Map<VehicleViewModel>(_vehicleService.GetVehicle(vehicleId.Value, withIncludes: true));
 
-                    if (vehicle != null)
-                    {
-                        contactFormModel.Vehicle = new ContactFormVehicleDetails
-                        {
-                            Id = vehicle.Id,
-                            FullVehicleName = _vehicleService.GetFullVehicleName(vehicle),
-                            Photo = (vehicle.Photos.Any()) ? vehicle.Photos.FirstOrDefault(x => x.IsMain).ImageUrl : null,
-                            Mileage = vehicle.Mileage?.ToString(),
-                            VIN = vehicle.VIN,
-                            SalePrice = vehicle.SalePrice.ToString("c")
-                        };
-                    }
                 }
 
                 return View(contactFormModel);

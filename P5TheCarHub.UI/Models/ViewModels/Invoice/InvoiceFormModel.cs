@@ -15,7 +15,7 @@ namespace P5TheCarHub.UI.Models.ViewModels
         public string InvoiceNumber { get; set; }
 
         public int VehicleId { get; set; }
-        public string VehicleFullName { get; set; }
+        public VehicleViewModel Vehicle { get; set; }
 
     }
 }

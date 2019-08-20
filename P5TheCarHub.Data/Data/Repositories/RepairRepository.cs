@@ -1,4 +1,5 @@
-﻿using P5TheCarHub.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
 
         public Repair GetById(int id)
         {
-            return _context.Repairs.Where(x => x.Id == id).SingleOrDefault();
+            return _context.Repairs.Include(x => x.Vehicle).Where(x => x.Id == id).SingleOrDefault();
         }
 
         public IEnumerable<Repair> GetAllByVehicleId(int vehicleId)

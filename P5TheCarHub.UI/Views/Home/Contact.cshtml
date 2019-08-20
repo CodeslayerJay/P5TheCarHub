@@ -28,9 +28,9 @@
         {
             <div class="card p-3 mb-3">
                 <div class="media">
-                    @if (Model.Vehicle.Photo != null)
+                    @if (Model.Vehicle.MainPhoto != null)
                     {
-                        <img src="@Model.Vehicle.Photo" class="mr-3" alt="...">
+                        <img src="@Model.Vehicle.MainPhoto" class="mr-3" alt="...">
                     }
 
                     <div class="media-body">
@@ -68,14 +68,14 @@
             @if (Model.Vehicle == null)
             {
                 <div class="form-group">
-                    <label asp-for="CarInfo" class="label-col">Name or type of vehicle your are looking for:</label>
-                    <input asp-for="CarInfo" class="form-control" />
-                    <span asp-validation-for="CarInfo" class="text-danger"></span>
+                    <label asp-for="VehicleInfo" class="label-col">Name or type of vehicle your are looking for:</label>
+                    <input asp-for="VehicleInfo" class="form-control" />
+                    <span asp-validation-for="VehicleInfo" class="text-danger"></span>
                 </div>
             }
             else
             {
-                <input asp-for="CarInfo" type="hidden" value="carId: @Model.Vehicle.Id name:@Model.Vehicle.FullVehicleName vin:@Model.Vehicle.VIN " />
+                <input asp-for="VehicleInfo" type="hidden" value="carId: @Model.Vehicle.VehicleId name:@Model.Vehicle.FullVehicleName vin:@Model.Vehicle.VIN " />
             }
 
             <div class="form-row">

@@ -70,7 +70,6 @@ namespace P5TheCarHub.UI.Controllers
                     vm = _mapper.Map<RepairFormModel>(repair);
                 }
 
-                vm.VehicleFullName = _vehicleService.GetFullVehicleName(vehicle);
                 return View("RepairForm", vm);
 
             }

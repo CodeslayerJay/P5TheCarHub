@@ -34,7 +34,7 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
 
         public Invoice GetByVehicleId(int vehicleId)
         {
-            return _context.Invoices.Where(x => x.VehicleId == vehicleId).FirstOrDefault();
+            return _context.Invoices.Include(x => x.Vehicle).Where(x => x.VehicleId == vehicleId).FirstOrDefault();
         }
 
 
@@ -48,7 +48,7 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
 
         public Invoice GetById(int id)
         {
-            return _context.Invoices.SingleOrDefault(x => x.Id == id);
+            return _context.Invoices.Include(x => x.Vehicle).SingleOrDefault(x => x.Id == id);
         }
 
 

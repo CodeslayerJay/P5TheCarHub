@@ -11,11 +11,10 @@
             <form method="post" asp-action="Save" asp-controller="Repair" asp-route-vehicleId="@Model.VehicleId">
                 <input asp-for="VehicleId" type="hidden" />
                 <input asp-for="RepairId" type="hidden"/>
-                <input asp-for="VehicleFullName" type="hidden"/>
-                
+                                
                 <div class="form-row pt-1">
                     <div class="col-8">
-                        <h5 class="text-muted pt-1 pb-3">@Model.VehicleFullName</h5>
+                        <h5 class="text-muted pt-1 pb-3">@Model.Vehicle.FullVehicleName</h5>
                     </div>
                     <div class="col-4 float-right">
                         <p class="text-muted">* - denotes required fields.</p>

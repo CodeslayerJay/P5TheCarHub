@@ -10,13 +10,12 @@ namespace P5TheCarHub.UI.Models.ViewModels
         public int RepairId { get; set; }
         public int VehicleId { get; set; }
 
-        public string VehicleFullName { get; set; }
         public string Description { get; set; }
         public decimal Cost { get; set; }
         public string Details { get; set; }
         public DateTime? RepairDate { get; set; }
 
         public bool AddAnotherRepair { get; set; }
-        
+        public VehicleViewModel Vehicle { get; set; }
     }
 }

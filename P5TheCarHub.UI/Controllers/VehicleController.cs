@@ -10,6 +10,7 @@ using P5CarSalesAppBasic.Models.Validators;
 using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Enums;
 using P5TheCarHub.Core.Exceptions;
+using P5TheCarHub.Core.Filters;
 using P5TheCarHub.Core.Interfaces.Services;
 using P5TheCarHub.UI.Models.ViewModels;
 using P5TheCarHub.UI.Utilities;
@@ -38,23 +39,12 @@ namespace P5TheCarHub.UI.Controllers
         {
             try
             {
-
-                var vehicleList = _vehicleService.GetAll().Select(x => _mapper.Map<VehicleViewModel>(x));
-                var filterApplied = false;
-
-                if (VehicleStatus.HasValue)
-                {
-                    vehicleList = vehicleList.Where(x => (int)x.VehicleStatus == VehicleStatus.Value);
-                    filterApplied = true;
-                }
-                    
-                vehicleList = vehicleList.OrderBy(x => x.LotDate).OrderBy(x => x.IsSold);
-                
+                var filter = new VehicleFilter { VehicleStatus = VehicleStatus, Size = size, Skip = ((page - 1) * size) };
+                var vehicleList = _vehicleService.GetAll(filter).Select(x => _mapper.Map<VehicleViewModel>(x));
 
                 var viewModel = new VehicleIndexViewModel
                 {
-                    Vehicles = vehicleList.Skip((page - 1) * size).Take(size),
-                    IsFilterApplied = filterApplied,
+                    Vehicles = vehicleList,
                     Pagination = new Pagination(vehicleList.Count(), size, page)
                 };
 

@@ -65,7 +65,6 @@ namespace P5TheCarHub.UI.Controllers
                     vm = _mapper.Map<InvoiceFormModel>(invoice);
                 }
 
-                vm.VehicleFullName = _vehicleService.GetFullVehicleName(vehicle);
                 return View("InvoiceForm", vm);
 
             }

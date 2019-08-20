@@ -14,8 +14,8 @@ namespace P5TheCarHub.UI.Models.ViewModels
         [Display(Name = "Full Name*")]
         public string Name { get; set; }
 
-        [Display(Name = "Car Info")]
-        public string CarInfo { get; set; }
+        [Display(Name = "Vehicle Info")]
+        public string VehicleInfo { get; set; }
 
         [MaxLength(1000)]
         public string Note { get; set; }
@@ -37,6 +37,6 @@ namespace P5TheCarHub.UI.Models.ViewModels
         public string ContactMethod { get; set; }
 
 
-        public ContactFormVehicleDetails Vehicle { get; set; }
+        public VehicleViewModel Vehicle { get; set; }
     }
 }
