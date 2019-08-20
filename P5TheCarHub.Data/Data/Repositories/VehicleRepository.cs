@@ -59,6 +59,9 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
         {
             var query = _context.Vehicles.Where(x => x.Id > 0);
 
+            if (filter.VehicleStatus.HasValue)
+                query = query.Where(x => (int)x.AvailableStatus == filter.VehicleStatus.Value);
+
             if (filter.MinPrice.HasValue)
                 query = query.Where(x => x.SalePrice >= filter.MinPrice.Value);
 

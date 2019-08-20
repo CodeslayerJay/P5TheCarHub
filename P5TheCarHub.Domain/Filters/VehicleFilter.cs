@@ -10,5 +10,6 @@ namespace P5TheCarHub.Core.Filters
         public decimal? MaxPrice { get; set; }
         public int? Size { get; set; }
         public int? Skip { get; set; }
+        public int? VehicleStatus { get; set; }
     }
 }
