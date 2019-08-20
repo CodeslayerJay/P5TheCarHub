@@ -60,19 +60,49 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
             var query = _context.Vehicles.Where(x => x.Id > 0);
 
             if (filter.VehicleStatus.HasValue)
-                query = query.Where(x => (int)x.AvailableStatus == filter.VehicleStatus.Value);
+            {
+                if(filter.VehicleStatus.Value >= 0)
+                {
+                    query = query.Where(x => (int)x.AvailableStatus == filter.VehicleStatus.Value);
+                }
+            }
+                
 
             if (filter.MinPrice.HasValue)
-                query = query.Where(x => x.SalePrice >= filter.MinPrice.Value);
+            {
+                if(filter.MinPrice.Value >= 0)
+                {
+                    query = query.Where(x => x.SalePrice >= filter.MinPrice.Value);
+                }
+            }
+
 
             if (filter.MaxPrice.HasValue)
-                query = query.Where(x => x.SalePrice <= filter.MaxPrice.Value);
+            {
+                if(filter.MaxPrice.Value >= 0)
+                {
+                    query = query.Where(x => x.SalePrice <= filter.MaxPrice.Value);
+                }
+            }
+                
 
             if (filter.Skip.HasValue)
-                query = query.Skip(filter.Skip.Value);
+            {
+                if(filter.Size.Value >= 0)
+                {
+                    query = query.Skip(filter.Skip.Value);
+                }
+            }
+                
 
             if (filter.Size.HasValue)
-                query = query.Take(filter.Size.Value);
+            {
+                if(filter.Size.Value >= 0)
+                {
+                    query = query.Take(filter.Size.Value);
+                }
+            }
+                
 
             query = query.OrderBy(x => x.SalePrice);
 
