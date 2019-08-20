@@ -32,7 +32,7 @@ namespace P5TheCarHub.UI.Controllers
         {
             var viewModel = new HomeViewModel
             {
-                Vehicles = _vehicleService.GetAll(amount: 3, orderBy: "LotDate").Select(x => _mapper.Map<VehicleViewModel>(x))
+                Vehicles = _vehicleService.GetAll(amount: 3).Select(x => _mapper.Map<VehicleViewModel>(x))
             };
 
             return View(viewModel);

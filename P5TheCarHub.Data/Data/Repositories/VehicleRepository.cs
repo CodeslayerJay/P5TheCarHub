@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using P5TheCarHub.Core.Entities;
+using P5TheCarHub.Core.Filters;
 using P5TheCarHub.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
@@ -48,20 +49,31 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
 
         public IEnumerable<Vehicle> GetAll(int? amount = null)
         {
-            return GetAll(amount, orderBy: null);
+            var filter = new VehicleFilter { Size = amount };
+
+            return GetAll(filter);
         }
 
-        public IEnumerable<Vehicle> GetAll(int? amount = null, string orderBy = null)
+        
+        public IEnumerable<Vehicle> GetAll(VehicleFilter filter)
         {
-            var vehicles = _context.Vehicles;
+            var query = _context.Vehicles.Where(x => x.Id > 0);
 
-            if (!String.IsNullOrEmpty(orderBy))
-                vehicles.OrderBy(x => orderBy);
+            if (filter.MinPrice.HasValue)
+                query = query.Where(x => x.SalePrice >= filter.MinPrice.Value);
 
-            if (amount.HasValue)
-                return vehicles.Include(x => x.Photos).Where(x => x.Id > 0).Take(amount.Value).ToList();
+            if (filter.MaxPrice.HasValue)
+                query = query.Where(x => x.SalePrice <= filter.MaxPrice.Value);
 
-            return vehicles.Include(x => x.Photos).Where(x => x.Id > 0).ToList();
+            if (filter.Skip.HasValue)
+                query = query.Skip(filter.Skip.Value);
+
+            if (filter.Size.HasValue)
+                query = query.Take(filter.Size.Value);
+
+            query = query.OrderBy(x => x.SalePrice).OrderBy(x => x.LotDate);
+
+            return query.ToList();
         }
 
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using P5TheCarHub.Core.Filters;
 
 namespace P5TheCarHub.Core.Interfaces.Repositories
 {
@@ -10,6 +11,7 @@ namespace P5TheCarHub.Core.Interfaces.Repositories
     {
         Vehicle GetByVin(string vin, bool withIncludes);
         Vehicle GetById(int id, bool withIncludes);
-        IEnumerable<Vehicle> GetAll(int? amount, string orderBy);
+        IEnumerable<Vehicle> GetAll(int? amount);
+        IEnumerable<Vehicle> GetAll(VehicleFilter filter);
     }
 }

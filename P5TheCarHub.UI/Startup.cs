@@ -23,7 +23,6 @@ using P5TheCarHub.Infrastructure.Data.Repositories;
 using P5TheCarHub.Infrastructure.Identity;
 using P5TheCarHub.UI.Models;
 using P5TheCarHub.UI.Models.Managers;
-using P5TheCarHub.UI.ServiceWorkers;
 
 namespace P5TheCarHub.UI
 {

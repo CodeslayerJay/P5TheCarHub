@@ -1,6 +1,7 @@
 ﻿using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Enums;
 using P5TheCarHub.Core.Exceptions;
+using P5TheCarHub.Core.Filters;
 using P5TheCarHub.Core.Interfaces;
 using P5TheCarHub.Core.Interfaces.Repositories;
 using P5TheCarHub.Core.Interfaces.Services;
@@ -86,11 +87,16 @@ namespace P5TheCarHub.Core.Services
             return _unitOfWork.Vehicles.GetByVin(vin, withIncludes);
         }
 
-        public IEnumerable<Vehicle> GetAll(int? amount = null, string orderBy = null)
+        public IEnumerable<Vehicle> GetAll(int? amount = null)
         {
-            return _unitOfWork.Vehicles.GetAll(amount, orderBy);
+            return _unitOfWork.Vehicles.GetAll(amount);
         }
 
+        public IEnumerable<Vehicle> GetAll(VehicleFilter filter)
+        {
+            return _unitOfWork.Vehicles.GetAll(filter);
+        }
+        
         public void DeleteVehicle(int id)
         {
             var vehicle = GetVehicle(id);

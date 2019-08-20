@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using P5TheCarHub.Core.Filters;
 using P5TheCarHub.Core.Interfaces.Services;
 using P5TheCarHub.UI.Models.ViewModels;
 
@@ -24,36 +25,18 @@ namespace P5TheCarHub.UI.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index(int? type, string minPrice = null,
-                string maxPrice = "100000", int size = 10, int page = 1)
+        public IActionResult Index(decimal? minPrice = null,
+                decimal? maxPrice = 50000, int size = 10, int page = 1)
         {
             try
             {
-                var vehicleList = _vehicleService.GetAll().Select(x => _mapper.Map<VehicleViewModel>(x));
-                var filterApplied = false;
-
-                var minPriceParseResult = decimal.TryParse(minPrice, out decimal min);
-                var maxPriceParseResult = decimal.TryParse(maxPrice, out decimal max);
-
-                if (minPriceParseResult && maxPriceParseResult)
-                {
-                    vehicleList = vehicleList.Where(x => x.IsSold == false)
-                       .Where(x => x.SalePrice >= min)
-                       .Where(x => x.SalePrice < max)
-                       .OrderBy(x => x.SalePrice)
-                       .OrderBy(x => x.LotDate);
-                    filterApplied = true;
-                }
-                else
-                {
-                    vehicleList = vehicleList.OrderBy(x => x.LotDate).OrderBy(x => x.IsSold);
-                }
-
+                var filter = new VehicleFilter { MinPrice = minPrice, Size = size, MaxPrice = maxPrice, Skip = ((page - 1) * size) };
+                var vehicles = _vehicleService.GetAll(filter).Select(x => _mapper.Map<VehicleViewModel>(x));
+                
                 var viewModel = new InventoryViewModel
                 {
-                    Vehicles = vehicleList.Skip((page - 1) * size).Take(size),
-                    IsFilterApplied = filterApplied,
-                    Pagination = new Pagination(vehicleList.Count(), size, page)
+                    Vehicles = vehicles,
+                    Pagination = new Pagination(vehicles.Count(), size, page)
                 };
 
                 return View(viewModel);

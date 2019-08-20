@@ -1,5 +1,6 @@
 ﻿using P5TheCarHub.Core.Entities;
 using P5TheCarHub.Core.Enums;
+using P5TheCarHub.Core.Filters;
 using P5TheCarHub.Core.Interfaces;
 using P5TheCarHub.Core.Interfaces.Repositories;
 using System;
@@ -139,9 +140,10 @@ namespace P5TheCarHub.UnitTests.Mocks
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Vehicle> GetAll(int? amount = null, string orderBy = null)
+        public IEnumerable<Vehicle> GetAll(VehicleFilter filter)
         {
-            return GetAll(amount);
+            filter.Size = 10;
+            return GetAll(filter.Size.Value);
         }
     }
 }
