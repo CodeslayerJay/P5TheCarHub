@@ -9,7 +9,7 @@ namespace P5TheCarHub.Infrastructure.Identity
 {
     public static class IdentitySeed
     {
-        private const string AdminUser = "Admin_";
+        private const string AdminUser = "Admin";
         private const string AdminPassword = "P@ssword123!";
 
         public static async void EnsurePopulated(IApplicationBuilder app)

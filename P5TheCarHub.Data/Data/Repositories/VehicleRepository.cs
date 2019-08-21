@@ -59,6 +59,16 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
         {
             var query = _context.Vehicles.Where(x => x.Id > 0);
 
+
+            if (filter.IncludeInvoice)
+                query = query.Include(x => x.Invoice);
+
+            if (filter.IncludePhotos)
+                query = query.Include(x => x.Photos);
+
+            if (filter.IncludeRepairs)
+                query = query.Include(x => x.Repairs);
+
             if (filter.VehicleStatus.HasValue)
             {
                 if(filter.VehicleStatus.Value >= 0)
@@ -107,7 +117,7 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
             query = query.OrderBy(x => x.SalePrice);
 
             query = (filter.OrderByDescending) ? query.OrderByDescending(x => x.LotDate) : query.OrderBy(x => x.LotDate);
-
+            
             return query.ToList();
         }
 

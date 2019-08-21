@@ -12,5 +12,10 @@ namespace P5TheCarHub.Core.Filters
         public int? Skip { get; set; }
         public int? VehicleStatus { get; set; }
         public bool OrderByDescending { get; set; }
+
+        public bool IncludePhotos { get; set; }
+        public bool IncludeRepairs { get; set; }
+        public bool IncludeInvoice { get; set; }
+        
     }
 }
