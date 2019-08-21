@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using P5TheCarHub.Core.Enums;
+using P5TheCarHub.Core.Filters;
 using P5TheCarHub.Core.Interfaces.Services;
 
 using P5TheCarHub.UI.Models;
@@ -30,9 +32,12 @@ namespace P5TheCarHub.UI.Controllers
 
         public IActionResult Index()
         {
+            var filter = new VehicleFilter { Size = 3, IncludePhotos = true };
+            
             var viewModel = new HomeViewModel
             {
-                VehiclesForSale = _vehicleService.GetVehiclesBySoldStatus(isSold: false).Take(3).Select(x => _mapper.Map<VehicleViewModel>(x)),
+                VehiclesForSale = _vehicleService.Find(x => x.AvailableStatus == VehicleAvailabilityStatus.Available, filter)
+                                    .Select(x => _mapper.Map<VehicleViewModel>(x))
             };
 
             return View(viewModel);

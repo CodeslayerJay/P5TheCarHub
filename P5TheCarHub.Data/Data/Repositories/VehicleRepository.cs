@@ -51,14 +51,21 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
         {
             var filter = new VehicleFilter { Size = amount };
 
-            return GetAll(filter);
+            return GetAll(filter).ToList();
         }
 
-        
         public IEnumerable<Vehicle> GetAll(VehicleFilter filter)
+        {
+            return Query(filter).ToList();
+        }
+
+
+        private IQueryable<Vehicle> Query(VehicleFilter filter, Expression<Func<Vehicle, bool>> predicate = null)
         {
             var query = _context.Vehicles.Where(x => x.Id > 0);
 
+            if (predicate != null)
+                query = query.Where(predicate);
 
             if (filter.IncludeInvoice)
                 query = query.Include(x => x.Invoice);
@@ -116,9 +123,9 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
 
             query = query.OrderBy(x => x.SalePrice);
 
-            query = (filter.OrderByDescending) ? query.OrderByDescending(x => x.LotDate) : query.OrderBy(x => x.LotDate);
+            //query = (filter.OrderByDescending) ? query.OrderByDescending(x => x.LotDate) : query.OrderBy(x => x.LotDate);
             
-            return query.ToList();
+            return query;
         }
 
 
@@ -146,11 +153,9 @@ namespace P5TheCarHub.Infrastructure.Data.Repositories
             return query.ToList();
         }
 
-        public IEnumerable<Vehicle> Find(Expression<Func<Vehicle, bool>> predicate, VehicleFilter filter)
+        public IEnumerable<Vehicle> Find(Expression<Func<Vehicle, bool>> predicate, VehicleFilter filter = null)
         {
-            var query = GetAll(filter).AsQueryable();
-            query = query.Where(predicate);
-            return query.ToList();
+            return Query(filter, predicate).ToList();
         }
 
     }

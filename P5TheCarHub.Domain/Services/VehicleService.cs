@@ -9,6 +9,7 @@ using P5TheCarHub.Core.Specifications.VehicleSpecifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace P5TheCarHub.Core.Services
@@ -112,6 +113,11 @@ namespace P5TheCarHub.Core.Services
         public IEnumerable<Vehicle> GetVehiclesBySoldStatus(bool isSold)
         {
             return GetAll().Where(x => x.AvailableStatus == VehicleAvailabilityStatus.Sold).ToList();
+        }
+
+        public IEnumerable<Vehicle> Find(Expression<Func<Vehicle, bool>> predicate, VehicleFilter filter = null)
+        {
+            return _unitOfWork.Vehicles.Find(predicate, filter);
         }
     }
 }

@@ -13,6 +13,6 @@ namespace P5TheCarHub.Core.Interfaces.Repositories
         Vehicle GetByVin(string vin, bool withIncludes);
         Vehicle GetById(int id, bool withIncludes);
         IEnumerable<Vehicle> GetAll(VehicleFilter filter);
-        IEnumerable<Vehicle> Find(Expression<Func<Vehicle, bool>> predicate, VehicleFilter filter);
+        IEnumerable<Vehicle> Find(Expression<Func<Vehicle, bool>> predicate, VehicleFilter filter = null);
     }
 }
