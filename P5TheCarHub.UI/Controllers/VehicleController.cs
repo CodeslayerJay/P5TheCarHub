@@ -39,7 +39,7 @@ namespace P5TheCarHub.UI.Controllers
         {
             try
             {
-                var filter = new VehicleFilter { VehicleStatus = VehicleStatus, Size = size, Skip = ((page - 1) * size) };
+                var filter = new VehicleFilter { VehicleStatus = VehicleStatus, Size = size, Skip = ((page - 1) * size), IncludePhotos = true };
                 var vehicleList = _vehicleService.GetAll(filter).Select(x => _mapper.Map<VehicleViewModel>(x));
 
                 var viewModel = new VehicleIndexViewModel

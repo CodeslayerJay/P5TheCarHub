@@ -30,7 +30,8 @@ namespace P5TheCarHub.UI.Controllers
         {
             try
             {
-                var filter = new VehicleFilter { MinPrice = minPrice, Size = size, MaxPrice = maxPrice, Skip = ((page - 1) * size) };
+                var filter = new VehicleFilter { MinPrice = minPrice, Size = size, MaxPrice = maxPrice, Skip = ((page - 1) * size),
+                        IncludePhotos = true};
                 var vehicles = _vehicleService.GetAll(filter).Select(x => _mapper.Map<VehicleViewModel>(x));
                 
                 var viewModel = new InventoryViewModel
