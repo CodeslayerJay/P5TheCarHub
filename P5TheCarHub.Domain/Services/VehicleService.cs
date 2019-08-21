@@ -23,7 +23,12 @@ namespace P5TheCarHub.Core.Services
             _unitOfWork = unitOfWork;
              
         }
-                
+        
+        public string GetVehicleFullName(Vehicle vehicle)
+        {
+            return $"{vehicle.Year} {vehicle.Make} {vehicle.Model} {vehicle.Trim}";
+        }
+
         private decimal CalculateVehicleSalePrice(decimal purchasePrice)
         {
             return purchasePrice + MARKUPFEE;

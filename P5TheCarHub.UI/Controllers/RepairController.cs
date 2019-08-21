@@ -53,7 +53,7 @@ namespace P5TheCarHub.UI.Controllers
 
                 var vm = new RepairFormModel
                 {
-                    VehicleId = vehicle.Id
+                    VehicleId = vehicle.Id,
                 };
 
                 if (id.HasValue)
@@ -70,6 +70,7 @@ namespace P5TheCarHub.UI.Controllers
                     vm = _mapper.Map<RepairFormModel>(repair);
                 }
 
+                vm.VehicleFullName = _vehicleService.GetVehicleFullName(vehicle);
                 return View("RepairForm", vm);
 
             }

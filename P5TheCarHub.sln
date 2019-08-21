@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P5TheCarHub.UnitTests", "P5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P5TheCarHub.UI", "P5TheCarHub.UI\P5TheCarHub.UI.csproj", "{B154325E-F454-4693-A83D-9209BD7D49C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P5TheCarHub.ConsolePractice", "P5TheCarHub.ConsolePractice\P5TheCarHub.ConsolePractice.csproj", "{77537770-9A0D-4C0F-8456-1D1555905674}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{B154325E-F454-4693-A83D-9209BD7D49C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B154325E-F454-4693-A83D-9209BD7D49C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B154325E-F454-4693-A83D-9209BD7D49C7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{77537770-9A0D-4C0F-8456-1D1555905674}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77537770-9A0D-4C0F-8456-1D1555905674}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{77537770-9A0D-4C0F-8456-1D1555905674}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{77537770-9A0D-4C0F-8456-1D1555905674}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

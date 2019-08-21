@@ -13,5 +13,6 @@ namespace P5TheCarHub.Core.Interfaces.Services
         Vehicle GetVehicleByVin(string vin, bool withIncludes);
         IEnumerable<Vehicle> GetVehiclesBySoldStatus(bool isSold);
         IEnumerable<Vehicle> GetAll(VehicleFilter filter);
+        string GetVehicleFullName(Vehicle vehicle);
     }
 }

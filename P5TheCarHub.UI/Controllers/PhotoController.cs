@@ -59,6 +59,7 @@ namespace P5TheCarHub.UI.Controllers
                 IsMain = ((_photoService.GetVehicleMainPhoto(vehicle.Id) == null) ? true : false),
             };
 
+            vm.VehicleFullName = _vehicleService.GetVehicleFullName(vehicle);
             return View("PhotoForm",vm);
         }
 

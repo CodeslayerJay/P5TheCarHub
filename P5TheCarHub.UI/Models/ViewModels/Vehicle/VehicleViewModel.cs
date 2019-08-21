@@ -16,6 +16,12 @@ namespace P5TheCarHub.UI.Models.ViewModels
         {
             Repairs = new List<RepairViewModel>();
             Photos = new List<PhotoViewModel>();
+            SetFullVehicleName();
+        }
+
+        private void SetFullVehicleName()
+        {
+            FullVehicleName = $"{Year} {Make} {Model} {Trim}";
         }
 
         public int VehicleId { get; set; }

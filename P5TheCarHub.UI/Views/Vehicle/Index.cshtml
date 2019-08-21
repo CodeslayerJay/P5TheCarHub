@@ -24,7 +24,8 @@
                     <select asp-for="VehicleStatus" asp-items="Html.GetEnumSelectList<VehicleAvailabilityStatus>()" class="custom-select">
                         
                     </select>
-                    <button class="btn btn-outline-success my-2 my-sm-0 ml-3" type="submit">Filter</button>
+                    <button class="btn btn-outline-primary my-2 my-sm-0 ml-3 mr-2" type="submit">Filter</button>
+                    <a class="btn" asp-action="Index" asp-controller="Vehicle">Reset</a>
                 </div>
             </form>
         </div>

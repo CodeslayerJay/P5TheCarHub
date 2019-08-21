@@ -16,6 +16,6 @@ namespace P5TheCarHub.UI.Models.ViewModels
         public DateTime? RepairDate { get; set; }
 
         public bool AddAnotherRepair { get; set; }
-        public VehicleViewModel Vehicle { get; set; }
+        public string VehicleFullName { get; set; }
     }
 }
