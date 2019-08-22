@@ -1,6 +1,6 @@
 # P5TheCarHub
 
-Auto Sales And Inventory Management App | Live Demo: (P5TheCarHub.AzureWebsites.net)
+Auto Sales And Inventory Management App | Live Demo: [P5TheCarHub.AzureWebsites.net](https://P5TheCarHub.AzureWebsites.net)
 
 ## Additional Information
 
