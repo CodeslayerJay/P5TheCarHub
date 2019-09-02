@@ -30,11 +30,6 @@ namespace P5TheCarHub.Core.Services
             return $"{vehicle.Year} {vehicle.Make} {vehicle.Model} {vehicle.Trim}";
         }
 
-        private decimal CalculateVehicleSalePrice(decimal purchasePrice)
-        {
-            return purchasePrice + MARKUPFEE;
-        }
-
         public Vehicle SaveVehicle(Vehicle vehicle)
         {
 
@@ -47,33 +42,38 @@ namespace P5TheCarHub.Core.Services
                 throw new DuplicateVehicleVinException(vehicle.VIN);
 
             vehicle.VIN = vehicle.VIN?.ToUpper();
-            vehicle.SalePrice = CalculateVehicleSalePrice(vehicle.PurchasePrice);
-
-
+            
             if(vehicle.Id == 0)
             {
                 _unitOfWork.Vehicles.Add(vehicle);
             }
-            else
-            {
-                UpdateVehicle(vehicle);
-            }
-            
+           
             _unitOfWork.SaveChanges();
 
+            UpdateSalePrice(vehicle.Id);
             return vehicle;
         }
 
-        private void UpdateVehicle(Vehicle vehicle)
+        public void UpdateSalePrice(int vehicleId)
         {
-            var vehicleToUpdate = _unitOfWork.Vehicles.GetById(vehicle.Id);
+            var vehicle = _unitOfWork.Vehicles.GetById(vehicleId);
 
-            var vehicleRequiredSpec = new VehicleExistsSpecification();
-            if (!vehicleRequiredSpec.IsSatisfiedBy(vehicle))
-                throw new VehicleNotFoundException(vehicle.Id);
+            if(vehicle != null)
+            {
+                var repairs = _unitOfWork.Repairs.GetAllByVehicleId(vehicle.Id);
 
-            _unitOfWork.SaveChanges();
+                if (repairs.Any())
+                {
+                    vehicle.SalePrice = vehicle.PurchasePrice + MARKUPFEE + repairs.Sum(x => x.Cost);
+                } else
+                {
+                    vehicle.SalePrice = vehicle.PurchasePrice + MARKUPFEE;
+                }
+
+                _unitOfWork.SaveChanges();
+            }
         }
+
         
         public Vehicle GetVehicle(int id, bool withIncludes = false)
         {

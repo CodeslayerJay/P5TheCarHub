@@ -13,11 +13,16 @@ input[disabled] {
     background-color: #555!important;
 }*/
 
+body {
+    background-color: #e9e5e5;
+}
+
 .tab-content.card {
     border-top: none;
     border-color: #ccc;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
+    box-shadow: 1px 1px 3px #ccc;
 }
 
 .navbar {

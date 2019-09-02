@@ -19,39 +19,12 @@ namespace P5TheCarHub.UnitTests.ServicesTests
         public RepairServiceTests()
         {
             _unitOfWork = new UnitOfWorkMock();
-            _repairService = new RepairService(_unitOfWork);
+            
             _vehicleService = new VehicleService(_unitOfWork);
+            _repairService = new RepairService(_unitOfWork, _vehicleService);
         }
 
-        [Fact]
-        public void SaveRepair_WhenCalled_UpdatesVehicleSalePriceAndReturnsNewlyCreatedRepair()
-        {
-            var vehicle = _vehicleService.GetVehicle(id: 2);
-            var currentSalePrice = vehicle.SalePrice;
-
-            var repair = new Repair { Description = "Wash", Details = "Washed and waxed car", Cost = 5, VehicleId = vehicle.Id,
-                RepairDate = DateTime.Today };
-
-            var result = _repairService.SaveRepair(repair);
-
-            Assert.NotNull(result);
-            Assert.NotEqual(0, result.Id);
-            Assert.Equal((currentSalePrice + repair.Cost), vehicle.SalePrice);
-        }
-
-        [Fact]
-        public void SaveRepair_WhenVehicleDoesNotExist_ThrowsVehicleNotFoundException()
-        {
-            var repair = new Repair
-            {
-                Description = "Wash",
-                Details = "Washed and waxed car",
-                Cost = 5,
-                RepairDate = DateTime.Today
-            };
-
-            Assert.Throws<VehicleNotFoundException>(() => _repairService.SaveRepair(repair));
-        }
+        
 
         [Fact]
         public void GetAllByVehicleId_WhenCalled_ReturnsListOfRepairsByVehicleId()
@@ -68,22 +41,6 @@ namespace P5TheCarHub.UnitTests.ServicesTests
             Assert.NotNull(result);
         }
 
-        
-        [Fact]
-        public void SaveRepair_WhenRepairIsFound_AndRepairIdIsNotZero_UpdatesVehicleSalePriceAndReturnsUpdatedRepair()
-        {
-            var vehicle = _vehicleService.GetVehicle(id: 1);
-            var currentSalePrice = vehicle.SalePrice;
-
-            var repair = _repairService.GetRepair(id: 1);
-            repair.Cost = 10;
-
-            var result = _repairService.SaveRepair(repair);
-
-            Assert.NotNull(result);
-            Assert.Equal((currentSalePrice + result.Cost), vehicle.SalePrice);
-            Assert.NotEqual(currentSalePrice, vehicle.SalePrice);
-        }
 
         [Fact]
         public void DeleteRepair_WhenRepairIsFound_RemovesRepair()

@@ -17,5 +17,6 @@ namespace P5TheCarHub.Core.Interfaces.Services
         IEnumerable<Vehicle> GetAll(VehicleFilter filter);
         string GetVehicleFullName(Vehicle vehicle);
         IEnumerable<Vehicle> Find(Expression<Func<Vehicle, bool>> predicate, VehicleFilter filter = null);
+        void UpdateSalePrice(int vehicleId);
     }
 }

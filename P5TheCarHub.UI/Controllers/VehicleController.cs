@@ -110,7 +110,7 @@ namespace P5TheCarHub.UI.Controllers
                 {
                     var vehicle = (formModel.VehicleId == AppStrings.NotSet) ? 
                         _mapper.Map<Vehicle>(formModel) :
-                        _mapper.Map<VehicleFormModel, Vehicle>(formModel, _vehicleService.GetVehicle(formModel.VehicleId, withIncludes: false));
+                        _mapper.Map<VehicleFormModel, Vehicle>(formModel, _vehicleService.GetVehicle(formModel.VehicleId, withIncludes: true));
 
                     _vehicleService.SaveVehicle(vehicle);
 
