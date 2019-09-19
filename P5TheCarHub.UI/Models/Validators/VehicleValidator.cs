@@ -16,18 +16,18 @@ namespace P5CarSalesAppBasic.Models.Validators
         {
             
             RuleFor(x => x.VIN).Cascade(CascadeMode.StopOnFirstFailure)
-                .MaximumLength(500)
-                    .WithMessage("Maximum length is 500 characters.");
+                .MaximumLength(100)
+                    .WithMessage("Maximum length is 100 characters.");
             RuleFor(x => x.Make).Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage("Make is required.")
-                .MaximumLength(100).WithMessage("Maximum length is 100 characters.");
+                .MaximumLength(15).WithMessage("Maximum length is 15 characters.");
             RuleFor(x => x.Model).Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage("Model is required.")
-                .MaximumLength(100).WithMessage("Maximum length is 100 characters.");
+                .MaximumLength(15).WithMessage("Maximum length is 15 characters.");
             RuleFor(x => x.Trim).Cascade(CascadeMode.StopOnFirstFailure)
-                .MaximumLength(100).WithMessage("Maximum length is 100 characters.");
+                .MaximumLength(10).WithMessage("Maximum length is 10 characters.");
             RuleFor(x => x.Color).Cascade(CascadeMode.StopOnFirstFailure)
-                .MaximumLength(100).WithMessage("Maximum length is 100 characters.");
+                .MaximumLength(15).WithMessage("Maximum length is 15 characters.");
 
 
             RuleFor(x => x.Mileage).Cascade(CascadeMode.StopOnFirstFailure)

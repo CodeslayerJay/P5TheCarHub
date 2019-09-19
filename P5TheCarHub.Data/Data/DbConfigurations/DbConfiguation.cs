@@ -21,16 +21,16 @@ namespace P5TheCarHub.Infrastructure.Data.DbConfigurations
             builder.Property(v => v.Year)
                .IsRequired(true);
             builder.Property(v => v.Make)
-               .HasMaxLength(100)
+               .HasMaxLength(15)
                .IsRequired(true);
             builder.Property(v => v.Model)
-               .HasMaxLength(100)
+               .HasMaxLength(15)
                .IsRequired(true);
             builder.Property(v => v.Trim)
-               .HasMaxLength(100)
+               .HasMaxLength(10)
                .IsRequired(false);
             builder.Property(v => v.Color)
-                .HasMaxLength(100)
+                .HasMaxLength(15)
                 .IsRequired(false);
             builder.Property(v => v.LastUpdated)
                 .IsRequired(true);

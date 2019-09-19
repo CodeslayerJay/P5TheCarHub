@@ -103,6 +103,13 @@ namespace P5TheCarHub.Core.Services
             if (invoice == null)
                 throw new InvoiceNotFoundException(id);
 
+            var vehicle = _unitOfWork.Vehicles.GetById(invoice.VehicleId);
+
+            if(vehicle != null)
+            {
+                vehicle.AvailableStatus = VehicleAvailabilityStatus.NotAvailable;
+            }
+
             _unitOfWork.Invoices.Delete(id);
             _unitOfWork.SaveChanges();
         }
