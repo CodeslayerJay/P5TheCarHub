@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using P5TheCarHub.Core.Enums;
@@ -92,12 +93,17 @@ namespace P5TheCarHub.UI.Controllers
 
         public IActionResult Privacy()
         {
+            //throw new Exception("This is a test exception for testing error page.");
             return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
+            var exception = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+
+            _logger.LogError("Error occurred during request.", exception.Path, exception.Error.Message, exception.Error.StackTrace);
+           
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
